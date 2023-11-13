@@ -5,6 +5,7 @@
 import { Settings } from './settings.js';
 import { Scroll } from './scroll.js';
 import { Plataforma } from './plataforma.js';
+import { Escalera } from './Escalera.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
@@ -66,10 +67,21 @@ window.onload = () => {
         const p_y = settings.array_plataformas[i][0];
         const p_x = settings.array_plataformas[i][1];
         const p_ancho = settings.array_plataformas[i][2];
+        const p_bordeIz = settings.array_plataformas[i][3];
+        const p_bordeDe = settings.array_plataformas[i][4];
 
-        settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png'));
+        settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png', p_bordeIz, p_bordeDe));
     }
     
+    // ---------------------------------------------------------------
+    for (let escalera of settings.array_escaleras) {
+
+        const e_x = escalera[0];
+        const e_y = escalera[1];
+        const e_size = escalera[2];
+
+        settings.objeto.escalera.push(new Escalera(e_x, e_y, e_size));
+    }
     // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
@@ -87,6 +99,10 @@ function bucle_principal() {
     
     for (let plataforma of settings.objeto.plataforma) {
         plataforma.dibuja(dxdy);
+    }
+
+    for (let escalera of settings.objeto.escalera) {
+        escalera.dibuja(dxdy);
     }
 
     dxdy = settings.objeto.jugador.dibuja();

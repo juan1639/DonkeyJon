@@ -26,7 +26,7 @@ export class Settings {
         ];
 
         this.ini_suelo = this.resolucion[1] - this.constante.bsy;
-        this.gap = this.constante.bsy * 6;
+        this.gap = this.constante.bsy * 2;
 
         this.ini_scrolls = [
             [-this.resolucion[0], 0, './img/fondo_cielo3.png'],
@@ -45,6 +45,7 @@ export class Settings {
         this.objeto = {
             scroll: [],
             plataforma: [],
+            escalera: [],
             jugador: null,
             toneles: []
         };
@@ -89,25 +90,36 @@ export class Settings {
         };
 
         this.array_plataformas = [
-            [this.ini_suelo - this.gap * 5, 0, 12],
-            [this.ini_suelo - this.gap * 4, 0, 9],
-            [this.ini_suelo - this.gap * 3, 5, 5],
-            [this.ini_suelo - this.gap * 2, 2, 8],
-            [this.ini_suelo - this.gap, 0, 11],
+            [this.ini_suelo - this.gap * 5, -16, 20, false, true],
+            [this.ini_suelo - this.gap * 5, 7, 21, true, true],
+            [this.ini_suelo - this.gap * 4, -13, 45, true, false],
+            [this.ini_suelo - this.gap * 3, -16, 15, false, true],
+            [this.ini_suelo - this.gap * 3, 2, 10, true, true],
+            [this.ini_suelo - this.gap * 2, -12, 40, true, true],
+            [this.ini_suelo - this.gap * 1, -14, 22, true, true],
+            [this.ini_suelo - this.gap * 1, 10, 8, true, true],
+            [this.ini_suelo - this.gap * 1, 21, 9, true, true],
             [this.ini_suelo, -16, 48]
+        ];
+
+        this.array_escaleras = [
+            [26, this.ini_suelo, this.gap],
+            [-9, this.ini_suelo - this.gap * 1, this.gap],
+            [19, this.ini_suelo - this.gap * 2, this.gap],
+            [8, this.ini_suelo - this.gap * 2, this.gap],
+            [-7, this.ini_suelo - this.gap * 3, this.gap],
+            [24, this.ini_suelo - this.gap * 4, this.gap]
         ];
 
         this.imagenes = {
             ssheet_jugador: new Image(),
             fondo_cielo1: new Image(),
             tile_medio: new Image(),
-            tile_iz: new Image('./img/tile2.png'),
-            tile_de: new Image('./img/tile3.png'),
-            tile_izS: new Image('./img/tile4.png'),
-            tile_deS: new Image('./img/tile5.png'),
+            tile_izS: new Image(),
+            tile_deS: new Image(),
             tile_madera: new Image('./img/tile6.png'),
             tile_metal: new Image('./img/blockGrey.png'),
-            escalera: new Image('./img/ladderWide_mid.png')
+            escalera: new Image()
         };
 
         this.sonidos = {
