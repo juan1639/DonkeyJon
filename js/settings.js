@@ -11,8 +11,13 @@ export class Settings {
             nro_columnas: 16,
             GRAVEDAD: 1,
             FPS: 60,
-            xIni_jugador: 8,
-            yIni_jugador: 9
+            ancho_jugador: 120,
+            alto_jugador: 150
+        }
+
+        this.ini_jugador = {
+            x: Math.floor(this.constante.nro_columnas / 2),
+            y: this.constante.nro_filas - 4
         }
 
         this.resolucion = [
@@ -53,11 +58,19 @@ export class Settings {
             tecla_de: false
         }
 
+        this.tecla = {
+            iz: 'ArrowLeft',
+            de: 'ArrowRight',
+            up: 'ArrowUp',
+            do: 'ArrowDown',
+            enter: 'Enter',
+        }
+
         this.estado = {
-            prejuego: false,
+            preJuego: false,
             enJuego: true,
-            gameover: false,
-            nivel_superado: false
+            gameOver: false,
+            nivelSuperado: false
         }
         
         this.colores = {

@@ -15,9 +15,11 @@ export class Scroll {
         this.alto = alto;
     }
 
-    dibuja() {
+    dibuja(dxdy) {
+
+        this.x += dxdy[0];
+        this.y += dxdy[1];
 
         this.ctx.drawImage(this.img, this.x, this.y, this.ancho, this.alto);
     }
-
 }

@@ -3,25 +3,25 @@ import { settings } from "./main.js";
 // ============================================================================
 export class Jugador {
 
-    constructor(left, top) {
+    constructor(left, top, width, height) {
 
         this.ctx = settings.ctx;
         this.img = settings.imagenes.ssheet_jugador;
         this.img.src = './img/Ssheet_jugador.png';
 
         this.ssheet = {
-            quieto: [0, 0, 0, 0, false],
+            quieto: [0, 0, 0, 0, true],
             andar: [0, 110, 80, 110, false],
             agachado: [240, 0, 240, 0, false],
-            escalera: [400, 0, 480, 0, true],
+            escalera: [400, 0, 480, 0, false],
             saltar: [80, 0, 160, 0, false]
         }
 
         this.rect = {
-            x: left * settings.constante.bsx,
-            y: top * settings.constante.bsy,
-            ancho: 80,
-            alto: 100,
+            x: left,
+            y: top,
+            ancho: width,
+            alto: height,
             clipX: 0,
             clipY: 0,
             clipAncho: 80,
@@ -46,6 +46,9 @@ export class Jugador {
 
     dibuja() {
 
+        const dxdy = this.actualiza();
+
+        // -----------------------------------------------------------
         this.ctx.save();
 
         if (this.move.flip) {
@@ -65,6 +68,8 @@ export class Jugador {
 
         //this.ctx.drawImage(this.img, this.rect.x, this.rect.y);
         //this.ctx.drawImage(this.img, 0, 0);
+
+        return dxdy;
     }
 
     selecc_ssheetAccion() {
@@ -86,5 +91,35 @@ export class Jugador {
         }
 
         return [0, 0];
+    }
+
+    actualiza() {
+
+        let dx = 0;
+        let dy = 0;
+
+        dx = this.leer_teclado(dx);
+
+        //this.move.velY += settings.constante.GRAVEDAD;
+        //dy += this.move.velY;
+
+        //this.rect.x += dx;
+        //this.rect.y += dy;
+
+        return [-dx, -dy];
+    }
+
+    leer_teclado(dx) {
+
+        if (settings.controles.tecla_iz) {
+            this.move.flip = true;
+            dx = -(this.move.velX);
+
+        } else if (settings.controles.tecla_de) {
+            this.move.flip = false;
+            dx = this.move.velX;
+        }
+
+        return dx;
     }
 }
