@@ -9,7 +9,7 @@ let eventos_click;
 // ----------------------------------------------------------------------
 const eventos_keyDown = document.addEventListener('keydown', (event) => {
 
-    console.log(event.key);
+    //console.log(event.key);
     const pulsacion = event.key;
 
     if (settings.estado.preJuego) {
@@ -32,15 +32,15 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
     } else if (settings.estado.enJuego) {
 
         if (pulsacion === settings.tecla.iz) {
-            console.log('izq...');
+            //console.log('izq...');
             settings.controles.tecla_iz = true;
             
         } else if (pulsacion === settings.tecla.de) {
-            console.log('dcha...');
+            //console.log('dcha...');
             settings.controles.tecla_de = true;
 
         } else {
-            console.log('...');
+            //console.log('...');
         }
     }
 });
@@ -50,14 +50,14 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
     if (settings.estado.enJuego) {
 
         if (event.key === settings.tecla.iz) {
-            console.log('endizq...');
+            //console.log('endizq...');
             settings.controles.tecla_iz = false;
     
         } else if (event.key === settings.tecla.de) {
-            console.log('enddcha...');
+            //console.log('enddcha...');
             settings.controles.tecla_de = false;
         } else {
-            console.log('... ..');
+            //console.log('... ..');
         }
     }
 });
