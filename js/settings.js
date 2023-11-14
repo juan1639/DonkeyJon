@@ -26,13 +26,17 @@ export class Settings {
         ];
 
         this.ini_suelo = this.resolucion[1] - this.constante.bsy;
-        this.gap = this.constante.bsy * 2;
+        this.gap = this.constante.bsy * 6;
 
         this.ini_scrolls = [
             [-this.resolucion[0], 0, './img/fondo_cielo3.png'],
             [0, 0, './img/fondo_cielo1.png'],
             [this.resolucion[0], 0, './img/fondo_cielo3.png'],
-            [this.resolucion[0] * 2, 0, './img/fondo_cielo1.png']
+            [this.resolucion[0] * 2, 0, './img/fondo_cielo1.png'],
+            [-this.resolucion[0], -this.resolucion[1], './img/fondo_cielo4.png'],
+            [0, -this.resolucion[1], './img/fondo_cielo2.png'],
+            [this.resolucion[0], -this.resolucion[1], './img/fondo_cielo4.png'],
+            [this.resolucion[0] * 2, -this.resolucion[1], './img/fondo_cielo2.png']
         ];
 
         this.escala = {
@@ -48,7 +52,7 @@ export class Settings {
             plataforma: [],
             escalera: [],
             jugador: null,
-            toneles: []
+            bichos: []
         };
 
         this.marcadores = {
@@ -118,7 +122,7 @@ export class Settings {
         this.array_escaleras = [
             [31, this.ini_suelo, this.gap],
             [-3, this.ini_suelo - this.gap * 1, this.gap],
-            [25, this.ini_suelo - this.gap * 2, this.gap],
+            [25, this.ini_suelo - this.gap * 2, this.gap * 2],
             [8, this.ini_suelo - this.gap * 2, this.gap],
             [-5, this.ini_suelo - this.gap * 3, this.gap],
             [34, this.ini_suelo - this.gap * 4, this.gap]

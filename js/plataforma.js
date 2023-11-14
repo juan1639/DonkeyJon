@@ -3,7 +3,7 @@ import { settings } from "./main.js";
 // ============================================================================
 export class Plataforma {
 
-    constructor(y, x, ancho, ruta, bordeIz, bordeDe) {
+    constructor(top, left, width, ruta, bordeIz, bordeDe) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
@@ -17,34 +17,38 @@ export class Plataforma {
         this.img_bordeDe = new Image();
         this.img_bordeDe.src = './img/tile3.png';
 
-        this.x = x * this.anchoTile;
-        this.y = y;
-        this.ancho = ancho;
-
         this.bordeIz = bordeIz;
         this.bordeDe = bordeDe;
+
+        this.rect = {
+            x: left * settings.constante.bsx,
+            y: top,
+            ancho: width * settings.constante.bsx,
+            anchoBucle: width,
+            alto: settings.constante.bsy
+        }
     }
 
     dibuja(dxdy) {
 
-        this.x += dxdy[0];
-        this.y += dxdy[1];
+        this.rect.x += dxdy[0];
+        this.rect.y += dxdy[1];
 
         let imagen = this.img; 
 
-        for (let i = 0; i < this.ancho; i ++) {
+        for (let i = 0; i < this.rect.anchoBucle; i ++) {
 
             if (i === 0 && this.bordeIz) {
                 imagen = this.img_bordeIz;
 
-            } else if (i === this.ancho - 1 && this.bordeDe) {
+            } else if (i === this.rect.anchoBucle - 1 && this.bordeDe) {
                 imagen = this.img_bordeDe;
                 
             } else {
                 imagen = this.img;
             }
 
-            this.ctx.drawImage(imagen, this.x + i * this.anchoTile, this.y, this.anchoTile, this.altoTile);
+            this.ctx.drawImage(imagen, this.rect.x + i * this.anchoTile, this.rect.y, this.anchoTile, this.altoTile);
         }
     }
 }

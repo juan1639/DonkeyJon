@@ -6,6 +6,7 @@ import { Settings } from './settings.js';
 import { Scroll } from './scroll.js';
 import { Plataforma } from './plataforma.js';
 import { Escalera } from './Escalera.js';
+import { Bichos } from './bichos.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
@@ -83,6 +84,10 @@ window.onload = () => {
 
         settings.objeto.escalera.push(new Escalera(e_x, e_y, e_size));
     }
+
+    // ---------------------------------------------------------------
+    settings.objeto.bichos.push(new Bichos());
+
     // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
@@ -105,6 +110,8 @@ function bucle_principal() {
     for (let escalera of settings.objeto.escalera) {
         escalera.dibuja(dxdy);
     }
+
+    settings.objeto.bichos[0].dibuja(dxdy);
 
     dxdy = settings.objeto.jugador.dibuja();
 }

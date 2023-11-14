@@ -20,6 +20,9 @@ export class Scroll {
         this.x += dxdy[0];
         this.y += dxdy[1];
 
+        if (this.y > this.alto && dxdy[1] > 0) this.y -= this.alto * 2;
+        if (this.y < -this.alto && dxdy[1] < 0) this.y += this.alto * 2;
+
         this.ctx.drawImage(this.img, this.x, this.y, this.ancho, this.alto);
     }
 }

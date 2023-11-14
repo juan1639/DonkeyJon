@@ -15,6 +15,7 @@ export class Escalera {
         this.x = x * this.anchoTile;
         this.y = y - this.altoTile;
         this.size = size;
+        console.log(this.y, this.size, this.altoTile);
     }
 
     dibuja(dxdy) {
@@ -22,7 +23,11 @@ export class Escalera {
         this.x += dxdy[0];
         this.y += dxdy[1];
 
-        this.ctx.drawImage(this.img, this.x, this.y, this.anchoTile, this.altoTile);
+        const top_escalera = this.y - this.size;
+
+        for (let i = this.y; i > top_escalera; i -= this.altoTile) {
+            this.ctx.drawImage(this.img, this.x, i, this.anchoTile, this.altoTile);
+        }
     }
 }
 

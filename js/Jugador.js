@@ -1,4 +1,5 @@
 import { settings } from "./main.js";
+import { checkColision } from "./functions.js";
 
 // ============================================================================
 export class Jugador {
@@ -31,8 +32,9 @@ export class Jugador {
         this.move = {
             acelX: 0.0,
             velX: 6,
-            velY: -4,
+            velY: 4,
             velYsalto: -20,
+            velYGrav: 0,
             flip: false,
             anima: 0
         }
@@ -41,7 +43,8 @@ export class Jugador {
         this.correcciones = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(this.rect.ancho / 3),
+            // obj2_hor: Math.floor(this.rect.ancho / 3),
+            obj2_hor: Math.floor(width / 3),
             obj2_ver: 0,
         }
 
@@ -112,15 +115,20 @@ export class Jugador {
         dx = dxdy[0];
         dy = dxdy[1];
 
-        //this.move.velY += settings.constante.GRAVEDAD;
-        //dy += this.move.velY;
+        // -----------------------------------------------
+        if (!this.ssheet.escalera[4]) {
+
+            this.move.velYGrav -= settings.constante.GRAVEDAD;
+            dy += this.move.velYGrav;
+        }
 
         dx = this.check_limitesHorizontales(dx);
+        dy = this.check_colisionPlataformas(dy);
 
         //this.rect.x += dx;
         //this.rect.y += dy;
 
-        return [-dx, -dy];
+        return [-dx, dy];
     }
 
     check_limitesHorizontales(dx) {
@@ -133,6 +141,25 @@ export class Jugador {
         if (scroll_de.x + dx < top && !this.move.flip) dx = scroll_de.x;
 
         return dx;
+    }
+
+    check_colisionPlataformas(dy) {
+
+        for (let plataf of settings.objeto.plataforma) {
+
+            if (checkColision(plataf, this, this.correcciones, 0)) {
+
+                //console.log('colision');
+
+                if (this.move.velYGrav < 0) {
+
+                    this.move.velYGrav = 0;
+                    dy = this.rect.y + this.rect.alto - plataf.rect.y; 
+                }
+            }
+        }
+
+        return dy;
     }
 
     leer_teclado(dxdy) {
