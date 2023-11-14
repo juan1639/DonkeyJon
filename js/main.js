@@ -10,7 +10,8 @@ import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
 import { 
-    eventos_touch,
+    eventos_touchStart,
+    eventos_touchEnd,
     eventos_click,
     eventos_keyDown,
     eventos_keyUp

@@ -31,7 +31,8 @@ export class Jugador {
         this.move = {
             acelX: 0.0,
             velX: 6,
-            velY: -20,
+            velY: -4,
+            velYsalto: -20,
             flip: false,
             anima: 0
         }
@@ -102,10 +103,14 @@ export class Jugador {
 
     actualiza() {
 
-        let dx = 0;
-        let dy = 0;
+        let dxdy = [0, 0];
+        let dx = dxdy[0];
+        let dy = dxdy[1];
 
-        dx = this.leer_teclado(dx);
+        // -----------------------------------------------
+        dxdy = this.leer_teclado(dxdy);
+        dx = dxdy[0];
+        dy = dxdy[1];
 
         //this.move.velY += settings.constante.GRAVEDAD;
         //dy += this.move.velY;
@@ -121,7 +126,7 @@ export class Jugador {
     check_limitesHorizontales(dx) {
 
         const scroll_iz = settings.objeto.scroll[0];
-        const scroll_de = settings.objeto.scroll[2];
+        const scroll_de = settings.objeto.scroll[3];
         const top = this.move.velX * 2;
 
         if (scroll_iz.x - dx > 0) dx = scroll_iz.x;
@@ -130,25 +135,42 @@ export class Jugador {
         return dx;
     }
 
-    leer_teclado(dx) {
+    leer_teclado(dxdy) {
 
-        if (settings.controles.tecla_iz) {
+        let dx = dxdy[0];
+        let dy = dxdy[1];
+
+        if (settings.controles.tecla_iz || settings.controles.touch_iz) {
             this.move.flip = true;
-            this.ssheet.quieto[4] = false;
+            this.reset_ssheetBooleanos();
             this.ssheet.andar[4] = true;
             dx = -(this.move.velX);
 
-        } else if (settings.controles.tecla_de) {
+        } else if (settings.controles.tecla_de || settings.controles.touch_de) {
             this.move.flip = false;
-            this.ssheet.quieto[4] = false;
+            this.reset_ssheetBooleanos();
             this.ssheet.andar[4] = true;
             dx = this.move.velX;
 
         } else {
-            this.ssheet.andar[4] = false;
+            this.reset_ssheetBooleanos();
             this.ssheet.quieto[4] = true;
         }
 
-        return dx;
+        if (settings.controles.tecla_up) {
+            this.reset_ssheetBooleanos();
+            this.ssheet.escalera[4] = true;
+            dy = this.move.velY;
+        }
+
+        return [dx, dy];
+    }
+
+    reset_ssheetBooleanos() {
+        this.ssheet.quieto[4] = false;
+        this.ssheet.andar[4] = false;
+        this.ssheet.agachado[4] = false;
+        this.ssheet.escalera[4] = false;
+        this.ssheet.saltar[4] = false;
     }
 }

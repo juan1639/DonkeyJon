@@ -31,7 +31,8 @@ export class Settings {
         this.ini_scrolls = [
             [-this.resolucion[0], 0, './img/fondo_cielo3.png'],
             [0, 0, './img/fondo_cielo1.png'],
-            [this.resolucion[0], 0, './img/fondo_cielo3.png']
+            [this.resolucion[0], 0, './img/fondo_cielo3.png'],
+            [this.resolucion[0] * 2, 0, './img/fondo_cielo1.png']
         ];
 
         this.escala = {
@@ -65,8 +66,10 @@ export class Settings {
         this.controles = {
             touch_iz: false,
             touch_de: false,
+            touch_up: false,
             tecla_iz: false,
-            tecla_de: false
+            tecla_de: false,
+            tecla_up: false
         };
 
         this.tecla = {
@@ -76,6 +79,15 @@ export class Settings {
             do: 'ArrowDown',
             enter: 'Enter',
         };
+
+        this.touch = {
+            iz: ['boton__le', 'flecha__le'],
+            de: ['boton__ri', 'flecha__ri'],
+            up: '',
+            do: '',
+            nextLevel: 'boton__NextLevel',
+            newGame: 'boton__newGame'
+        }
 
         this.estado = {
             preJuego: false,
@@ -92,23 +104,24 @@ export class Settings {
         this.array_plataformas = [
             [this.ini_suelo - this.gap * 5, -16, 20, false, true],
             [this.ini_suelo - this.gap * 5, 7, 21, true, true],
-            [this.ini_suelo - this.gap * 4, -13, 45, true, false],
+            [this.ini_suelo - this.gap * 5, 31, 7, true, true],
+            [this.ini_suelo - this.gap * 4, -7, 55, true, false],
             [this.ini_suelo - this.gap * 3, -16, 15, false, true],
             [this.ini_suelo - this.gap * 3, 2, 10, true, true],
-            [this.ini_suelo - this.gap * 2, -12, 40, true, true],
-            [this.ini_suelo - this.gap * 1, -14, 22, true, true],
-            [this.ini_suelo - this.gap * 1, 10, 8, true, true],
-            [this.ini_suelo - this.gap * 1, 21, 9, true, true],
-            [this.ini_suelo, -16, 48]
+            [this.ini_suelo - this.gap * 2, -5, 39, true, true],
+            [this.ini_suelo - this.gap * 1, -7, 15, true, true],
+            [this.ini_suelo - this.gap * 1, 11, 7, true, true],
+            [this.ini_suelo - this.gap * 1, 21, 17, true, true],
+            [this.ini_suelo, -16, 64]
         ];
 
         this.array_escaleras = [
-            [26, this.ini_suelo, this.gap],
-            [-9, this.ini_suelo - this.gap * 1, this.gap],
-            [19, this.ini_suelo - this.gap * 2, this.gap],
+            [31, this.ini_suelo, this.gap],
+            [-3, this.ini_suelo - this.gap * 1, this.gap],
+            [25, this.ini_suelo - this.gap * 2, this.gap],
             [8, this.ini_suelo - this.gap * 2, this.gap],
-            [-7, this.ini_suelo - this.gap * 3, this.gap],
-            [24, this.ini_suelo - this.gap * 4, this.gap]
+            [-5, this.ini_suelo - this.gap * 3, this.gap],
+            [34, this.ini_suelo - this.gap * 4, this.gap]
         ];
 
         this.imagenes = {
