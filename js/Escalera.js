@@ -3,7 +3,7 @@ import { settings } from "./main.js";
 // ============================================================================
 export class Escalera {
 
-    constructor(x, y, size) {
+    constructor(left, top, sizeEscalera) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
@@ -12,21 +12,26 @@ export class Escalera {
         this.img = settings.imagenes.escalera;
         this.img.src = './img/ladderWide_mid.png';
 
-        this.x = x * this.anchoTile;
-        this.y = y - this.altoTile;
-        this.size = size;
-        console.log(this.y, this.size, this.altoTile);
+        this.rect = {
+            x: left * this.anchoTile,
+            y: top - sizeEscalera,
+            ancho: this.anchoTile,
+            alto: sizeEscalera,
+            size: sizeEscalera
+        }
+
+        console.log(this.rect.y, this.rect.size, this.altoTile);
     }
 
     dibuja(dxdy) {
 
-        this.x += dxdy[0];
-        this.y += dxdy[1];
+        this.rect.x += dxdy[0];
+        this.rect.y += dxdy[1];
 
-        const top_escalera = this.y - this.size;
+        const bottom_escalera = this.rect.y + this.rect.size;
 
-        for (let i = this.y; i > top_escalera; i -= this.altoTile) {
-            this.ctx.drawImage(this.img, this.x, i, this.anchoTile, this.altoTile);
+        for (let i = this.rect.y; i < bottom_escalera; i += this.altoTile) {
+            this.ctx.drawImage(this.img, this.rect.x, i, this.anchoTile, this.altoTile);
         }
     }
 }

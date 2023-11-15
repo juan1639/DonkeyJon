@@ -15,6 +15,7 @@ export class Jugador {
             andar: [0, 110, 80, 110, false],
             agachado: [240, 0, 240, 0, false],
             escalera: [400, 0, 480, 0, false],
+            escaleraQuieto: [400, 0, 400, 0, false],
             saltar: [80, 0, 160, 0, false]
         }
 
@@ -39,13 +40,26 @@ export class Jugador {
             anima: 0
         }
 
+        this.saltando = false;
+        this.potencia_salto = 20;
+
+        // --------------------------------------------------------------------------
+        // Correcciones en las colisiones
         // (Poniendo los 4 atributos = 0 ... sería una colision estricta rectangular)
+        // --------------------------------------------------------------------------
         this.correcciones = {
             obj1_hor: 0,
             obj1_ver: 0,
             // obj2_hor: Math.floor(this.rect.ancho / 3),
             obj2_hor: Math.floor(width / 3),
-            obj2_ver: 0,
+            obj2_ver: 0
+        }
+
+        this.correcciones_escalera = {
+            obj1_hor: 0,
+            obj1_ver: 10,
+            obj2_hor: 0,
+            obj2_ver: 0
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -155,12 +169,29 @@ export class Jugador {
                 if (this.move.velYGrav < 0 && this.rect.y + corr < plataf.rect.y) {
 
                     this.move.velYGrav = 0;
-                    dy = this.rect.y + this.rect.alto - plataf.rect.y; 
+                    dy = this.rect.y + this.rect.alto - plataf.rect.y;
+
+                    if (this.saltando) this.saltando = false;
                 }
             }
         }
 
         return dy;
+    }
+
+    check_colisionEscaleras() {
+
+        for (let escalera of settings.objeto.escalera) {
+
+            if (checkColision(escalera, this, this.correcciones_escalera, 0)) {
+
+                console.log('colision Escalera');
+                const corr = Math.floor(this.rect.alto / 2);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     leer_teclado(dxdy) {
@@ -181,15 +212,25 @@ export class Jugador {
             dx = this.move.velX;
 
         } else {
+            
             this.reset_ssheetBooleanos();
             this.ssheet.quieto[4] = true;
         }
 
         if (settings.controles.tecla_up || settings.controles.touch_up) {
-            this.reset_ssheetBooleanos();
-            this.ssheet.escalera[4] = true;
-            dy = this.move.velY;
+        
+            if (this.check_colisionEscaleras()) {
 
+                this.reset_ssheetBooleanos();
+                this.ssheet.escalera[4] = true;
+                dy = this.move.velY;
+
+            } else if (!this.saltando) {
+
+                this.saltando = true;
+                this.move.velYGrav = this.potencia_salto;
+            }
+        
         } else if (settings.controles.tecla_do || settings.controles.touch_do) {
             this.reset_ssheetBooleanos();
             this.ssheet.agachado[4] = true;
@@ -204,6 +245,7 @@ export class Jugador {
         this.ssheet.andar[4] = false;
         this.ssheet.agachado[4] = false;
         this.ssheet.escalera[4] = false;
+        this.ssheet.escaleraQuieto[4] = false;
         this.ssheet.saltar[4] = false;
     }
 }
