@@ -71,9 +71,11 @@ export class Settings {
             touch_iz: false,
             touch_de: false,
             touch_up: false,
+            touch_do: false,
             tecla_iz: false,
             tecla_de: false,
-            tecla_up: false
+            tecla_up: false,
+            tecla_do: false
         };
 
         this.tecla = {
@@ -87,8 +89,8 @@ export class Settings {
         this.touch = {
             iz: ['boton__le', 'flecha__le'],
             de: ['boton__ri', 'flecha__ri'],
-            up: '',
-            do: '',
+            up: ['boton__up', 'flecha__up'],
+            do: ['boton__do', 'flecha__do'],
             nextLevel: 'boton__NextLevel',
             newGame: 'boton__newGame'
         }

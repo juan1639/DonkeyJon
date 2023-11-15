@@ -135,7 +135,7 @@ BOTONES < CONTROLES & NUEVA PARTIDA >
 }
 
 .controles {
-	height: 90px;
+	height: 49%;
 	color: black;
 	border-radius: 6px;
 	background: linear-gradient(#CCC, #777);
@@ -155,12 +155,12 @@ BOTONES < CONTROLES & NUEVA PARTIDA >
 }
 
 #boton__do {
-	width: 100%;
+	width: 19%;
 	border-radius: 0 0 90% 90%;
 }
 
 #boton__le, #boton__ri {
-	width: 49%;
+	width: 40%;
 }
 
 .flecha__direccion {
@@ -233,15 +233,11 @@ RESPONSIVE
 
 	.botonesControl {
 		width: 100%;
-		height: 180px;
+		height: 140px;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-start;
 		justify-content: space-between;
-	}
-
-	#boton__up, #boton__do{
-		display: none;
 	}
 }
 

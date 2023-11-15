@@ -150,8 +150,9 @@ export class Jugador {
             if (checkColision(plataf, this, this.correcciones, 0)) {
 
                 //console.log('colision');
+                const corr = Math.floor(this.rect.alto / 2);
 
-                if (this.move.velYGrav < 0) {
+                if (this.move.velYGrav < 0 && this.rect.y + corr < plataf.rect.y) {
 
                     this.move.velYGrav = 0;
                     dy = this.rect.y + this.rect.alto - plataf.rect.y; 
@@ -184,10 +185,15 @@ export class Jugador {
             this.ssheet.quieto[4] = true;
         }
 
-        if (settings.controles.tecla_up) {
+        if (settings.controles.tecla_up || settings.controles.touch_up) {
             this.reset_ssheetBooleanos();
             this.ssheet.escalera[4] = true;
             dy = this.move.velY;
+
+        } else if (settings.controles.tecla_do || settings.controles.touch_do) {
+            this.reset_ssheetBooleanos();
+            this.ssheet.agachado[4] = true;
+            //dy = 0;
         }
 
         return [dx, dy];

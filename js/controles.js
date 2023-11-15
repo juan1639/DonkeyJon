@@ -1,8 +1,5 @@
 import { settings } from "./main.js";
 
-let eventos_touch;
-let eventos_click;
-
 // ----------------------------------------------------------------------
 //  EVENTOS Keydown / Keyup
 // 
@@ -38,12 +35,14 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
         } else if (pulsacion === settings.tecla.de) {
             //console.log('dcha...');
             settings.controles.tecla_de = true;
-        }
 
-        if (pulsacion === settings.tecla.up) {
-
+        } else if (pulsacion === settings.tecla.up) {
             //console.log('arriba/salto');
             settings.controles.tecla_up = true;
+
+        } else if (pulsacion === settings.tecla.do) {
+            //console.log('agachar');
+            settings.controles.tecla_do = true;
         }
     }
 });
@@ -60,12 +59,14 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
         } else if (event.key === settings.tecla.de) {
             //console.log('enddcha...');
             settings.controles.tecla_de = false;
-        }
 
-        if (event.key === settings.tecla.up) {
-
-            //console.log('arriba/salto');
+        } else if (event.key === settings.tecla.up) {
+            //console.log('endArriba/salto');
             settings.controles.tecla_up = false;
+
+        } else if (event.key === settings.tecla.do) {
+            //console.log('endAgachar');
+            settings.controles.tecla_do = false;
         }
     }
 });
@@ -105,8 +106,13 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             // console.log('dcha...');
             settings.controles.touch_de = true;
             
-        } else {
-            //console.log('...');
+        } else if (touch === settings.touch.up[0] || touch === settings.touch.up[1]) {
+            //console.log('arriba/saltar');
+            settings.controles.touch_up = true;
+
+        } else if (touch === settings.touch.do[0] || touch === settings.touch.do[1]) {
+            //console.log('arriba/saltar');
+            settings.controles.touch_do = true;
         }
     }
     
@@ -137,8 +143,13 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
             // console.log('enddcha...');
             settings.controles.touch_de = false;
 
-        } else {
-            //console.log('... ..');
+        } else if (touchEnd === settings.touch.up[0] || touchEnd ===  settings.touch.up[1]) {
+            //console.log('endUp');
+            settings.controles.touch_up = false;
+
+        } else if (touchEnd === settings.touch.do[0] || touchEnd ===  settings.touch.do[1]) {
+            //console.log('endUp');
+            settings.controles.touch_do = false;
         }
     }
 });
@@ -146,7 +157,6 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 export {
     eventos_touchStart,
     eventos_touchEnd,
-    eventos_click,
     eventos_keyDown,
     eventos_keyUp
 };
