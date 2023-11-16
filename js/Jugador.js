@@ -58,7 +58,7 @@ export class Jugador {
         this.correcciones_escalera = {
             obj1_hor: 0,
             obj1_ver: 10,
-            obj2_hor: 0,
+            obj2_hor: Math.floor(width/ 2),
             obj2_ver: 0
         }
 
@@ -81,10 +81,10 @@ export class Jugador {
         }
 
         const clipXY = this.selecc_ssheetAccion();
-        this.clipX = clipXY[0];
-        this.clipY = clipXY[1];
+        this.rect.clipX = clipXY[0];
+        this.rect.clipY = clipXY[1];
 
-        this.ctx.drawImage(this.img, this.clipX, this.clipY, this.rect.clipAncho, this.rect.clipAlto, 
+        this.ctx.drawImage(this.img, this.rect.clipX, this.rect.clipY, this.rect.clipAncho, this.rect.clipAlto, 
             this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
 
         this.ctx.restore();
@@ -169,6 +169,7 @@ export class Jugador {
                 if (this.move.velYGrav < 0 && this.rect.y + corr < plataf.rect.y) {
 
                     this.move.velYGrav = 0;
+                    //dy = 0;
                     dy = this.rect.y + this.rect.alto - plataf.rect.y;
 
                     if (this.saltando) this.saltando = false;
