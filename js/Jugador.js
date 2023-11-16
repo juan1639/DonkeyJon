@@ -41,6 +41,7 @@ export class Jugador {
         }
 
         this.saltando = false;
+        this.direcc_salto = this.move.velX;
         this.potencia_salto = 20;
 
         // --------------------------------------------------------------------------
@@ -186,7 +187,7 @@ export class Jugador {
 
             if (checkColision(escalera, this, this.correcciones_escalera, 0)) {
 
-                console.log('colision Escalera');
+                //console.log('colision Escalera');
                 const corr = Math.floor(this.rect.alto / 2);
                 return true;
             }
@@ -199,6 +200,14 @@ export class Jugador {
 
         let dx = dxdy[0];
         let dy = dxdy[1];
+
+        if (this.saltando) {
+            this.reset_ssheetBooleanos();
+            this.ssheet.andar[4] = true;
+
+            return [this.direcc_salto, dy];
+        } 
+            
 
         if (settings.controles.tecla_iz || settings.controles.touch_iz) {
             this.move.flip = true;
@@ -230,6 +239,7 @@ export class Jugador {
 
                 this.saltando = true;
                 this.move.velYGrav = this.potencia_salto;
+                this.direcc_salto = this.move.flip === true ? -6 : 6; 
             }
         
         } else if (settings.controles.tecla_do || settings.controles.touch_do) {

@@ -30,6 +30,7 @@ let dxdy = [0, 0];
 
 // ===========================================================================
 //  Funcion Inicializadora
+// 
 // ---------------------------------------------------------------------------
 window.onload = () => {
 
@@ -85,7 +86,10 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
-    settings.objeto.bichos.push(new Bichos());
+    const posIniX = 8 * settings.constante.bsx;
+    const posIniY = settings.ini_suelo - settings.gap * 6;
+    
+    settings.objeto.bichos.push(new Bichos(posIniX, posIniY));
 
     // ---------------------------------------------------------------
     setInterval(() => {

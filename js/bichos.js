@@ -4,11 +4,14 @@ import { checkColision } from "./functions.js";
 // ============================================================================
 export class Bichos {
 
-    constructor() {
+    constructor(posIniX, posIniY) {
 
         this.ctx = settings.ctx;
         this.img = new Image();
         this.img.src = './img/Ssheet_platD.png';
+
+        this.pos_inicioX = posIniX;
+        this.pos_inicioY = posIniY;
 
         this.ancho = settings.constante.bsx * 2;
         this.alto = settings.constante.bsy;
@@ -18,9 +21,8 @@ export class Bichos {
         }
 
         this.rect = {
-            x: 4 * settings.constante.bsx,
-            // y: settings.array_plataformas[0][0] - this.alto,
-            y: settings.resolucion[1] - settings.constante.bsy * 8,
+            x: posIniX,
+            y: posIniY,
             ancho: this.ancho,
             alto: this.alto,
             clipX: 270,
@@ -53,12 +55,12 @@ export class Bichos {
         const gap = settings.gap;
 
         this.array_enque_nivelPlataforma = [
-            nivel - gap * 5 - this.alto,
-            nivel - gap * 4 - this.alto,
-            nivel - gap * 3 - this.alto,
-            nivel - gap * 2 - this.alto,
-            nivel - gap * 1 - this.alto,
-            nivel - this.alto
+            [nivel - gap * 5 - this.alto, false],
+            [nivel - gap * 4 - this.alto, false],
+            [nivel - gap * 3 - this.alto, false],
+            [nivel - gap * 2 - this.alto, false],
+            [nivel - gap * 1 - this.alto, false],
+            [nivel - this.alto, false]
         ];
 
         this.intervalo_anima = setInterval(() => {
@@ -116,11 +118,14 @@ export class Bichos {
         dy += this.move.velY;
 
         dy = this.check_colisionPlataformas(dy);
-
         this.rect.y += dy;
-        
-        //if (this.rect.y === this.array_enque_nivelPlataforma[5]) console.log('ultima');
-        //if (this.rect.y === this.array_enque_nivelPlataforma[4]) console.log('anteultima');
+
+        this.check_cambioDireccionRandom();
+
+        //if (this.rect.y === this.array_enque_nivelPlataforma[5][0]) console.log('ultima');
+        //if (this.rect.y === this.array_enque_nivelPlataforma[4][0]) console.log('anteultima');
+
+        this.check_outOfLimits();
     }
 
     check_colisionPlataformas(dy) {
@@ -131,11 +136,47 @@ export class Bichos {
 
                 //console.log('colision');
                 this.move.velY = 0;
-                //dy = this.rect.y + this.rect.alto - plataf.rect.y;
-                dy = 0;
+                dy = plataf.rect.y - (this.rect.y + this.rect.alto);
+                //dy = 0;
             }
         }
 
         return dy;
+    }
+
+    check_outOfLimits() {
+
+        const limit_do = settings.resolucion[1] * 2;
+
+        if (this.rect.y > limit_do) {
+
+            this.rect.x = this.pos_inicioX;
+            this.rect.y = this.pos_inicioY;
+            this.move.velX = 4;
+            this.move.velY = 0;
+
+            for (let bandera of this.array_enque_nivelPlataforma) {
+                bandera[1] = false;
+            }
+        }
+    }
+
+    check_cambioDireccionRandom() {
+
+        const nro_plataformas = this.array_enque_nivelPlataforma.length;
+
+        for (let i = 0; i < nro_plataformas; i ++) {
+
+            const plataforma = this.array_enque_nivelPlataforma[i][0];
+            const bandera = this.array_enque_nivelPlataforma[i][1];
+
+            if (this.rect.y === plataforma && !bandera) {
+
+                this.array_enque_nivelPlataforma[i][1] = true;
+                if (Math.floor(Math.random() * 9) < 5) this.move.velX *= -1;
+                
+                return;
+            }
+        }
     }
 }

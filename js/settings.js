@@ -109,11 +109,12 @@ export class Settings {
 
         this.array_plataformas = [
             [this.ini_suelo - this.gap * 5, -16, 20, false, true],
-            [this.ini_suelo - this.gap * 5, 7, 21, true, true],
-            [this.ini_suelo - this.gap * 5, 31, 7, true, true],
-            [this.ini_suelo - this.gap * 4, -7, 55, true, false],
+            [this.ini_suelo - this.gap * 5, 8, 20, true, true],
+            [this.ini_suelo - this.gap * 5, 32, 8, true, true],
+            [this.ini_suelo - this.gap * 4, -7, 25, true, true],
+            [this.ini_suelo - this.gap * 4, 22, 26, true, false],
             [this.ini_suelo - this.gap * 3, -16, 15, false, true],
-            [this.ini_suelo - this.gap * 3, 2, 10, true, true],
+            [this.ini_suelo - this.gap * 3, 3, 10, true, true],
             [this.ini_suelo - this.gap * 2, -5, 39, true, true],
             [this.ini_suelo - this.gap * 1, -7, 15, true, true],
             [this.ini_suelo - this.gap * 1, 11, 7, true, true],
@@ -134,8 +135,6 @@ export class Settings {
             ssheet_jugador: new Image(),
             fondo_cielo1: new Image(),
             tile_medio: new Image(),
-            tile_izS: new Image(),
-            tile_deS: new Image(),
             tile_madera: new Image('./img/tile6.png'),
             tile_metal: new Image('./img/blockGrey.png'),
             escalera: new Image()
