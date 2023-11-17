@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 import { Settings } from './settings.js';
 import { Scroll } from './scroll.js';
-import { Plataforma } from './plataforma.js';
+import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Bichos } from './bichos.js';
 import { Jugador } from './Jugador.js';
@@ -71,8 +71,14 @@ window.onload = () => {
         const p_ancho = settings.array_plataformas[i][2];
         const p_bordeIz = settings.array_plataformas[i][3];
         const p_bordeDe = settings.array_plataformas[i][4];
+        const movil = settings.array_plataformas[i][5];
 
-        settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png', p_bordeIz, p_bordeDe));
+        if (movil === 0) {
+            settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png', p_bordeIz, p_bordeDe));
+            
+        } else {
+            settings.objeto.plataforma.push(new PlataformaMovil(p_y, p_x, p_ancho, './img/tile6.png', movil, movil));
+        }
     }
     
     // ---------------------------------------------------------------

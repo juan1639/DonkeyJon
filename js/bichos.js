@@ -37,6 +37,7 @@ export class Bichos {
         const nro_rnd = Math.floor(Math.random()* velocidades[this.id].length);
 
         this.move = {
+            activo: true,
             acelX: 0.0,
             velX: velocidades[this.id][nro_rnd],
             velY: 0,
@@ -130,6 +131,9 @@ export class Bichos {
         this.rect.x += dxdy[0];
         this.rect.y += dxdy[1];
 
+        if (!this.move.activo) return;
+
+        // -------------------------------------------
         this.rect.x += this.move.velX;
         this.recorrido ++;
 
@@ -138,9 +142,6 @@ export class Bichos {
 
         dy = this.check_colisionPlataformas(dy);
         this.rect.y += dy;
-
-        //if (this.rect.y === this.array_enque_nivelPlataforma[5][0]) console.log('ultima');
-        //if (this.rect.y === this.array_enque_nivelPlataforma[4][0]) console.log('anteultima');
 
         this.check_cambioDireccion();
         this.check_outOfLimits();
@@ -179,6 +180,11 @@ export class Bichos {
         if (this.rect.y > limit_do) {
             this.rect.x = Math.floor(Math.random()* settings.resolucion[0]);
             this.rect.y = -settings.resolucion[1];
+            this.move.activo = false;
+
+            setTimeout(() => {
+                this.move.activo = true;
+            }, 2500);
         }
     }
 }

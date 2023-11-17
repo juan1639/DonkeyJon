@@ -22,6 +22,7 @@ export class Settings {
 
         this.ini_suelo = this.resolucion[1] - this.constante.bsy * 2;
         this.gap = this.constante.bsy * 6;
+        this.gapMini = this.constante.bsy * 2;
 
         this.ini_jugador = {
             x: Math.floor(this.resolucion[0] / 2),
@@ -70,7 +71,7 @@ export class Settings {
         this.nro_enemigos = {
             mariq: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
             carac: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
-            birds: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7]
+            pajaros: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7]
         };
 
         this.controles = {
@@ -113,19 +114,35 @@ export class Settings {
             blanco_nube: 'rgb(233, 233, 233)'
         };
 
+        // -------------------------------------------------------------------
+        // [ y, x, longSize, bordeIz, bordeDe, movil/fija, nro_alturas nivel ]
+        // -------------------------------------------------------------------
         this.array_plataformas = [
-            [this.ini_suelo - this.gap * 5, -16, 20, false, true],
-            [this.ini_suelo - this.gap * 5, 8, 20, true, true],
-            [this.ini_suelo - this.gap * 5, 32, 8, true, true],
-            [this.ini_suelo - this.gap * 4, -7, 25, true, true],
-            [this.ini_suelo - this.gap * 4, 22, 26, true, false],
-            [this.ini_suelo - this.gap * 3, -16, 15, false, true],
-            [this.ini_suelo - this.gap * 3, 3, 10, true, true],
-            [this.ini_suelo - this.gap * 2, -4, 39, true, true],
-            [this.ini_suelo - this.gap * 1, -6, 14, true, true],
-            [this.ini_suelo - this.gap * 1, 11, 7, true, true],
-            [this.ini_suelo - this.gap * 1, 21, 17, true, true],
-            [this.ini_suelo, -16, 64]
+
+            [this.ini_suelo - this.gap * 6, -16, 22, false, true, 0, 6],
+            [this.ini_suelo - this.gap * 6, 6, 3, false, false, 1, 6],
+            [this.ini_suelo - this.gap * 6, 23, 25, true, false, 0, 6],
+
+            [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 30, 3, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 5 - this.gapMini, 35, 2, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 5, -16, 20, false, true, 0, 6],
+            [this.ini_suelo - this.gap * 5, 8, 20, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 5, 32, 8, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 4, -6, 24, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 4, 22, 26, true, false, 0, 6],
+
+            [this.ini_suelo - this.gap * 3, -16, 15, false, true, 0, 6],
+            [this.ini_suelo - this.gap * 3, 3, 10, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 2, -4, 39, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 1, -6, 14, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 1, 11, 7, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 1, 21, 17, true, true, 0, 6],
+
+            [this.ini_suelo, -16, 64, false, false, 0, 6]
         ];
 
         this.array_escaleras = [
@@ -141,7 +158,7 @@ export class Settings {
             ssheet_jugador: new Image(),
             fondo_cielo1: new Image(),
             tile_medio: new Image(),
-            tile_madera: new Image('./img/tile6.png'),
+            tile_madera: new Image(),
             tile_metal: new Image('./img/blockGrey.png'),
             escalera: new Image()
         };
@@ -155,6 +172,16 @@ export class Settings {
             eatingGhost: new Audio('./audio/pacmaneatinghost.ogg'),
             intermision: new Audio('./audio/pacmanintermision.ogg')
         };
+
+        this.volumen = {
+            gameOver: 0.8,
+            jump: 0.3,
+            marioTuberias: 0.9,
+            pacmanDies: 0.6,
+            eatingCherry: 0.9,
+            eatingGhost: 0.8,
+            intermision: 0.6
+        }
     }
 }
 

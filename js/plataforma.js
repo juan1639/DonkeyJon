@@ -52,3 +52,42 @@ export class Plataforma {
         }
     }
 }
+
+// ============================================================================
+export class PlataformaMovil {
+
+    constructor(top, left, width, ruta, dx, dy) {
+
+        this.anchoTile = settings.constante.bsx;
+        this.altoTile = settings.constante.bsy;
+
+        this.ctx = settings.ctx;
+        this.img = settings.imagenes.tile_madera;
+        this.img.src = ruta;
+
+        this.rect = {
+            x: left * settings.constante.bsx,
+            y: top,
+            ancho: width * settings.constante.bsx,
+            anchoBucle: width,
+            alto: settings.constante.bsy
+        }
+
+        this.move = {
+            activo: true,
+            velX: dx,
+            velY: dy
+        }
+    }
+
+    dibuja(dxdy) {
+
+        this.rect.x += dxdy[0];
+        this.rect.y += dxdy[1];
+
+        for (let i = 0; i < this.rect.anchoBucle; i ++) {
+
+            this.ctx.drawImage(this.img, this.rect.x + i * this.anchoTile, this.rect.y, this.anchoTile, this.altoTile);
+        }
+    }
+}

@@ -66,6 +66,8 @@ export class Jugador {
         this.intervalo_anima = setInterval(() => {
             this.move.anima = this.move.anima === 0 ? this.move.anima = 2 : this.move.anima = 0;
         }, 99);
+        
+        settings.sonidos.jump.volume = settings.volumen.jump;
     }
 
     dibuja() {
@@ -239,7 +241,8 @@ export class Jugador {
 
                 this.saltando = true;
                 this.move.velYGrav = this.potencia_salto;
-                this.direcc_salto = this.move.flip === true ? -6 : 6; 
+                this.direcc_salto = this.move.flip === true ? -6 : 6;
+                settings.sonidos.jump.play();
             }
         
         } else if (settings.controles.tecla_do || settings.controles.touch_do) {
