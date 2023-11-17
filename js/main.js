@@ -86,15 +86,28 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
-    const posIniX = 8 * settings.constante.bsx;
-    const posIniY = settings.ini_suelo - settings.gap * 6;
+    const nivel = settings.marcadores.nivel - 1;
+    const rangoX = settings.resolucion[0] * 3;
     
-    settings.objeto.bichos.push(new Bichos(posIniX, posIniY));
+    for (let i = 0; i < settings.nro_enemigos.mariq[nivel]; i ++) {
+
+        const posIniX = (Math.floor(Math.random()* rangoX) - (rangoX / 3));
+        const posIniY = settings.ini_suelo - settings.gap * 5 - settings.constante.bsy;
+        const id = Math.floor(Math.random()* 2);
+
+        settings.objeto.bichos.push(new Bichos(id, posIniX, posIniY));
+    }
 
     // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
     }, 1000 / settings.constante.FPS);
+
+    /* setInterval(() => {
+        console.log(settings.objeto.bichos[0].rect.x, settings.objeto.bichos[0].rect.y);
+        console.log(settings.objeto.bichos[1].rect.x, settings.objeto.bichos[1].rect.y);
+        console.log(settings.objeto.bichos[2].rect.x, settings.objeto.bichos[2].rect.y);
+    }, 1000); */
 }
 
 // ===================================================================
@@ -114,7 +127,9 @@ function bucle_principal() {
         escalera.dibuja(dxdy);
     }
 
-    settings.objeto.bichos[0].dibuja(dxdy);
+    for (let bicho of settings.objeto.bichos) {
+        bicho.dibuja(dxdy);
+    }
 
     dxdy = settings.objeto.jugador.dibuja();
 }

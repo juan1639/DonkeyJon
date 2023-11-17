@@ -4,20 +4,30 @@ import { checkColision } from "./functions.js";
 // ============================================================================
 export class Bichos {
 
-    constructor(posIniX, posIniY) {
+    constructor(id, posIniX, posIniY) {
 
         this.ctx = settings.ctx;
         this.img = new Image();
         this.img.src = './img/Ssheet_platD.png';
 
-        this.pos_inicioX = posIniX;
-        this.pos_inicioY = posIniY;
+        this.id = id;
+        this.max_recorrido = Math.floor(Math.random()* settings.resolucion[0]) + settings.resolucion[0];
+        this.recorrido = 0;
 
         this.ancho = settings.constante.bsx * 2;
         this.alto = settings.constante.bsy;
 
-        this.ssheet = {
-            andando: [270, 320, 270, 580, true],
+        if (this.id === 0) {
+
+            this.ssheet = {
+                andando: [270, 320, 270, 580, true],
+            }
+
+        } else if (this.id === 1) {
+
+            this.ssheet = {
+                andando: [5, 830, 5, 960, true],
+            }
         }
 
         this.rect = {
@@ -31,13 +41,18 @@ export class Bichos {
             clipAlto:72
         }
 
+        const nro_rnd = Math.floor(Math.random()* 3);
+        const velocidades = [3, 4, 5];
+
         this.move = {
             acelX: 0.0,
-            velX: 4,
+            velX: velocidades[nro_rnd],
             velY: 0,
             flip: true,
             anima: 0
         }
+
+        if (this.id === 1) this.move.velX = Math.floor(Math.random()* 2) + 1;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -113,6 +128,7 @@ export class Bichos {
         this.rect.y += dxdy[1];
 
         this.rect.x += this.move.velX;
+        this.recorrido ++;
 
         this.move.velY += settings.constante.GRAVEDAD;
         dy += this.move.velY;
@@ -120,11 +136,10 @@ export class Bichos {
         dy = this.check_colisionPlataformas(dy);
         this.rect.y += dy;
 
-        this.check_cambioDireccionRandom();
-
         //if (this.rect.y === this.array_enque_nivelPlataforma[5][0]) console.log('ultima');
         //if (this.rect.y === this.array_enque_nivelPlataforma[4][0]) console.log('anteultima');
 
+        this.check_cambioDireccion();
         this.check_outOfLimits();
     }
 
@@ -144,39 +159,23 @@ export class Bichos {
         return dy;
     }
 
-    check_outOfLimits() {
+    check_cambioDireccion() {
 
-        const limit_do = settings.resolucion[1] * 2;
+        if (this.recorrido > this.max_recorrido) {
 
-        if (this.rect.y > limit_do) {
-
-            this.rect.x = this.pos_inicioX;
-            this.rect.y = this.pos_inicioY;
-            this.move.velX = 4;
-            this.move.velY = 0;
-
-            for (let bandera of this.array_enque_nivelPlataforma) {
-                bandera[1] = false;
-            }
+            this.recorrido = 0;
+            this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
+            this.move.velX *= -1;
         }
     }
 
-    check_cambioDireccionRandom() {
+    check_outOfLimits() {
 
-        const nro_plataformas = this.array_enque_nivelPlataforma.length;
+        const limit_do = settings.resolucion[1] + settings.constante.bsx * 5;
 
-        for (let i = 0; i < nro_plataformas; i ++) {
-
-            const plataforma = this.array_enque_nivelPlataforma[i][0];
-            const bandera = this.array_enque_nivelPlataforma[i][1];
-
-            if (this.rect.y === plataforma && !bandera) {
-
-                this.array_enque_nivelPlataforma[i][1] = true;
-                if (Math.floor(Math.random() * 9) < 5) this.move.velX *= -1;
-                
-                return;
-            }
+        if (this.rect.y > limit_do) {
+            this.rect.x = settings.constante.bsx * 8;
+            this.rect.y = -settings.resolucion[1];
         }
     }
 }

@@ -67,6 +67,12 @@ export class Settings {
             botonNextLevel: document.getElementById('boton__NextLevel')
         };
 
+        this.nro_enemigos = {
+            mariq: [7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12],
+            carac: [7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12],
+            birds: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7]
+        };
+
         this.controles = {
             touch_iz: false,
             touch_de: false,
@@ -115,7 +121,7 @@ export class Settings {
             [this.ini_suelo - this.gap * 4, 22, 26, true, false],
             [this.ini_suelo - this.gap * 3, -16, 15, false, true],
             [this.ini_suelo - this.gap * 3, 3, 10, true, true],
-            [this.ini_suelo - this.gap * 2, -5, 39, true, true],
+            [this.ini_suelo - this.gap * 2, -4, 39, true, true],
             [this.ini_suelo - this.gap * 1, -7, 15, true, true],
             [this.ini_suelo - this.gap * 1, 11, 7, true, true],
             [this.ini_suelo - this.gap * 1, 21, 17, true, true],
@@ -124,7 +130,7 @@ export class Settings {
 
         this.array_escaleras = [
             [31, this.ini_suelo, this.gap],
-            [-3, this.ini_suelo - this.gap * 1, this.gap],
+            [-1, this.ini_suelo - this.gap * 1, this.gap],
             [25, this.ini_suelo - this.gap * 2, this.gap * 2],
             [8, this.ini_suelo - this.gap * 2, this.gap],
             [-5, this.ini_suelo - this.gap * 3, this.gap],
