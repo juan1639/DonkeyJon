@@ -17,18 +17,7 @@ export class Bichos {
         this.ancho = settings.constante.bsx * 2;
         this.alto = settings.constante.bsy;
 
-        if (this.id === 0) {
-
-            this.ssheet = {
-                andando: [270, 320, 270, 580, true],
-            }
-
-        } else if (this.id === 1) {
-
-            this.ssheet = {
-                andando: [5, 830, 5, 960, true],
-            }
-        }
+        this.elegir_ssheetId();
 
         this.rect = {
             x: posIniX,
@@ -41,18 +30,19 @@ export class Bichos {
             clipAlto:72
         }
 
-        const nro_rnd = Math.floor(Math.random()* 3);
-        const velocidades = [3, 4, 5];
+        // ---------------------------------------------------------------------
+        // Id --> 0 Mariq, 1 Carac, 
+        // ---------------------------------------------------------------------
+        const velocidades = [[3, 4], [1, 2]];
+        const nro_rnd = Math.floor(Math.random()* velocidades[this.id].length);
 
         this.move = {
             acelX: 0.0,
-            velX: velocidades[nro_rnd],
+            velX: velocidades[this.id][nro_rnd],
             velY: 0,
             flip: true,
             anima: 0
         }
-
-        if (this.id === 1) this.move.velX = Math.floor(Math.random()* 2) + 1;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -61,7 +51,6 @@ export class Bichos {
         this.correcciones = {
             obj1_hor: 0,
             obj1_ver: 0,
-            // obj2_hor: Math.floor(this.rect.ancho / 3),
             obj2_hor: Math.floor(this.ancho / 2),
             obj2_ver: 0
         }
@@ -82,7 +71,7 @@ export class Bichos {
             this.move.anima = this.move.anima === 0 ? this.move.anima = 2 : this.move.anima = 0;
         }, 99);
 
-        console.log(this.rect.x, this.rect.y);
+        console.log('enemigo:', this.rect.x, this.rect.y);
     }
 
     dibuja(dxdy) {
@@ -118,6 +107,20 @@ export class Bichos {
         }
 
         return [0, 0];
+    }
+
+    elegir_ssheetId() {
+
+        if (this.id === 0) {
+            this.ssheet = {
+                andando: [270, 320, 270, 580, true],
+            }
+
+        } else if (this.id === 1) {
+            this.ssheet = {
+                andando: [5, 830, 5, 960, true],
+            }
+        }
     }
 
     actualiza(dxdy) {
@@ -174,7 +177,7 @@ export class Bichos {
         const limit_do = settings.resolucion[1] + settings.constante.bsx * 5;
 
         if (this.rect.y > limit_do) {
-            this.rect.x = settings.constante.bsx * 8;
+            this.rect.x = Math.floor(Math.random()* settings.resolucion[0]);
             this.rect.y = -settings.resolucion[1];
         }
     }

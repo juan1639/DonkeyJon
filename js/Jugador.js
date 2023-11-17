@@ -42,7 +42,7 @@ export class Jugador {
 
         this.saltando = false;
         this.direcc_salto = this.move.velX;
-        this.potencia_salto = 20;
+        this.potencia_salto = 16;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones

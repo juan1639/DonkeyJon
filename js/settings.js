@@ -15,18 +15,18 @@ export class Settings {
             alto_jugador: 150
         };
 
-        this.ini_jugador = {
-            x: Math.floor(this.constante.nro_columnas / 2),
-            y: this.constante.nro_filas - 4
-        };
-
         this.resolucion = [
             this.constante.bsx * this.constante.nro_columnas, 
             this.constante.bsy * this.constante.nro_filas
         ];
 
-        this.ini_suelo = this.resolucion[1] - this.constante.bsy;
+        this.ini_suelo = this.resolucion[1] - this.constante.bsy * 2;
         this.gap = this.constante.bsy * 6;
+
+        this.ini_jugador = {
+            x: Math.floor(this.resolucion[0] / 2),
+            y: this.ini_suelo - this.constante.alto_jugador
+        };
 
         this.ini_scrolls = [
             [-this.resolucion[0], 0, './img/fondo_cielo3.png'],
@@ -68,8 +68,8 @@ export class Settings {
         };
 
         this.nro_enemigos = {
-            mariq: [7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12],
-            carac: [7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12],
+            mariq: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
+            carac: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
             birds: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7]
         };
 
@@ -122,7 +122,7 @@ export class Settings {
             [this.ini_suelo - this.gap * 3, -16, 15, false, true],
             [this.ini_suelo - this.gap * 3, 3, 10, true, true],
             [this.ini_suelo - this.gap * 2, -4, 39, true, true],
-            [this.ini_suelo - this.gap * 1, -7, 15, true, true],
+            [this.ini_suelo - this.gap * 1, -6, 14, true, true],
             [this.ini_suelo - this.gap * 1, 11, 7, true, true],
             [this.ini_suelo - this.gap * 1, 21, 17, true, true],
             [this.ini_suelo, -16, 64]

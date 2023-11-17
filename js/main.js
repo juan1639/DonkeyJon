@@ -55,8 +55,8 @@ window.onload = () => {
     // ---------------------------------------------------------------
     const ancho = settings.constante.ancho_jugador;
     const alto = settings.constante.alto_jugador;
-    const xIni = settings.ini_jugador.x * settings.constante.bsx - Math.floor(ancho / 2);
-    const yIni = settings.ini_jugador.y * settings.constante.bsy;
+    const xIni = settings.ini_jugador.x;
+    const yIni = settings.ini_jugador.y;
     console.log('Jugador coord:', xIni, yIni, ancho, alto, resX, resY);
 
     settings.objeto.jugador = new Jugador(xIni, yIni, ancho, alto);
@@ -102,12 +102,6 @@ window.onload = () => {
     setInterval(() => {
         bucle_principal();
     }, 1000 / settings.constante.FPS);
-
-    /* setInterval(() => {
-        console.log(settings.objeto.bichos[0].rect.x, settings.objeto.bichos[0].rect.y);
-        console.log(settings.objeto.bichos[1].rect.x, settings.objeto.bichos[1].rect.y);
-        console.log(settings.objeto.bichos[2].rect.x, settings.objeto.bichos[2].rect.y);
-    }, 1000); */
 }
 
 // ===================================================================
