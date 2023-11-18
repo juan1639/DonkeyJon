@@ -62,6 +62,9 @@ export class Decorativos {
 
         } else if (this.id.slice(0, 12) === './img/flagYe') {
             return [this.anchoTile * 2, this.altoTile * 3];
+
+        } else if (this.id.slice(0, 12) === './img/lockYe') {
+            return [this.anchoTile * 2, this.altoTile * 2];
         }
 
         return [this.anchoTile * 2, this.altoTile * 4];
@@ -84,6 +87,15 @@ export class Decorativos {
                 return './img/switchRed_right.png';
             } else {
                 return './img/switchRed_mid.png';
+            }
+        }
+
+        if (this.id.slice(0, 12) === './img/lockYe') {
+            
+            if (settings.objeto.llave.accion_realizada) {
+                return './img/signExit.png';
+            } else {
+                return './img/lockYellow.png';
             }
         }
 

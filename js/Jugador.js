@@ -152,6 +152,7 @@ export class Jugador {
         dx = this.check_limitesHorizontales(dx);
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
+        this.check_colisionLlave();
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -215,7 +216,7 @@ export class Jugador {
 
             if (checkColision(item, this, this.correcciones_items, 0)) {
 
-                if (!item.accion_realizada && this.ssheet.agachado[4]) {
+                if (!item.accion_realizada && this.ssheet.agachado[4] && item.id.slice(0, 15) === './img/switchRed') {
                     item.accion_realizada = true;
                     this.accion_realizada = true;
                     settings.sonidos.eatingGhost.play();
@@ -225,6 +226,22 @@ export class Jugador {
             }
         }
 
+        return false;
+    }
+
+    check_colisionLlave() {
+
+        const llave = settings.objeto.llave;
+
+        if (checkColision(llave, this, this.correcciones_escalera, 0)) {
+
+            if (!llave.accion_realizada && this.ssheet.agachado[4]) {
+                llave.accion_realizada = true;
+                settings.sonidos.eatingGhost.play();
+                return true;
+            }
+        }
+        
         return false;
     }
 

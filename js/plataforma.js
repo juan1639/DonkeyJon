@@ -113,7 +113,7 @@ export class PlataformaMovil {
         this.rect.x += this.move.velX;
 
         if (this.check_colisionPlataformas()) {
-            this.rect.x += -this.move.velX;
+            this.rect.x -= this.move.velX;
             this.move.velX *= -1;
         }
     }

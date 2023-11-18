@@ -54,6 +54,7 @@ export class Settings {
             jugador: null,
             bichos: [],
             pajaros: [],
+            llave: null,
             decorativos: [],
             textos: []
         };
@@ -166,23 +167,29 @@ export class Settings {
             [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png', false],
             [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
             [-15, this.ini_suelo, 1, './img/signLarge.png', false],
+            [-15, this.ini_suelo - this.gap * 3, 1, './img/signLarge.png', false],
             [-7, this.ini_suelo, 1, './img/signArrow_TR.png', false],
             [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
             [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png', false],
             [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png', false],
             [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
-            [38, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png', false],
+            [34, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png', false],
             [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png', false],
+            [37, this.ini_suelo - this.gap * 6, 1, './img/signLarge.png', false],
 
             [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true],
 
-            [-12, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false]
+            [-12, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
+            [-10, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
         ];
 
         this.array_textos = [
             [' https://keney.nl', -15, this.ini_suelo - this.constante.bsy, 30, this.colores.txt_amar2],
-            [' Centro IMI', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 38, this.colores.txt_amar2],
-            [' Pulse agachar para realizar accion', -30, this.ini_suelo - this.constante.bsy, 40, this.colores.txt_amar1]
+            [' Graphics get from:', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 25, this.colores.txt_amar2],
+            [' Pulse agachar para realizar accion', -30, this.ini_suelo - this.constante.bsy, 40, this.colores.txt_amar1],
+            [' Centro IMI', -15, this.ini_suelo - this.gap * 3 - this.constante.bsy - 10, 38, this.colores.txt_amar2],
+            ['   Cafetería', 37, this.ini_suelo - this.gap * 6 - this.constante.bsy * 2, 39, this.colores.txt_amar2],
+            ['   Arlekín', 37, this.ini_suelo - this.gap * 6 - this.constante.bsy - 5, 45, this.colores.txt_amar2]
 
         ];
 

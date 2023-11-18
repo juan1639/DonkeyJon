@@ -7,6 +7,7 @@ import { Scroll } from './scroll.js';
 import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Bichos } from './bichos.js';
+import { Llave } from './llave.js';
 import { Decorativos } from './decorativos.js';
 import { Textos } from './textos.js';
 import { Jugador } from './Jugador.js';
@@ -124,6 +125,13 @@ window.onload = () => {
 
         settings.objeto.textos.push(new Textos(txt[0], txtX, txtY, size, color));
     }
+    
+    // ---------------------------------------------------------------
+    const id_llave = './img/keyYellow.png';
+    const llx = 1 * settings.constante.bsx;
+    const lly = settings.ini_suelo - settings.gap * 5;
+
+    settings.objeto.llave = new Llave(id_llave, llx, lly, true);
 
     // ---------------------------------------------------------------
     setInterval(() => {
@@ -152,6 +160,7 @@ function bucle_principal() {
         bicho.dibuja(dxdy);
     }
 
+    settings.objeto.llave.dibuja(dxdy);
     dxdy = settings.objeto.jugador.dibuja();
 
     for (let decor of settings.objeto.decorativos) {
