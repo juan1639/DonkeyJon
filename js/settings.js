@@ -1,4 +1,3 @@
-
 // ============================================================================
 export class Settings {
 
@@ -53,7 +52,10 @@ export class Settings {
             plataforma: [],
             escalera: [],
             jugador: null,
-            bichos: []
+            bichos: [],
+            pajaros: [],
+            decorativos: [],
+            textos: []
         };
 
         this.marcadores = {
@@ -152,6 +154,30 @@ export class Settings {
             [8, this.ini_suelo - this.gap * 2, this.gap],
             [-5, this.ini_suelo - this.gap * 3, this.gap],
             [34, this.ini_suelo - this.gap * 4, this.gap]
+        ];
+
+        this.array_decorativos = [
+            [-10, this.ini_suelo, 1, './img/tree05.png'],
+            [42, this.ini_suelo, 1, './img/tree05.png'],
+            [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png'],
+            [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png'],
+            [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png'],
+            [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png'],
+            [-15, this.ini_suelo, 1, './img/signLarge.png'],
+            [-7, this.ini_suelo, 1, './img/signArrow_TR.png'],
+            [38, this.ini_suelo, 1, './img/signArrow_up.png'],
+            [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png'],
+            [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png'],
+            [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png'],
+            [38, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png'],
+            [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png'],
+            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png']
+        ];
+
+        this.array_textos = [
+            [' https://keney.nl', -15, this.ini_suelo - this.constante.bsy, 30],
+            [' Centro IMI', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 38]
+
         ];
 
         this.imagenes = {

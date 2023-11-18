@@ -7,6 +7,8 @@ import { Scroll } from './scroll.js';
 import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Bichos } from './bichos.js';
+import { Decorativos } from './decorativos.js';
+import { Textos } from './textos.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
@@ -105,6 +107,23 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
+    for (let i of settings.array_decorativos) {
+        const decX = i[0] * settings.constante.bsx;
+        console.log('dec:', decX, i[3], i[1], i[2]);
+
+        settings.objeto.decorativos.push(new Decorativos(i[3], decX, i[1], i[2]));
+    }
+
+    // ---------------------------------------------------------------
+    for (let txt of settings.array_textos) {
+        const txtX = txt[1] * settings.constante.bsx;
+        const txtY = txt[2];
+        const size = txt[3];
+
+        settings.objeto.textos.push(new Textos(txt[0], txtX, txtY, size));
+    }
+
+    // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
     }, 1000 / settings.constante.FPS);
@@ -131,7 +150,15 @@ function bucle_principal() {
         bicho.dibuja(dxdy);
     }
 
+    for (let decor of settings.objeto.decorativos) {
+        decor.dibuja(dxdy);
+    }
+
     dxdy = settings.objeto.jugador.dibuja();
+
+    for (let texto of settings.objeto.textos) {
+        texto.dibuja(dxdy);
+    }
 }
 
 export { settings };
