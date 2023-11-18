@@ -3,7 +3,7 @@ import { settings } from "./main.js";
 // ============================================================================
 export class Decorativos {
 
-    constructor(id, left, top, cuantos) {
+    constructor(id, left, top, cuantos, accion) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
@@ -14,6 +14,7 @@ export class Decorativos {
         this.img.src = this.id;
 
         this.cuantos = cuantos;
+        this.accion = accion;
 
         this.rect = {
             x: left,
@@ -46,7 +47,7 @@ export class Decorativos {
         } else if (this.id.slice(0, 12) === './img/signAr') {
             return [this.anchoTile, this.altoTile * 2];
             
-        } else if (this.id === './img/switchRed_mid.png') {
+        } else if (this.id.slice(0, 15) === './img/switchRed') {
             return [this.anchoTile, this.altoTile];
         }
 

@@ -113,7 +113,9 @@ export class Settings {
         
         this.colores = {
             azul_fondo: 'rgb(134, 210, 230)',
-            blanco_nube: 'rgb(233, 233, 233)'
+            blanco_nube: 'rgb(233, 233, 233)',
+            txt_amar2: 'rgb(240, 240, 170)',
+            txt_amar1: 'rgb(235, 135, 9)'
         };
 
         // -------------------------------------------------------------------
@@ -157,26 +159,27 @@ export class Settings {
         ];
 
         this.array_decorativos = [
-            [-10, this.ini_suelo, 1, './img/tree05.png'],
-            [42, this.ini_suelo, 1, './img/tree05.png'],
-            [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png'],
-            [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png'],
-            [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png'],
-            [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png'],
-            [-15, this.ini_suelo, 1, './img/signLarge.png'],
-            [-7, this.ini_suelo, 1, './img/signArrow_TR.png'],
-            [38, this.ini_suelo, 1, './img/signArrow_up.png'],
-            [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png'],
-            [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png'],
-            [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png'],
-            [38, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png'],
-            [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png'],
-            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png']
+            [-10, this.ini_suelo, 1, './img/tree05.png', false],
+            [42, this.ini_suelo, 1, './img/tree05.png', false],
+            [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
+            [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
+            [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png', false],
+            [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+            [-15, this.ini_suelo, 1, './img/signLarge.png', false],
+            [-7, this.ini_suelo, 1, './img/signArrow_TR.png', false],
+            [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
+            [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png', false],
+            [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png', false],
+            [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
+            [38, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png', false],
+            [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png', false],
+            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true]
         ];
 
         this.array_textos = [
-            [' https://keney.nl', -15, this.ini_suelo - this.constante.bsy, 30],
-            [' Centro IMI', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 38]
+            [' https://keney.nl', -15, this.ini_suelo - this.constante.bsy, 30, this.colores.txt_amar2],
+            [' Centro IMI', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 38, this.colores.txt_amar2],
+            [' Pulse agachar para realizar accion', -30, this.ini_suelo - this.constante.bsy, 40, this.colores.txt_amar1]
 
         ];
 

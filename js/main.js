@@ -13,16 +13,16 @@ import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
 import { 
+    borraCanvas
+} from "./functions.js";
+
+// ----------------------------------------------------------------------------
+import { 
     eventos_touchStart,
     eventos_touchEnd,
     eventos_keyDown,
     eventos_keyUp
 } from "./controles.js";
- 
-// ----------------------------------------------------------------------------
-import { 
-    borraCanvas
-} from "./functions.js";
 
 // ----------------------------------------------------------------------------
 const escalas_validas = [1, 2, 3, 4];
@@ -109,9 +109,10 @@ window.onload = () => {
     // ---------------------------------------------------------------
     for (let i of settings.array_decorativos) {
         const decX = i[0] * settings.constante.bsx;
-        console.log('dec:', decX, i[3], i[1], i[2]);
+        const accion = i[4]; // interactuable true/false
+        console.log('dec:', decX, i[3], i[1], i[2], i[4]);
 
-        settings.objeto.decorativos.push(new Decorativos(i[3], decX, i[1], i[2]));
+        settings.objeto.decorativos.push(new Decorativos(i[3], decX, i[1], i[2], accion));
     }
 
     // ---------------------------------------------------------------
@@ -119,8 +120,9 @@ window.onload = () => {
         const txtX = txt[1] * settings.constante.bsx;
         const txtY = txt[2];
         const size = txt[3];
+        const color = txt[4];
 
-        settings.objeto.textos.push(new Textos(txt[0], txtX, txtY, size));
+        settings.objeto.textos.push(new Textos(txt[0], txtX, txtY, size, color));
     }
 
     // ---------------------------------------------------------------

@@ -60,6 +60,7 @@ export class Bichos {
         const gap = settings.gap;
 
         this.array_enque_nivelPlataforma = [
+            [nivel - gap * 6 - this.alto, false],
             [nivel - gap * 5 - this.alto, false],
             [nivel - gap * 4 - this.alto, false],
             [nivel - gap * 3 - this.alto, false],

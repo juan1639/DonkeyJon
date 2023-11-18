@@ -44,6 +44,8 @@ export class Jugador {
         this.direcc_salto = this.move.velX;
         this.potencia_salto = 16;
 
+        this.col_item = false;
+
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
         // (Poniendo los 4 atributos = 0 ... sería una colision estricta rectangular)
@@ -51,7 +53,6 @@ export class Jugador {
         this.correcciones = {
             obj1_hor: 0,
             obj1_ver: 0,
-            // obj2_hor: Math.floor(this.rect.ancho / 3),
             obj2_hor: Math.floor(width / 3),
             obj2_ver: 0
         }
@@ -60,6 +61,13 @@ export class Jugador {
             obj1_hor: 0,
             obj1_ver: 10,
             obj2_hor: Math.floor(width/ 2),
+            obj2_ver: 0
+        }
+
+        this.correcciones_items = {
+            obj1_hor: 0,
+            obj1_ver: -100,
+            obj2_hor: 0,
             obj2_ver: 0
         }
 
@@ -141,6 +149,7 @@ export class Jugador {
 
         dx = this.check_limitesHorizontales(dx);
         dy = this.check_colisionPlataformas(dy);
+        this.col_item = this.check_colisionItems();
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -192,6 +201,20 @@ export class Jugador {
                 //console.log('colision Escalera');
                 const corr = Math.floor(this.rect.alto / 2);
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    check_colisionItems() {
+
+        for (let item of settings.objeto.decorativos) {
+
+            if (checkColision(item, this, this.correcciones_items, 0)) {
+
+                //console.log('colision Escalera');
+                if (item.accion) return true;
             }
         }
 
