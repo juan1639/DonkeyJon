@@ -152,11 +152,11 @@ function bucle_principal() {
         bicho.dibuja(dxdy);
     }
 
+    dxdy = settings.objeto.jugador.dibuja();
+
     for (let decor of settings.objeto.decorativos) {
         decor.dibuja(dxdy);
     }
-
-    dxdy = settings.objeto.jugador.dibuja();
 
     for (let texto of settings.objeto.textos) {
         texto.dibuja(dxdy);

@@ -45,6 +45,7 @@ export class Jugador {
         this.potencia_salto = 16;
 
         this.col_item = false;
+        this.accion_realizada = false;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -76,6 +77,7 @@ export class Jugador {
         }, 99);
         
         settings.sonidos.jump.volume = settings.volumen.jump;
+        settings.sonidos.eatingGhost.volume = settings.volumen.eatingGhost;
     }
 
     dibuja() {
@@ -213,7 +215,12 @@ export class Jugador {
 
             if (checkColision(item, this, this.correcciones_items, 0)) {
 
-                //console.log('colision Escalera');
+                if (!item.accion_realizada && this.ssheet.agachado[4]) {
+                    item.accion_realizada = true;
+                    this.accion_realizada = true;
+                    settings.sonidos.eatingGhost.play();
+                }
+
                 if (item.accion) return true;
             }
         }
@@ -270,7 +277,7 @@ export class Jugador {
         
         } else if (settings.controles.tecla_do || settings.controles.touch_do) {
             this.reset_ssheetBooleanos();
-            this.ssheet.agachado[4] = true;
+            this.ssheet.agachado[4] = true; 
             //dy = 0;
         }
 

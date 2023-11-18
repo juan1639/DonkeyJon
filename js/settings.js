@@ -124,7 +124,7 @@ export class Settings {
         this.array_plataformas = [
 
             [this.ini_suelo - this.gap * 6, -16, 22, false, true, 0, 6],
-            [this.ini_suelo - this.gap * 6, 6, 3, false, false, 1, 6],
+            [this.ini_suelo - this.gap * 6, 7, 3, false, false, 1, 6],
             [this.ini_suelo - this.gap * 6, 23, 25, true, false, 0, 6],
 
             [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 30, 3, true, true, 0, 6],
@@ -173,7 +173,10 @@ export class Settings {
             [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
             [38, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png', false],
             [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png', false],
-            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true]
+
+            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true],
+
+            [-12, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false]
         ];
 
         this.array_textos = [

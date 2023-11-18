@@ -1,4 +1,5 @@
 import { settings } from "./main.js";
+import { checkColision } from "./functions.js";
 
 // ============================================================================
 export class Plataforma {
@@ -7,6 +8,8 @@ export class Plataforma {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
+
+        this.rutaArchivoPng = ruta;
 
         this.ctx = settings.ctx;
         this.img = settings.imagenes.tile_medio;
@@ -61,6 +64,8 @@ export class PlataformaMovil {
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
 
+        this.rutaArchivoPng = ruta;
+
         this.ctx = settings.ctx;
         this.img = settings.imagenes.tile_madera;
         this.img.src = ruta;
@@ -78,16 +83,51 @@ export class PlataformaMovil {
             velX: dx,
             velY: dy
         }
+
+        this.correcciones = {
+            obj1_hor: 0,
+            obj1_ver: 0,
+            obj2_hor: 0,
+            obj2_ver: 0
+        } 
     }
 
     dibuja(dxdy) {
 
-        this.rect.x += dxdy[0];
-        this.rect.y += dxdy[1];
+        this.actualiza(dxdy);
 
         for (let i = 0; i < this.rect.anchoBucle; i ++) {
 
             this.ctx.drawImage(this.img, this.rect.x + i * this.anchoTile, this.rect.y, this.anchoTile, this.altoTile);
         }
+    }
+
+    actualiza(dxdy) {
+
+        this.rect.x += dxdy[0];
+        this.rect.y += dxdy[1];
+
+        if (!settings.objeto.jugador.accion_realizada) return;
+
+        // -------------------------------------------
+        this.rect.x += this.move.velX;
+
+        if (this.check_colisionPlataformas()) {
+            this.rect.x += -this.move.velX;
+            this.move.velX *= -1;
+        }
+    }
+
+    check_colisionPlataformas() {
+
+        for (let plataf of settings.objeto.plataforma) {
+
+            if (checkColision(plataf, this, this.correcciones, 0)) {
+                
+                if (plataf.rutaArchivoPng !== './img/tile6.png') return true;
+            }
+        }
+
+        return false;
     }
 }
