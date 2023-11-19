@@ -69,9 +69,9 @@ export class Jugador {
 
         this.correcciones_items = {
             obj1_hor: 0,
-            obj1_ver: -100,
+            obj1_ver: 0,
             obj2_hor: 0,
-            obj2_ver: 0
+            obj2_ver: Math.floor(width / 3)
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -157,7 +157,6 @@ export class Jugador {
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
         this.check_colisionLlave();
-        //this.check_nivelSuperado();
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -225,25 +224,13 @@ export class Jugador {
             if (checkColision(item, this, this.correcciones_items, 0)) {
 
                 if (item.id === './img/lockYellow.png' && !superado && llave.accion_realizada) {
-                    superado = true;
+
+                    settings.estado.nivelSuperado = true;
                     settings.sonidos.intermision.play();
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
 
-                    if (!this.msg_NOllave) {
-
-                        this.msg_NOllave = true;
-                        const x = this.rect.x - settings.constante.bsx * 3;
-                        const y = this.rect.y - settings.constante.bsy;
-                        
-                        settings.objeto.textos.push(new Textos('Debes coger la llave...', x, y, 70, 'red'));
-                        //console.log(settings.objeto.textos.length);
-
-                        setTimeout(() => {
-                            this.msg_NOllave = false;
-                            settings.objeto.textos.pop();
-                        }, 3000);
-                    }
+                    this.mostrar_msg();
                 }
 
                 if (!item.accion_realizada && this.ssheet.agachado[4] && item.id.slice(0, 15) === './img/switchRed') {
@@ -345,5 +332,23 @@ export class Jugador {
         this.ssheet.escalera[4] = false;
         this.ssheet.escaleraQuieto[4] = false;
         this.ssheet.saltar[4] = false;
+    }
+
+    mostrar_msg() {
+
+        if (!this.msg_NOllave) {
+
+            this.msg_NOllave = true;
+            const x = this.rect.x - settings.constante.bsx * 3;
+            const y = this.rect.y - settings.constante.bsy;
+            
+            settings.objeto.textos.push(new Textos('Debes coger la llave...', x, y, 70, 'red'));
+            //console.log(settings.objeto.textos.length);
+
+            setTimeout(() => {
+                this.msg_NOllave = false;
+                settings.objeto.textos.pop();
+            }, 3000);
+        }
     }
 }

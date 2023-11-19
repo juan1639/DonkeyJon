@@ -7,6 +7,7 @@ import { Scroll } from './scroll.js';
 import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Bichos } from './bichos.js';
+import { Pajaros } from './pajaros.js';
 import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
 import { Decorativos } from './decorativos.js';
@@ -108,6 +109,15 @@ window.onload = () => {
         settings.objeto.bichos.push(new Bichos(id, posIniX, posIniY));
     }
 
+    // ---------------------------------------------------------------    
+    for (let i = 0; i < settings.nro_enemigos.pajaros[nivel]; i ++) {
+
+        const posIniY = settings.ini_suelo - settings.gap * 7;
+        const id = Math.floor(Math.random()* 2);
+
+        settings.objeto.pajaros.push(new Pajaros(id, posIniY));
+    }
+
     // ---------------------------------------------------------------
     for (let i of settings.array_decorativos) {
         const decX = i[0] * settings.constante.bsx;
@@ -170,14 +180,16 @@ function bucle_principal() {
         bicho.dibuja(dxdy);
     }
 
+    for (let pajaro of settings.objeto.pajaros) {
+        pajaro.dibuja(dxdy);
+    }
+
     for (let bon of settings.objeto.bonus) {
         bon.dibuja(dxdy);
     }
 
-    settings.objeto.llave.dibuja(dxdy);
-
     dxdy = settings.objeto.jugador.dibuja();
-
+    
     for (let decor of settings.objeto.decorativos) {
         decor.dibuja(dxdy);
     }
@@ -185,6 +197,8 @@ function bucle_principal() {
     for (let texto of settings.objeto.textos) {
         texto.dibuja(dxdy);
     }
+
+    settings.objeto.llave.dibuja(dxdy);
 }
 
 export { settings };

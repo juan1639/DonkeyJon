@@ -17,15 +17,19 @@ export class Decorativos {
         this.accion = accion;
         this.accion_realizada = false;
 
+        const size = this.elegir_sizeElemento(this.anchoTile, this.altoTile);
+        const ancho = size[0];
+        const alto = size[1];
+
         this.rect = {
             x: left,
-            y: top,
-            ancho: this.anchoTile,
+            y: top - alto,
+            ancho: ancho,
             anchoBucle: cuantos,
-            alto: this.altoTile
+            alto: alto
         }
         
-        if (this.id.slice(0, 12) === './img/lockYe') this.rect.x += this.anchoTile + 1;
+        if (this.id.slice(0, 12) === './img/lockYe') this.rect.x += Math.floor(this.anchoTile / 5);
 
         this.anima = false;
 
@@ -40,14 +44,13 @@ export class Decorativos {
         this.rect.y += dxdy[1];
 
         let img = this.img;
-        img.src = this.elegirImg(); 
+        img.src = this.elegirImg();
 
-        const size = this.elegir_sizeElemento(this.anchoTile, this.altoTile);
-        const ancho = size[0];
-        const alto = size[1];
+        const ancho = this.rect.ancho;
+        const alto = this.rect.alto;
 
         for (let i = 0; i < this.rect.anchoBucle; i ++) {
-            this.ctx.drawImage(img, this.rect.x + i * ancho, this.rect.y - alto, ancho, alto);
+            this.ctx.drawImage(img, this.rect.x + i * ancho, this.rect.y, ancho, alto);
         }
     }
 
