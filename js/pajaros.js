@@ -17,13 +17,43 @@ export class Pajaros {
         this.max_recorrido = settings.resolucion[0] * 4;
         this.recorrido = 0;
 
+        this.max_recorrY = settings.constante.bsy * 3;
+        this.recorrY = 0;
+
+        const rx = settings.resolucion[0];
+        const r = settings.resolucion[1];
+
         this.array_posIni = [
-            [-this.ancho * 4, posIniY + this.alto * 6, 2, 0, true],
-            [settings.resolucion[0], posIniY + this.alto, -2, 0, false],
-            [-settings.resolucion[0], posIniY + this.alto * 3, 2, 0, true],
-            [settings.resolucion[0] + this.ancho * 4, posIniY + this.alto * 4, -2, 0, false],
-            [-settings.resolucion[0] + this.ancho * 8, posIniY + this.alto, 4, 0, true],
-            [settings.resolucion[0] + this.ancho * 8, posIniY + this.alto * 2, -4, 0, false]
+            [
+                -Math.floor(Math.random()* rx),
+                posIniY + Math.floor(Math.random()* r),
+                3, 0, true
+            ],
+            [
+                rx + Math.floor(Math.random()* rx),
+                posIniY + Math.floor(Math.random()* r),
+                -3, 0, false
+            ],
+            [
+                -Math.floor(Math.random()* rx),
+                posIniY + Math.floor(Math.random()* r),
+                4, 1, true
+            ],
+            [
+                Math.floor(Math.random()* rx) + this.ancho * 4,
+                posIniY + Math.floor(Math.random()* r),
+                -4, 1, false
+            ],
+            [
+                -Math.floor(Math.random()* rx),
+                posIniY + Math.floor(Math.random()* r),
+                5, 1, true
+            ],
+            [
+                rx + Math.floor(Math.random()* rx),
+                posIniY + Math.floor(Math.random()* r),
+                -5, 1, false
+            ]
         ];
 
         const posXY = this.selecc_posInicial();
@@ -65,7 +95,7 @@ export class Pajaros {
             if (this.move.anima > 20) this.move.anima = 0;
         }, 99);
 
-        console.log('ene_pajaro:', this.rect.x, this.rect.y);
+        console.log('ene_pajaro:', this.rect.x, this.rect.y, this.move.velY);
     }
 
     dibuja(dxdy) {
@@ -107,16 +137,29 @@ export class Pajaros {
         this.rect.x += this.move.velX;
         this.recorrido += Math.abs(this.move.velX);
 
-        this.check_cambioDireccion();
+        this.rect.y += this.move.velY;
+        this.recorrY ++;
+
+        this.check_cambioY(this.recorrY);
+        this.check_cambioDireccion(this.recorrido);
     }
 
-    check_cambioDireccion() {
+    check_cambioDireccion(recorrido) {
 
-        if (this.recorrido >= this.max_recorrido) {
+        if (recorrido >= this.max_recorrido) {
 
             this.recorrido = 0;
             this.move.velX = -this.move.velX;
             this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
+        }
+    }
+
+    check_cambioY(recorrido) {
+
+        if (recorrido >= this.max_recorrY) {
+
+            this.recorrY = 0;
+            this.move.velY = -this.move.velY;
         }
     }
 

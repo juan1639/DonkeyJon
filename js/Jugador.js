@@ -46,6 +46,10 @@ export class Jugador {
         this.potencia_salto = 16;
 
         this.col_item = false;
+        this.col_bicho = false;
+        this.col_pajaro = false;
+        this.col_bonus = false;
+
         this.accion_realizada = false;
         this.msg_NOllave = false;
 
@@ -63,7 +67,7 @@ export class Jugador {
         this.correcciones_escalera = {
             obj1_hor: 0,
             obj1_ver: 10,
-            obj2_hor: Math.floor(width/ 2),
+            obj2_hor: Math.floor(width / 2),
             obj2_ver: 0
         }
 
@@ -72,6 +76,20 @@ export class Jugador {
             obj1_ver: 0,
             obj2_hor: 0,
             obj2_ver: Math.floor(width / 3)
+        }
+
+        this.correcciones_bichos = {
+            obj1_hor: 0,
+            obj1_ver: 0,
+            obj2_hor: Math.floor(width / 8),
+            obj2_ver: Math.floor(height / 10)
+        }
+
+        this.correcciones_pajaros = {
+            obj1_hor: 0,
+            obj1_ver: 0,
+            obj2_hor: Math.floor(width / 8),
+            obj2_ver: Math.floor(height / 10)
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -157,6 +175,9 @@ export class Jugador {
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
         this.check_colisionLlave();
+        this.col_bicho = this.check_colisionBichos();
+        this.col_pajaro = this.check_colisionPajaros();
+        this.col_bonus = this.check_colisionBonus();
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -262,11 +283,70 @@ export class Jugador {
         return false;
     }
 
-    check_nivelSuperado() {
+    check_colisionBonus() {
 
-        if (settings.objeto.scroll[0].x <= 0) {
-            console.log('nivelSuperado!');
+        for (let bonus of settings.objeto.bonus) {
+
+            if (checkColision(bonus, this, this.correcciones_pajaros, 0)) {
+                this.ctx.fillStyle = 'green';
+                this.ctx.fillRect(0, 0, 90, 90);
+                
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    check_colisionBichos() {
+
+        for (let bichos of settings.objeto.bichos) {
+
+            if (checkColision(bichos, this, this.correcciones_bichos, 0)) {
+
+                const array_posValidas = this.averiguar_plataformas();
+                const pos_bicho = bichos.rect.y + bichos.rect.alto;
+
+                if (array_posValidas.includes(pos_bicho)) {
+                    this.ctx.fillStyle = 'red';
+                    this.ctx.fillRect(0, 0, 90, 90);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    check_colisionPajaros() {
+
+        for (let pajaro of settings.objeto.pajaros) {
+
+            if (checkColision(pajaro, this, this.correcciones_pajaros, 0)) {
+                this.ctx.fillStyle = 'blue';
+                this.ctx.fillRect(0, 0, 90, 90);
+                
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    averiguar_plataformas() {
+
+        const nro_plataformas = settings.array_plataformas[0][6];
+        let array_posValidas = [];
+
+        for (let i = 0; i < nro_plataformas; i ++) {
+            const plataf = settings.ini_suelo - i * settings.gap;
+
+            array_posValidas.push(plataf);
+            array_posValidas.push(plataf - 1);
+        }
+
+        return array_posValidas;
     }
 
     leer_teclado(dxdy) {

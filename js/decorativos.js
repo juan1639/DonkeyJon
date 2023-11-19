@@ -56,7 +56,7 @@ export class Decorativos {
 
     elegir_sizeElemento() {
 
-        if (this.id === './img/signLarge.png') {
+        if (this.id.slice(0, 14) === './img/Letrero_') {
             return [this.anchoTile * 4, this.altoTile * 3];
 
         } else if (this.id.slice(0, 12) === './img/signAr') {
