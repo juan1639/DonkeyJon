@@ -24,6 +24,8 @@ export class Decorativos {
             anchoBucle: cuantos,
             alto: this.altoTile
         }
+        
+        if (this.id.slice(0, 12) === './img/lockYe') this.rect.x += this.anchoTile + 1;
 
         this.anima = false;
 

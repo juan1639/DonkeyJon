@@ -1,4 +1,5 @@
 import { settings } from "./main.js";
+import { Textos } from './textos.js';
 import { checkColision } from "./functions.js";
 
 // ============================================================================
@@ -46,6 +47,7 @@ export class Jugador {
 
         this.col_item = false;
         this.accion_realizada = false;
+        this.msg_NOllave = false;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -77,7 +79,9 @@ export class Jugador {
         }, 99);
         
         settings.sonidos.jump.volume = settings.volumen.jump;
+        settings.sonidos.pacmanDies.volume = settings.volumen.pacmanDies;
         settings.sonidos.eatingGhost.volume = settings.volumen.eatingGhost;
+        settings.sonidos.intermision.volume = settings.volumen.intermision;
     }
 
     dibuja() {
@@ -153,6 +157,7 @@ export class Jugador {
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
         this.check_colisionLlave();
+        //this.check_nivelSuperado();
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -212,17 +217,42 @@ export class Jugador {
 
     check_colisionItems() {
 
+        let superado = settings.estado.nivelSuperado;
+        let llave = settings.objeto.llave;
+
         for (let item of settings.objeto.decorativos) {
 
             if (checkColision(item, this, this.correcciones_items, 0)) {
+
+                if (item.id === './img/lockYellow.png' && !superado && llave.accion_realizada) {
+                    superado = true;
+                    settings.sonidos.intermision.play();
+
+                } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
+
+                    if (!this.msg_NOllave) {
+
+                        this.msg_NOllave = true;
+                        const x = this.rect.x - settings.constante.bsx * 3;
+                        const y = this.rect.y - settings.constante.bsy;
+                        
+                        settings.objeto.textos.push(new Textos('Debes coger la llave...', x, y, 70, 'red'));
+                        //console.log(settings.objeto.textos.length);
+
+                        setTimeout(() => {
+                            this.msg_NOllave = false;
+                            settings.objeto.textos.pop();
+                        }, 3000);
+                    }
+                }
 
                 if (!item.accion_realizada && this.ssheet.agachado[4] && item.id.slice(0, 15) === './img/switchRed') {
                     item.accion_realizada = true;
                     this.accion_realizada = true;
                     settings.sonidos.eatingGhost.play();
                 }
-
-                if (item.accion) return true;
+                
+                if (item.accion) return true; // msg explicativo accion
             }
         }
 
@@ -243,6 +273,13 @@ export class Jugador {
         }
         
         return false;
+    }
+
+    check_nivelSuperado() {
+
+        if (settings.objeto.scroll[0].x <= 0) {
+            console.log('nivelSuperado!');
+        }
     }
 
     leer_teclado(dxdy) {

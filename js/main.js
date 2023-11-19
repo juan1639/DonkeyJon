@@ -8,6 +8,7 @@ import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Bichos } from './bichos.js';
 import { Llave } from './llave.js';
+import { Bonus } from './bonus.js';
 import { Decorativos } from './decorativos.js';
 import { Textos } from './textos.js';
 import { Jugador } from './Jugador.js';
@@ -134,6 +135,15 @@ window.onload = () => {
     settings.objeto.llave = new Llave(id_llave, llx, lly, true);
 
     // ---------------------------------------------------------------
+    for (let bonus of settings.array_bonus) {
+        const idBonus = bonus[0];
+        const bonX = bonus[1] * settings.constante.bsx;
+        const bonY = bonus[2];
+
+        settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
+    }
+
+    // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
     }, 1000 / settings.constante.FPS);
@@ -160,7 +170,12 @@ function bucle_principal() {
         bicho.dibuja(dxdy);
     }
 
+    for (let bon of settings.objeto.bonus) {
+        bon.dibuja(dxdy);
+    }
+
     settings.objeto.llave.dibuja(dxdy);
+
     dxdy = settings.objeto.jugador.dibuja();
 
     for (let decor of settings.objeto.decorativos) {

@@ -25,11 +25,11 @@ export class Textos {
 
         const colision = settings.objeto.jugador.col_item;
 
-        if (this.size === 40 && colision) {
-            const x = settings.objeto.jugador.rect.x - settings.constante.bsx * 4;
+        if (this.size === 55 && colision) {
+            const x = settings.objeto.jugador.rect.x - settings.constante.bsx * 8;
             const y = settings.objeto.jugador.rect.y - settings.constante.bsy;
-
-            this.ctx.fillText(this.idTxt, x, y);
+            
+            this.ctx.fillText(this.idTxt, x, y);   
         }
 
         this.ctx.fillText(this.idTxt, this.x, this.y);

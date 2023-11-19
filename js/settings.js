@@ -55,6 +55,7 @@ export class Settings {
             bichos: [],
             pajaros: [],
             llave: null,
+            bonus: [],
             decorativos: [],
             textos: []
         };
@@ -116,7 +117,7 @@ export class Settings {
             azul_fondo: 'rgb(134, 210, 230)',
             blanco_nube: 'rgb(233, 233, 233)',
             txt_amar2: 'rgb(240, 240, 170)',
-            txt_amar1: 'rgb(235, 135, 9)'
+            txt_amar1: 'rgb(255, 89, 19)'
         };
 
         // -------------------------------------------------------------------
@@ -186,11 +187,22 @@ export class Settings {
         this.array_textos = [
             [' https://keney.nl', -15, this.ini_suelo - this.constante.bsy, 30, this.colores.txt_amar2],
             [' Graphics get from:', -15, this.ini_suelo - this.constante.bsy * 2 + 5, 25, this.colores.txt_amar2],
-            [' Pulse agachar para realizar accion', -30, this.ini_suelo - this.constante.bsy, 40, this.colores.txt_amar1],
+            [' Pulse agachar para realizar accion', -39, this.ini_suelo - this.constante.bsy, 55, this.colores.txt_amar1],
+            [' Primero debes coger la llave!', -30, this.ini_suelo - this.constante.bsy - 10, 60, this.colores.txt_amar1],
             [' Centro IMI', -15, this.ini_suelo - this.gap * 3 - this.constante.bsy - 10, 38, this.colores.txt_amar2],
             ['   Cafetería', 37, this.ini_suelo - this.gap * 6 - this.constante.bsy * 2, 39, this.colores.txt_amar2],
             ['   Arlekín', 37, this.ini_suelo - this.gap * 6 - this.constante.bsy - 5, 45, this.colores.txt_amar2]
-
+            
+        ];
+        
+        this.array_bonus = [
+            ['./img/items_ri.png', 35, this.ini_suelo, true],
+            ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 1, true],
+            ['./img/items_ri.png', 29, this.ini_suelo - this.gap * 2, true],
+            ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
+            ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 4, true],
+            ['./img/items_ri.png', 33, this.ini_suelo - this.gap * 5, true],
+            ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true]
         ];
 
         this.imagenes = {
