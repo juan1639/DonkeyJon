@@ -10,6 +10,7 @@ export class Settings {
             nro_columnas: 16,
             GRAVEDAD: 1,
             FPS: 60,
+            nro_CHISPASfireWorks: 99,
             ancho_jugador: 120,
             alto_jugador: 150
         };
@@ -29,14 +30,14 @@ export class Settings {
         };
 
         this.ini_scrolls = [
-            [-this.resolucion[0], 0, './img/fondo_cielo3.png'],
-            [0, 0, './img/fondo_cielo1.png'],
-            [this.resolucion[0], 0, './img/fondo_cielo3.png'],
-            [this.resolucion[0] * 2, 0, './img/fondo_cielo1.png'],
-            [-this.resolucion[0], -this.resolucion[1], './img/fondo_cielo4.png'],
-            [0, -this.resolucion[1], './img/fondo_cielo2.png'],
-            [this.resolucion[0], -this.resolucion[1], './img/fondo_cielo4.png'],
-            [this.resolucion[0] * 2, -this.resolucion[1], './img/fondo_cielo2.png']
+            [-this.resolucion[0], 0, './img/fondo_cielo103.png'],
+            [0, 0, './img/fondo_cielo101.png'],
+            [this.resolucion[0], 0, './img/fondo_cielo103.png'],
+            [this.resolucion[0] * 2, 0, './img/fondo_cielo101.png'],
+            [-this.resolucion[0], -this.resolucion[1], './img/fondo_cielo104.png'],
+            [0, -this.resolucion[1], './img/fondo_cielo102.png'],
+            [this.resolucion[0], -this.resolucion[1], './img/fondo_cielo104.png'],
+            [this.resolucion[0] * 2, -this.resolucion[1], './img/fondo_cielo102.png']
         ];
 
         this.escala = {

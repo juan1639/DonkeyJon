@@ -4,13 +4,17 @@ import { settings } from "./main.js";
 // ============================================================================
 export class FireWorks {
 
-    constructor(id, left, top, vel_x, vel_y) {
+    constructor(id, left, top) {
 
         this.ctx = settings.ctx;
 
         this.id = id;
-        this.duracion = 60;
 
+        const angulo_rnd = Math.floor(Math.random()* 360);
+        this.rad_rnd = (angulo_rnd * Math.PI) / 180;
+
+        const velocidad = Math.floor(Math.random()* 50) + 50;
+        
         this.rect = {
             x: left,
             y: top,
@@ -21,9 +25,13 @@ export class FireWorks {
 
         this.move = {
             activo: true,
-            velX: vel_x / 25,
-            velY: vel_y / 20
+            vel: velocidad / 10,
+            velX: Math.cos(this.rad_rnd),
+            velY: Math.sin(this.rad_rnd)
         }
+
+        this.duracion = 30;
+        this.max_duracion = this.duracion + 15;
     }
 
     dibuja(dxdy) {
@@ -39,13 +47,16 @@ export class FireWorks {
             this.rect.x += dxdy[0];
             this.rect.y += dxdy[1];
 
-            this.rect.x += this.move.velX;
-            this.rect.y += this.move.velY;
+            this.rect.x += this.move.velX * this.move.vel;
+            this.rect.y += this.move.velY * this.move.vel;
 
-            this.rect.size = Math.floor((99 - this.duracion) / 25);
+            this.rect.size = Math.floor((this.max_duracion - this.duracion) / 12);
 
+            this.ctx.beginPath();
+            this.ctx.arc(this.rect.x, this.rect.y, this.rect.size, 0, 2 * Math.PI);
             this.ctx.fillStyle = 'rgb(255,' + rgb.toString() + ',9)';
-            this.ctx.fillRect(this.rect.x, this.rect.y, this.rect.size, this.rect.size);
+            this.ctx.fill();
+            this.ctx.closePath();
         }
     }
 }

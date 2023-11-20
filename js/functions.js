@@ -18,21 +18,16 @@ function checkColision(obj1, obj2, corr, dy) {
 // ============================================================================
 function lanzar_fireWorks() {
 
-    const rangoX = Math.floor(settings.resolucion[0] / 2) + settings.resolucion[0] / 4;
-    const rangoY = Math.floor(settings.resolucion[1] / 3) + settings.resolucion[1] / 6;
+    const nroChispas = settings.constante.nro_CHISPASfireWorks;
 
-    const x = Math.floor(Math.random()* rangoX);
-    const y = Math.floor(Math.random()* rangoY);
+    const rangoX = Math.floor(settings.resolucion[0] / 2);
+    const rangoY = Math.floor(settings.resolucion[1] / 4);
+
+    const x = Math.floor(Math.random()* rangoX) + settings.resolucion[0] / 4;
+    const y = Math.floor(Math.random()* rangoY) + settings.resolucion[1] / 8;
     
-    for (let i = 0; i < 50; i ++) {
-
-        const rango_velX = 49;
-        const rango_velY = 49;
-
-        const velX = Math.floor(Math.random()* rango_velX * 2);
-        const velY = Math.floor(Math.random()* rango_velY * 2);
-
-        settings.objeto.chispa.push(new FireWorks(i, x, y, velX - rango_velX, velY - rango_velY));
+    for (let i = 0; i < nroChispas; i ++) {
+        settings.objeto.chispa.push(new FireWorks(i, x, y));
     }
 }
 
