@@ -57,7 +57,8 @@ export class Settings {
             llave: null,
             bonus: [],
             decorativos: [],
-            textos: []
+            textos: [],
+            chispa: []
         };
 
         this.marcadores = {
@@ -72,10 +73,19 @@ export class Settings {
             botonNextLevel: document.getElementById('boton__NextLevel')
         };
 
+        this.bandera = {
+            nivel: [
+                false, false, false, false, false,
+                false, false, false, false, false,
+                false, false, false, false, false,
+                false, false, false, false, false
+            ]
+        };
+
         this.nro_enemigos = {
             mariq: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
             carac: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
-            pajaros: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7]
+            pajaros: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7]
         };
 
         this.controles = {
@@ -167,8 +177,8 @@ export class Settings {
             [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
             [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png', false],
             [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
-            [26, this.ini_suelo, 1, './img/Letrero_Creditos.png', false],
-            [-15, this.ini_suelo, 1, './img/Letrero_kenneyNL.png', false],
+            [26, this.ini_suelo, 1, './img/Letrero_creditos.png', false],
+            [-15, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
             [-15, this.ini_suelo - this.gap * 3, 1, './img/Letrero_IMI.png', false],
             [31, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
             [-7, this.ini_suelo, 1, './img/signArrow_TR.png', false],

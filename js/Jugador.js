@@ -1,6 +1,9 @@
 import { settings } from "./main.js";
 import { Textos } from './textos.js';
-import { checkColision } from "./functions.js";
+import {
+    checkColision,
+    lanzar_fireWorks
+} from "./functions.js";
 
 // ============================================================================
 export class Jugador {
@@ -17,7 +20,8 @@ export class Jugador {
             agachado: [240, 0, 240, 0, false],
             escalera: [400, 0, 480, 0, false],
             escaleraQuieto: [400, 0, 400, 0, false],
-            saltar: [80, 0, 160, 0, false]
+            saltar: [80, 0, 160, 0, false],
+            celebrar: [560, 0, 640, 0, false]
         }
 
         this.rect = {
@@ -148,12 +152,23 @@ export class Jugador {
 
         } else if (this.ssheet.saltar[4]) {
             return [this.ssheet.saltar[i], this.ssheet.saltar[i + 1]];
+            
+        } else if (this.ssheet.celebrar[4]) {
+            return [this.ssheet.celebrar[i], this.ssheet.celebrar[i + 1]];
         }
 
         return [0, 0];
     }
 
     actualiza() {
+
+        if (settings.estado.nivelSuperado) {
+            this.reset_ssheetBooleanos();
+            this.ssheet.celebrar[4] = true;
+            return [0, 0];
+        }
+
+        // -----------------------------------------------
 
         let dxdy = [0, 0];
         let dx = dxdy[0];
@@ -239,15 +254,22 @@ export class Jugador {
 
         let superado = settings.estado.nivelSuperado;
         let llave = settings.objeto.llave;
+        const nivel = settings.marcadores.nivel;
 
         for (let item of settings.objeto.decorativos) {
 
             if (checkColision(item, this, this.correcciones_items, 0)) {
 
-                if (item.id === './img/lockYellow.png' && !superado && llave.accion_realizada) {
+                if (item.id === './img/lockYellow.png' && !superado && llave.accion_realizada && !settings.bandera[nivel]) {
 
                     settings.estado.nivelSuperado = true;
+                    settings.bandera[nivel] = true;
+                    lanzar_fireWorks();
                     settings.sonidos.intermision.play();
+
+                    setTimeout(() => {
+                        settings.estado.nivelSuperado = false;
+                    }, 9000);
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
 

@@ -194,6 +194,10 @@ function bucle_principal() {
         decor.dibuja(dxdy);
     }
 
+    for (let chispa of settings.objeto.chispa) {
+        if (chispa) chispa.dibuja(dxdy);
+    }
+
     for (let texto of settings.objeto.textos) {
         texto.dibuja(dxdy);
     }
