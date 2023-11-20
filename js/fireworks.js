@@ -43,6 +43,8 @@ export class FireWorks {
             if (this.duracion === 0 && this.id === 1 && settings.estado.nivelSuperado) lanzar_fireWorks();
 
             const rgb = Math.floor(Math.random()* 200) + 55;
+            
+            if (this.duracion > 26) this.dibuja_centro(rgb);
 
             this.rect.x += dxdy[0];
             this.rect.y += dxdy[1];
@@ -58,5 +60,16 @@ export class FireWorks {
             this.ctx.fill();
             this.ctx.closePath();
         }
+    }
+
+    dibuja_centro(rgb) {
+
+        const radio = Math.floor(Math.random()* 9) + 5;
+
+        this.ctx.beginPath();
+        this.ctx.arc(this.rect.x, this.rect.y, radio, 0, 2 * Math.PI);
+        this.ctx.fillStyle = 'rgb(255,' + rgb.toString() + ',9)';
+        this.ctx.fill();
+        this.ctx.closePath();
     }
 }

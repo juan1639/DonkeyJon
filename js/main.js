@@ -129,12 +129,11 @@ window.onload = () => {
 
     // ---------------------------------------------------------------
     for (let txt of settings.array_textos) {
-        const txtX = txt[1] * settings.constante.bsx;
-        const txtY = txt[2];
-        const size = txt[3];
-        const color = txt[4];
+        const alin = txt[1];
+        const size = txt[2];
+        const color = txt[3];
 
-        settings.objeto.textos.push(new Textos(txt[0], txtX, txtY, size, color));
+        settings.objeto.textos.push(new Textos(txt[0], alin, size, color));
     }
     
     // ---------------------------------------------------------------
@@ -152,6 +151,10 @@ window.onload = () => {
 
         settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
     }
+
+    setTimeout(() => {
+        settings.msg.nivel = false;
+    }, settings.constante.pausaMsgNivelMostrar);
 
     // ---------------------------------------------------------------
     setInterval(() => {

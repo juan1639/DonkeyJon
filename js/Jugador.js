@@ -50,6 +50,7 @@ export class Jugador {
         this.potencia_salto = 16;
 
         this.col_item = false;
+        this.col_llave = false;
         this.col_bicho = false;
         this.col_pajaro = false;
         this.col_bonus = false;
@@ -104,6 +105,7 @@ export class Jugador {
         settings.sonidos.pacmanDies.volume = settings.volumen.pacmanDies;
         settings.sonidos.eatingGhost.volume = settings.volumen.eatingGhost;
         settings.sonidos.intermision.volume = settings.volumen.intermision;
+        settings.sonidos.fireWorks.volume = settings.volumen.fireWorks;
     }
 
     dibuja() {
@@ -189,7 +191,7 @@ export class Jugador {
         dx = this.check_limitesHorizontales(dx);
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
-        this.check_colisionLlave();
+        this.col_llave = this.check_colisionLlave();
         this.col_bicho = this.check_colisionBichos();
         this.col_pajaro = this.check_colisionPajaros();
         this.col_bonus = this.check_colisionBonus();
@@ -265,11 +267,12 @@ export class Jugador {
                     settings.estado.nivelSuperado = true;
                     settings.bandera[nivel] = true;
                     lanzar_fireWorks();
-                    settings.sonidos.intermision.play();
+                    settings.sonidos.fireWorks.play();
 
                     setTimeout(() => {
                         settings.estado.nivelSuperado = false;
-                    }, 9000);
+                        settings.sonidos.fireWorks.pause();
+                    }, settings.constante.pausaFireWorksNivelSuperado);
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
 
@@ -300,6 +303,8 @@ export class Jugador {
                 settings.sonidos.eatingGhost.play();
                 return true;
             }
+
+            if (!llave.accion_realizada) return true;
         }
         
         return false;
@@ -441,10 +446,8 @@ export class Jugador {
         if (!this.msg_NOllave) {
 
             this.msg_NOllave = true;
-            const x = this.rect.x - settings.constante.bsx * 3;
-            const y = this.rect.y - settings.constante.bsy;
-            
-            settings.objeto.textos.push(new Textos('Debes coger la llave...', x, y, 70, 'red'));
+
+            settings.objeto.textos.push(new Textos('Debes coger la llave...', 'center', 70, 'red'));
             //console.log(settings.objeto.textos.length);
 
             setTimeout(() => {

@@ -11,6 +11,8 @@ export class Settings {
             GRAVEDAD: 1,
             FPS: 60,
             nro_CHISPASfireWorks: 99,
+            pausaFireWorksNivelSuperado: 12000,
+            pausaMsgNivelMostrar: 7000,
             ancho_jugador: 120,
             alto_jugador: 150
         };
@@ -128,7 +130,8 @@ export class Settings {
             azul_fondo: 'rgb(134, 210, 230)',
             blanco_nube: 'rgb(233, 233, 233)',
             txt_amar2: 'rgb(240, 240, 170)',
-            txt_amar1: 'rgb(255, 89, 19)'
+            txt_amar1: 'rgb(255, 89, 19)',
+            txt_amar3: 'rgb(225, 155, 29)'
         };
 
         // -------------------------------------------------------------------
@@ -198,10 +201,13 @@ export class Settings {
         ];
 
         this.array_textos = [
-            [' Pulse agachar para realizar accion', -39, this.ini_suelo - this.constante.bsy, 55, this.colores.txt_amar1],
-            [' Primero debes coger la llave!', -32, this.ini_suelo - this.constante.bsy - 10, 60, this.colores.txt_amar1]
-            
+            [' Pulse agachar para realizar accion', 'center', 50, this.colores.txt_amar1],
+            [' N i v e l  ', 'center', 120, this.colores.txt_amar3]
         ];
+
+        this.msg = {
+            nivel: true
+        };
         
         this.array_bonus = [
             ['./img/items_ri.png', 35, this.ini_suelo, true],
@@ -229,7 +235,8 @@ export class Settings {
             pacmanDies: new Audio('./audio/pacmandies.ogg'),
             eatingCherry: new Audio('./audio/pacmaneatingcherry.mp3'),
             eatingGhost: new Audio('./audio/pacmaneatinghost.ogg'),
-            intermision: new Audio('./audio/pacmanintermision.ogg')
+            intermision: new Audio('./audio/pacmanintermision.ogg'),
+            fireWorks: new Audio('./audio/fireworks.mp3')
         };
 
         this.volumen = {
@@ -239,7 +246,8 @@ export class Settings {
             pacmanDies: 0.6,
             eatingCherry: 0.9,
             eatingGhost: 0.8,
-            intermision: 0.6
+            intermision: 0.6,
+            fireWorks: 0.9
         }
     }
 }
