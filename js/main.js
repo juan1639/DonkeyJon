@@ -112,7 +112,7 @@ window.onload = () => {
     // ---------------------------------------------------------------    
     for (let i = 0; i < settings.nro_enemigos.pajaros[nivel]; i ++) {
 
-        const posIniY = settings.ini_suelo - settings.gap * 7;
+        const posIniY = settings.ini_suelo - settings.gap * 7 - settings.constante.bsy;
         const id = Math.floor(Math.random()* 2);
 
         settings.objeto.pajaros.push(new Pajaros(id, posIniY));
@@ -152,6 +152,7 @@ window.onload = () => {
         settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
     }
 
+    // ---------------------------------------------------------------
     setTimeout(() => {
         settings.msg.nivel = false;
     }, settings.constante.pausaMsgNivelMostrar);

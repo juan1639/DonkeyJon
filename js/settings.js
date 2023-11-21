@@ -122,6 +122,7 @@ export class Settings {
         this.estado = {
             preJuego: false,
             enJuego: true,
+            jugadorDies: false,
             gameOver: false,
             nivelSuperado: false
         };

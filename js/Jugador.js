@@ -2,7 +2,7 @@ import { settings } from "./main.js";
 import { Textos } from './textos.js';
 import {
     checkColision,
-    lanzar_fireWorks
+    lanzar_fireWorks,
 } from "./functions.js";
 
 // ============================================================================
@@ -21,7 +21,8 @@ export class Jugador {
             escalera: [400, 0, 480, 0, false],
             escaleraQuieto: [400, 0, 400, 0, false],
             saltar: [80, 0, 160, 0, false],
-            celebrar: [560, 0, 640, 0, false]
+            celebrar: [560, 0, 640, 0, false],
+            dies: [320, 0, 0, 0, false]
         }
 
         this.rect = {
@@ -58,6 +59,8 @@ export class Jugador {
         this.accion_realizada = false;
         this.msg_NOllave = false;
 
+        this.duracion_dies = 4200;
+
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
         // (Poniendo los 4 atributos = 0 ... sería una colision estricta rectangular)
@@ -87,14 +90,14 @@ export class Jugador {
             obj1_hor: 0,
             obj1_ver: 0,
             obj2_hor: Math.floor(width / 8),
-            obj2_ver: Math.floor(height / 10)
+            obj2_ver: Math.floor(height / 8)
         }
 
         this.correcciones_pajaros = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 8),
-            obj2_ver: Math.floor(height / 10)
+            obj2_hor: Math.floor(width / 3),
+            obj2_ver: Math.floor(height / 5)
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -157,6 +160,9 @@ export class Jugador {
             
         } else if (this.ssheet.celebrar[4]) {
             return [this.ssheet.celebrar[i], this.ssheet.celebrar[i + 1]];
+
+        } else if (this.ssheet.dies[4]) {
+            return [this.ssheet.dies[i], this.ssheet.dies[i + 1]];
         }
 
         return [0, 0];
@@ -167,6 +173,12 @@ export class Jugador {
         if (settings.estado.nivelSuperado) {
             this.reset_ssheetBooleanos();
             this.ssheet.celebrar[4] = true;
+            return [0, 0];
+        }
+
+        if (settings.estado.jugadorDies) {
+            this.reset_ssheetBooleanos();
+            this.ssheet.dies[4] = true;
             return [0, 0];
         }
 
@@ -181,13 +193,6 @@ export class Jugador {
         dx = dxdy[0];
         dy = dxdy[1];
 
-        // -----------------------------------------------
-        if (!this.ssheet.escalera[4]) {
-
-            this.move.velYGrav -= settings.constante.GRAVEDAD;
-            dy += this.move.velYGrav;
-        }
-
         dx = this.check_limitesHorizontales(dx);
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
@@ -195,6 +200,13 @@ export class Jugador {
         this.col_bicho = this.check_colisionBichos();
         this.col_pajaro = this.check_colisionPajaros();
         this.col_bonus = this.check_colisionBonus();
+
+        // -----------------------------------------------
+        if (!this.ssheet.escalera[4]) {
+
+            this.move.velYGrav -= settings.constante.GRAVEDAD;
+            dy += this.move.velYGrav;
+        }
 
         //this.rect.x += dx;
         //this.rect.y += dy;
@@ -327,16 +339,23 @@ export class Jugador {
 
     check_colisionBichos() {
 
+        const dies = settings.estado.jugadorDies;
+
         for (let bichos of settings.objeto.bichos) {
 
-            if (checkColision(bichos, this, this.correcciones_bichos, 0)) {
+            if (checkColision(bichos, this, this.correcciones_bichos, 0) && !dies) {
 
                 const array_posValidas = this.averiguar_plataformas();
                 const pos_bicho = bichos.rect.y + bichos.rect.alto;
 
                 if (array_posValidas.includes(pos_bicho)) {
-                    this.ctx.fillStyle = 'red';
-                    this.ctx.fillRect(0, 0, 90, 90);
+                    //this.ctx.fillStyle = 'red';
+                    //this.ctx.fillRect(0, 0, 90, 90);
+                    settings.estado.jugadorDies = true;
+
+                    setTimeout(() => {
+                        settings.estado.jugadorDies = false;
+                    }, this.duracion_dies);
 
                     return true;
                 }
@@ -347,13 +366,20 @@ export class Jugador {
     }
 
     check_colisionPajaros() {
+        
+        const dies = settings.estado.jugadorDies;
 
         for (let pajaro of settings.objeto.pajaros) {
 
-            if (checkColision(pajaro, this, this.correcciones_pajaros, 0)) {
-                this.ctx.fillStyle = 'blue';
-                this.ctx.fillRect(0, 0, 90, 90);
-                
+            if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies) {
+                //this.ctx.fillStyle = 'blue';
+                //this.ctx.fillRect(0, 0, 90, 90);
+                settings.estado.jugadorDies = true;
+
+                setTimeout(() => {
+                    settings.estado.jugadorDies = false;
+                }, this.duracion_dies);
+
                 return true;
             }
         }
@@ -439,6 +465,8 @@ export class Jugador {
         this.ssheet.escalera[4] = false;
         this.ssheet.escaleraQuieto[4] = false;
         this.ssheet.saltar[4] = false;
+        this.ssheet.celebrar[4] = false;
+        this.ssheet.dies[4] = false;
     }
 
     mostrar_msg() {

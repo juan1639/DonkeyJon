@@ -20,43 +20,7 @@ export class Pajaros {
         this.max_recorrY = settings.constante.bsy * 3;
         this.recorrY = 0;
 
-        const rx = settings.resolucion[0];
-        const r = settings.resolucion[1];
-
-        this.array_posIni = [
-            [
-                -Math.floor(Math.random()* rx),
-                posIniY + Math.floor(Math.random()* r),
-                3, 0, true
-            ],
-            [
-                rx + Math.floor(Math.random()* rx),
-                posIniY + Math.floor(Math.random()* r),
-                -3, 0, false
-            ],
-            [
-                -Math.floor(Math.random()* rx),
-                posIniY + Math.floor(Math.random()* r),
-                4, 1, true
-            ],
-            [
-                Math.floor(Math.random()* rx) + this.ancho * 4,
-                posIniY + Math.floor(Math.random()* r),
-                -4, 1, false
-            ],
-            [
-                -Math.floor(Math.random()* rx),
-                posIniY + Math.floor(Math.random()* r),
-                5, 1, true
-            ],
-            [
-                rx + Math.floor(Math.random()* rx),
-                posIniY + Math.floor(Math.random()* r),
-                -5, 1, false
-            ]
-        ];
-
-        const posXY = this.selecc_posInicial();
+        const posXY = this.selecc_posInicial(posIniY);
 
         this.rect = {
             x: posXY[0],
@@ -163,9 +127,29 @@ export class Pajaros {
         }
     }
 
-    selecc_posInicial() {
-        const nro_rnd = Math.floor(Math.random() * this.array_posIni.length);
+    selecc_posInicial(posIniY) {
 
-        return this.array_posIni[nro_rnd];
+        const array_inicializaPajaro = [];
+
+        array_inicializaPajaro.push(Math.floor(Math.random()* settings.resolucion[0]));
+        array_inicializaPajaro.push(posIniY + Math.floor(Math.random()* settings.resolucion[1]));
+
+        if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {
+            array_inicializaPajaro.push(Math.floor(Math.random()* 7) + 2);
+
+        } else {
+            array_inicializaPajaro.push(-(Math.floor(Math.random()* 7) + 2));
+        }
+
+        array_inicializaPajaro.push(Math.floor(Math.random()* 3) - 1);
+
+        if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {
+            array_inicializaPajaro.push(true);
+
+        } else {
+            array_inicializaPajaro.push(false);
+        }
+
+        return array_inicializaPajaro;
     }
 }
