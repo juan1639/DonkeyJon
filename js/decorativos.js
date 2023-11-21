@@ -107,3 +107,38 @@ export class Decorativos {
         return this.img.src;
     }
 }
+
+// ============================================================================
+export class DecorativosOffGame {
+
+    constructor(id, left, top, width, height) {
+
+        this.anchoTile = settings.constante.bsx;
+        this.altoTile = settings.constante.bsy;
+        this.id = id;
+
+        this.ctx = settings.ctx;
+        this.img = new Image();
+        this.img.src = this.id;
+        
+        left -= width / 2;
+        top -= height / 1.7;
+
+        this.rect = {
+            x: Math.floor(left),
+            y: Math.floor(top),
+            ancho: width,
+            alto: height
+        }
+    }
+
+    dibuja(dxdy) {
+
+        this.rect.x += dxdy[0];
+        this.rect.y += dxdy[1];
+
+        if (settings.estado.preJuego) {
+            this.ctx.drawImage(this.img, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
+        }
+    }
+}

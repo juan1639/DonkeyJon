@@ -1,5 +1,6 @@
 import { settings } from "./main.js";
 import { Textos } from './textos.js';
+import { Boommerang } from "./boommerang.js";
 import {
     checkColision,
     lanzar_fireWorks,
@@ -22,7 +23,8 @@ export class Jugador {
             escaleraQuieto: [400, 0, 400, 0, false],
             saltar: [80, 0, 160, 0, false],
             celebrar: [560, 0, 640, 0, false],
-            dies: [320, 0, 0, 0, false]
+            dies: [320, 0, 0, 0, false],
+            atacando: [80, 0, 80, 0, false]
         }
 
         this.rect = {
@@ -58,6 +60,9 @@ export class Jugador {
 
         this.accion_realizada = false;
         this.msg_NOllave = false;
+
+        this.bandera_boommerang = false;
+        this.cadencia_boommerang = 199;
 
         this.duracion_dies = 4200;
 
@@ -109,6 +114,7 @@ export class Jugador {
         settings.sonidos.eatingGhost.volume = settings.volumen.eatingGhost;
         settings.sonidos.intermision.volume = settings.volumen.intermision;
         settings.sonidos.fireWorks.volume = settings.volumen.fireWorks;
+        settings.sonidos.ataque.volume = settings.volumen.ataque;
     }
 
     dibuja() {
@@ -163,6 +169,9 @@ export class Jugador {
 
         } else if (this.ssheet.dies[4]) {
             return [this.ssheet.dies[i], this.ssheet.dies[i + 1]];
+
+        } else if (this.ssheet.atacando[4]) {
+            return [this.ssheet.atacando[i], this.ssheet.atacando[i + 1]];
         }
 
         return [0, 0];
@@ -411,6 +420,10 @@ export class Jugador {
             this.reset_ssheetBooleanos();
             this.ssheet.andar[4] = true;
 
+            if (settings.controles.tecla_at || settings.controles.touch_at) {
+                this.inicializa_disparo();
+            }
+
             return [this.direcc_salto, dy];
         } 
             
@@ -453,9 +466,41 @@ export class Jugador {
             this.reset_ssheetBooleanos();
             this.ssheet.agachado[4] = true; 
             //dy = 0;
+
+        } else if (settings.controles.tecla_at || settings.controles.touch_at) {
+            this.inicializa_disparo();
         }
 
         return [dx, dy];
+    }
+
+    inicializa_disparo() {
+
+        this.reset_ssheetBooleanos();
+        this.ssheet.atacando[4] = true;
+
+        if (!this.bandera_boommerang) {
+            
+
+            this.bandera_boommerang = true;
+            const ruta = './img/boommerang_sheet.png';
+            let flip = -1;
+            let iniX = 0;
+            const iniY = Math.floor(this.rect.alto / 4);
+            
+            if (!this.move.flip) {
+                flip = 1;
+                iniX = Math.floor(this.rect.ancho / 2);
+            }
+
+            settings.objeto.boommerang.push(new Boommerang(ruta, this.rect.x + iniX, this.rect.y + iniY, flip, -1));
+
+            settings.sonidos.ataque.play();
+
+            setTimeout(() => {
+                this.bandera_boommerang = false;
+            }, this.cadencia_boommerang);
+        }
     }
 
     reset_ssheetBooleanos() {
@@ -467,6 +512,7 @@ export class Jugador {
         this.ssheet.saltar[4] = false;
         this.ssheet.celebrar[4] = false;
         this.ssheet.dies[4] = false;
+        this.ssheet.atacando[4] = false;
     }
 
     mostrar_msg() {

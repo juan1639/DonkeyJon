@@ -55,11 +55,13 @@ export class Settings {
             plataforma: [],
             escalera: [],
             jugador: null,
+            boommerang: [],
             bichos: [],
             pajaros: [],
             llave: null,
             bonus: [],
             decorativos: [],
+            decorativosOffgame: [],
             textos: [],
             chispa: []
         };
@@ -96,10 +98,12 @@ export class Settings {
             touch_de: false,
             touch_up: false,
             touch_do: false,
+            touch_at: false,
             tecla_iz: false,
             tecla_de: false,
             tecla_up: false,
-            tecla_do: false
+            tecla_do: false,
+            tecla_at: false
         };
 
         this.tecla = {
@@ -107,6 +111,7 @@ export class Settings {
             de: 'ArrowRight',
             up: 'ArrowUp',
             do: 'ArrowDown',
+            at: ['Control', ' '],
             enter: 'Enter',
         };
 
@@ -115,13 +120,14 @@ export class Settings {
             de: ['boton__ri', 'flecha__ri'],
             up: ['boton__up', 'flecha__up'],
             do: ['boton__do', 'flecha__do'],
+            at: ['boton__at', 'icono__at'],
             nextLevel: 'boton__NextLevel',
             newGame: 'boton__newGame'
         }
 
         this.estado = {
-            preJuego: false,
-            enJuego: true,
+            preJuego: true,
+            enJuego: false,
             jugadorDies: false,
             gameOver: false,
             nivelSuperado: false
@@ -207,7 +213,7 @@ export class Settings {
         ];
 
         this.msg = {
-            nivel: true
+            nivel: false
         };
         
         this.array_bonus = [
@@ -218,6 +224,10 @@ export class Settings {
             ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 4, true],
             ['./img/items_ri.png', 33, this.ini_suelo - this.gap * 5, true],
             ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true]
+        ];
+
+        this.array_decorativosOffgame = [
+            [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_presentacion.png', 400, 300]
         ];
 
         this.imagenes = {
@@ -232,23 +242,27 @@ export class Settings {
         this.sonidos = {
             gameOver: new Audio('./audio/gameoveretro.ogg'),
             jump: new Audio('./audio/jumpbros.ogg'),
+            ataque: new Audio('./audio/misc125.mp3'),
             marioTuberias: new Audio('./audio/mario_tuberias.ogg'),
             pacmanDies: new Audio('./audio/pacmandies.ogg'),
             eatingCherry: new Audio('./audio/pacmaneatingcherry.mp3'),
             eatingGhost: new Audio('./audio/pacmaneatinghost.ogg'),
             intermision: new Audio('./audio/pacmanintermision.ogg'),
-            fireWorks: new Audio('./audio/fireworks.mp3')
+            fireWorks: new Audio('./audio/fireworks.mp3'),
+            musicaFondo: new Audio('./audio/music-puzzle-game1.mp3')
         };
 
         this.volumen = {
             gameOver: 0.8,
             jump: 0.3,
+            ataque: 0.7,
             marioTuberias: 0.9,
             pacmanDies: 0.6,
             eatingCherry: 0.9,
             eatingGhost: 0.8,
             intermision: 0.6,
-            fireWorks: 0.9
+            fireWorks: 0.9,
+            musicaFondo: 0.5
         }
     }
 }

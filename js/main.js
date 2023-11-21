@@ -10,7 +10,7 @@ import { Bichos } from './bichos.js';
 import { Pajaros } from './pajaros.js';
 import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
-import { Decorativos } from './decorativos.js';
+import { Decorativos, DecorativosOffGame } from './decorativos.js';
 import { Textos } from './textos.js';
 import { Jugador } from './Jugador.js';
 
@@ -128,6 +128,15 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
+    for (let i of settings.array_decorativosOffgame) {
+        const id_dOff = i[2];
+        const rx = Math.floor(i[0]);
+        const ry = Math.floor(i[1]);
+
+        settings.objeto.decorativos.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
+    }
+
+    // ---------------------------------------------------------------
     for (let txt of settings.array_textos) {
         const alin = txt[1];
         const size = txt[2];
@@ -151,12 +160,7 @@ window.onload = () => {
 
         settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
     }
-
-    // ---------------------------------------------------------------
-    setTimeout(() => {
-        settings.msg.nivel = false;
-    }, settings.constante.pausaMsgNivelMostrar);
-
+    
     // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
@@ -193,6 +197,10 @@ function bucle_principal() {
     }
 
     dxdy = settings.objeto.jugador.dibuja();
+
+    for (let boommerang of settings.objeto.boommerang) {
+        boommerang.dibuja(dxdy);
+    }
     
     for (let decor of settings.objeto.decorativos) {
         decor.dibuja(dxdy);
@@ -207,6 +215,10 @@ function bucle_principal() {
     }
 
     settings.objeto.llave.dibuja(dxdy);
+
+    for (let decorOff of settings.objeto.decorativosOffgame) {
+        decorOff.dibuja(dxdy);
+    }
 }
 
 export { settings };

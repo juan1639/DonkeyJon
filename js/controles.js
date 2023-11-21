@@ -15,6 +15,15 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';
+
+            settings.msg.nivel = true;
+
+            setTimeout(() => {
+                settings.msg.nivel = false;
+            }, settings.constante.pausaMsgNivelMostrar);
+
+            settings.sonidos.musicaFondo.play();
+            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
 
     } else if (settings.estado.gameOver) {
@@ -44,6 +53,11 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
             //console.log('agachar');
             settings.controles.tecla_do = true;
         }
+
+        if (pulsacion === settings.tecla.at[0] || pulsacion === settings.tecla.at[1]) {
+            //console.log('atacar...');
+            settings.controles.tecla_at = true;
+        }
     }
 });
 
@@ -68,6 +82,11 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
             //console.log('endAgachar');
             settings.controles.tecla_do = false;
         }
+
+        if (event.key === settings.tecla.at[0] || event.key === settings.tecla.at[1]) {
+            // console.log('endAtacar');
+            settings.controles.tecla_at = false;
+        }
     }
 });
 
@@ -76,7 +95,7 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
 // 
 // ----------------------------------------------------------------------
 const eventos_touchStart = document.addEventListener('touchstart', (event) => {
-    // console.log(event.target.id, event.targetTouches, event);
+    //console.log(event.target.id, event.targetTouches, event);
     const touch = event.target.id;
 
     if (settings.estado.preJuego) {
@@ -85,6 +104,15 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';
+
+            settings.msg.nivel = true;
+
+            setTimeout(() => {
+                settings.msg.nivel = false;
+            }, settings.constante.pausaMsgNivelMostrar);
+            
+            settings.sonidos.musicaFondo.play();
+            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
         
     } else if (settings.estado.gameOver) {
@@ -113,6 +141,11 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
         } else if (touch === settings.touch.do[0] || touch === settings.touch.do[1]) {
             //console.log('arriba/saltar');
             settings.controles.touch_do = true;
+        }
+
+        if (touch === settings.touch.at[0] || touch === settings.touch.at[1]) {
+            //console.log('atacar...');
+            settings.controles.touch_at = true;
         }
     }
     
@@ -150,6 +183,11 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
         } else if (touchEnd === settings.touch.do[0] || touchEnd ===  settings.touch.do[1]) {
             //console.log('endUp');
             settings.controles.touch_do = false;
+        }
+
+        if (touchEnd === settings.touch.at[0] || touchEnd === settings.touch.at[1]) {
+            // console.log('endAtacar');
+            settings.controles.touch_at = false;
         }
     }
 });
