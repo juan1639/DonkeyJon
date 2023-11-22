@@ -16,6 +16,10 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
             settings.estado.enJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';
 
+            for (let bicho of settings.objeto.bichos) {
+                bicho.check_outOfLimits(true);
+            }
+
             settings.msg.nivel = true;
 
             setTimeout(() => {
@@ -104,6 +108,10 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';
+
+            for (let bicho of settings.objeto.bichos) {
+                bicho.check_outOfLimits(true);
+            }
 
             settings.msg.nivel = true;
 

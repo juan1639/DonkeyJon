@@ -1,3 +1,4 @@
+import { checkColision } from "./functions.js";
 import { settings } from "./main.js";
 
 // ============================================================================
@@ -27,6 +28,13 @@ export class Boommerang {
             anima: 0
         }
 
+        this.correcciones_pajaros = {
+            obj1_hor: 0,
+            obj1_ver: 0,
+            obj2_hor: Math.floor(this.rect.ancho / 7),
+            obj2_ver: Math.floor(this.rect.alto / 6)
+        }
+
         setInterval(() => {
             this.move.anima ++;
 
@@ -43,6 +51,7 @@ export class Boommerang {
         this.rect.y += this.move.velY;
 
         this.check_limites();
+        this.check_colisionPajaros();
 
         const clipX = this.move.anima * this.rect.anchoClip;
 
@@ -57,6 +66,22 @@ export class Boommerang {
 
         if (this.rect.x > limit_de || this.rect.x < -this.rect.ancho || this.rect.y > limit_do || this.rect.y < -this.rect.alto) {
             settings.objeto.boommerang.shift();
+        }
+    }
+
+    check_colisionPajaros() {
+
+        for (let pajaro of settings.objeto.pajaros) {
+
+            if (checkColision(pajaro, this, this.correcciones_pajaros, 0)) {
+                
+                console.log('colision Pajaro');
+
+                settings.objeto.boommerang.shift();
+                pajaro.abatido = true;
+                settings.sonidos.dieThrow1.play();
+                settings.sonidos.chips1.play();
+            }
         }
     }
 }

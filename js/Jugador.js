@@ -64,7 +64,7 @@ export class Jugador {
         this.bandera_boommerang = false;
         this.cadencia_boommerang = 199;
 
-        this.duracion_dies = 4200;
+        this.duracion_dies = 3200;
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -102,7 +102,7 @@ export class Jugador {
             obj1_hor: 0,
             obj1_ver: 0,
             obj2_hor: Math.floor(width / 3),
-            obj2_ver: Math.floor(height / 5)
+            obj2_ver: Math.floor(height / 4)
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -118,6 +118,8 @@ export class Jugador {
     }
 
     dibuja() {
+
+        if (!settings.estado.enJuego) return [0, 0];
 
         const dxdy = this.actualiza();
 
@@ -192,7 +194,6 @@ export class Jugador {
         }
 
         // -----------------------------------------------
-
         let dxdy = [0, 0];
         let dx = dxdy[0];
         let dy = dxdy[1];
@@ -335,9 +336,13 @@ export class Jugador {
 
         for (let bonus of settings.objeto.bonus) {
 
-            if (checkColision(bonus, this, this.correcciones_pajaros, 0)) {
-                this.ctx.fillStyle = 'green';
-                this.ctx.fillRect(0, 0, 90, 90);
+            if (checkColision(bonus, this, this.correcciones_pajaros, 0) && !bonus.accion_realizada) {
+                
+                settings.marcadores.puntos += 2000;
+                settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
+                bonus.accion_realizada = true;
+                settings.sonidos.chips1.play();
+                settings.sonidos.chips2.play();
                 
                 return true;
             }
@@ -358,12 +363,19 @@ export class Jugador {
                 const pos_bicho = bichos.rect.y + bichos.rect.alto;
 
                 if (array_posValidas.includes(pos_bicho)) {
-                    //this.ctx.fillStyle = 'red';
-                    //this.ctx.fillRect(0, 0, 90, 90);
+                    
                     settings.estado.jugadorDies = true;
 
+                    settings.sonidos.musicaFondo.pause();
+                    settings.sonidos.pacmanDies.play();
+
                     setTimeout(() => {
+                        for (let bicho of settings.objeto.bichos) {
+                            bicho.check_outOfLimits(true);
+                        }
+
                         settings.estado.jugadorDies = false;
+                        settings.sonidos.musicaFondo.play();
                     }, this.duracion_dies);
 
                     return true;
@@ -380,13 +392,20 @@ export class Jugador {
 
         for (let pajaro of settings.objeto.pajaros) {
 
-            if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies) {
-                //this.ctx.fillStyle = 'blue';
-                //this.ctx.fillRect(0, 0, 90, 90);
+            if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies && !pajaro.abatido) {
+                
                 settings.estado.jugadorDies = true;
 
+                settings.sonidos.musicaFondo.pause();
+                settings.sonidos.pacmanDies.play();
+
                 setTimeout(() => {
+                    for (let bicho of settings.objeto.bichos) {
+                        bicho.check_outOfLimits(true);
+                    }
+
                     settings.estado.jugadorDies = false;
+                    settings.sonidos.musicaFondo.play();
                 }, this.duracion_dies);
 
                 return true;

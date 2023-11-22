@@ -10,6 +10,7 @@ export class Pajaros {
         this.img.src = './img/bird64x72.png';
 
         this.id = id;
+        this.abatido = false;
 
         this.ancho = settings.constante.bsx;
         this.alto = settings.constante.bsy;
@@ -98,14 +99,21 @@ export class Pajaros {
         if (!this.move.activo) return;
 
         // -------------------------------------------
-        this.rect.x += this.move.velX;
-        this.recorrido += Math.abs(this.move.velX);
+        if (this.abatido) {
 
-        this.rect.y += this.move.velY;
-        this.recorrY ++;
+            this.rect.y += Math.abs(this.move.velX);
 
-        this.check_cambioY(this.recorrY);
-        this.check_cambioDireccion(this.recorrido);
+        } else {
+
+            this.rect.x += this.move.velX;
+            this.recorrido += Math.abs(this.move.velX);
+
+            this.rect.y += this.move.velY;
+            this.recorrY ++;
+
+            this.check_cambioY(this.recorrY);
+            this.check_cambioDireccion(this.recorrido);
+        }
     }
 
     check_cambioDireccion(recorrido) {

@@ -145,7 +145,7 @@ export class Bichos {
         this.rect.y += dy;
 
         this.check_cambioDireccion();
-        this.check_outOfLimits();
+        this.check_outOfLimits(false);
     }
 
     check_colisionPlataformas(dy) {
@@ -174,11 +174,11 @@ export class Bichos {
         }
     }
 
-    check_outOfLimits() {
+    check_outOfLimits(reset) {
 
         const limit_do = settings.resolucion[1] + settings.constante.bsx * 5;
 
-        if (this.rect.y > limit_do) {
+        if (this.rect.y > limit_do || reset) {
             this.rect.x = Math.floor(Math.random()* settings.resolucion[0]);
             this.rect.y = -settings.resolucion[1];
             this.move.activo = false;
