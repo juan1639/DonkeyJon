@@ -93,30 +93,32 @@ export class Pajaros {
 
     actualiza(dxdy) {
 
+        if (!this.move.activo) return;
+
         let dy = 0;
 
         this.rect.x += dxdy[0];
         this.rect.y += dxdy[1];
-
-        if (!this.move.activo) return;
-
+        
         // -------------------------------------------
         if (this.abatido) {
 
             this.rect.y += Math.abs(this.move.velX);
             
-            if (this.rect.y > settings.resolucion[1]) this.reset_pajaro();
-
+            if (this.rect.y > settings.resolucion[1]) this.reset_pajaro(0);
+            
         } else {
-
+            
             this.rect.x += this.move.velX;
             this.recorrido += Math.abs(this.move.velX);
-
+            
             this.rect.y += this.move.velY;
             this.recorrY ++;
-
+            
             this.check_cambioY(this.recorrY);
             this.check_cambioDireccion(this.recorrido);
+
+            if (this.rect.y > settings.resolucion[1]) this.reset_pajaro(0);
         }
     }
 
@@ -144,9 +146,9 @@ export class Pajaros {
         }
     }
 
-    reset_pajaro() {
+    reset_pajaro(posIniY) {
 
-        const posXY = this.selecc_posInicial(0);
+        const posXY = this.selecc_posInicial(posIniY);
 
         this.rect.x = posXY[0];
         this.rect.y = posXY[1];
@@ -168,25 +170,35 @@ export class Pajaros {
 
         const array_inicializaPajaro = [];
 
-        const nro_rnd = Math.floor(Math.random()* 2);
+        // -----------------------------------------------------------------
+        let nro_rnd = Math.floor(Math.random()* 2);
+
         if (nro_rnd === 0) {
-            array_inicializaPajaro.push(-settings.constante.bsx);
+            array_inicializaPajaro.push(-settings.constante.bsx * 2);
             
         } else {
-            array_inicializaPajaro.push(settings.resolucion[0]);
+            array_inicializaPajaro.push(settings.resolucion[0] - settings.constante.bsx * 2);
         }
+        
+        // -----------------------------------------------------------------
+        nro_rnd = Math.floor(settings.resolucion[1] / 3);
 
-        array_inicializaPajaro.push(posIniY + Math.floor(Math.random()* settings.resolucion[1]));
-
+        array_inicializaPajaro.push(posIniY + Math.floor(Math.random()* nro_rnd));
+        
+        // -----------------------------------------------------------------
+        const velocidadProgresiva = 5 + Math.floor(settings.marcadores.nivel / 3);
+        
         if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {
-            array_inicializaPajaro.push(Math.floor(Math.random()* 7) + 2);
-
+            array_inicializaPajaro.push(Math.floor(Math.random()* velocidadProgresiva) + 2);
+            
         } else {
-            array_inicializaPajaro.push(-(Math.floor(Math.random()* 7) + 2));
+            array_inicializaPajaro.push(-(Math.floor(Math.random()* velocidadProgresiva) + 2));
         }
-
+        
+        // -----------------------------------------------------------------
         array_inicializaPajaro.push(Math.floor(Math.random()* 3) - 1);
-
+        
+        // -----------------------------------------------------------------
         if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {
             array_inicializaPajaro.push(true);
 

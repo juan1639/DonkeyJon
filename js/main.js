@@ -112,8 +112,8 @@ window.onload = () => {
     // ---------------------------------------------------------------    
     for (let i = 0; i < settings.nro_enemigos.pajaros[nivel]; i ++) {
 
-        const posIniY = settings.ini_suelo - settings.gap * 7 - settings.constante.bsy;
-        const id = Math.floor(Math.random()* 2);
+        const posIniY = 0;
+        const id = Math.floor(Math.random()* settings.nro_bichos);
 
         settings.objeto.pajaros.push(new Pajaros(id, posIniY));
     }

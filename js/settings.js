@@ -10,6 +10,7 @@ export class Settings {
             nro_columnas: 16,
             GRAVEDAD: 1,
             FPS: 60,
+            nro_bichos: 2,
             nro_CHISPASfireWorks: 99,
             pausaFireWorksNivelSuperado: 12000,
             pausaMsgNivelMostrar: 7000,

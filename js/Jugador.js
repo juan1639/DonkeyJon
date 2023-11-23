@@ -4,6 +4,7 @@ import { Boommerang } from "./boommerang.js";
 import { ShowBonus } from "./showbonus.js";
 import {
     checkColision,
+    checkColision_abovePtos,
     lanzar_fireWorks,
 } from "./functions.js";
 
@@ -52,6 +53,7 @@ export class Jugador {
         this.saltando = false;
         this.direcc_salto = this.move.velX;
         this.potencia_salto = 16;
+        this.saltoBonus = [700, false];
 
         this.col_item = false;
         this.col_llave = false;
@@ -252,7 +254,10 @@ export class Jugador {
                     //dy = 0;
                     dy = this.rect.y + this.rect.alto - plataf.rect.y;
 
-                    if (this.saltando) this.saltando = false;
+                    if (this.saltando) {
+                        this.saltando = false;
+                        this.saltoBonus[1] = false;
+                    }
                 }
             }
         }
@@ -342,7 +347,7 @@ export class Jugador {
 
             if (checkColision(bonus, this, this.correcciones_pajaros, 0) && !bonus.accion_realizada) {
                 
-                settings.marcadores.puntos += 2000;
+                settings.marcadores.puntos += bonus.puntos;
                 settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
                 bonus.accion_realizada = true;
 
@@ -380,7 +385,7 @@ export class Jugador {
                 const pos_bicho = bichos.rect.y + bichos.rect.alto;
 
                 if (array_posValidas.includes(pos_bicho)) {
-                    
+
                     settings.estado.jugadorDies = true;
 
                     settings.sonidos.musicaFondo.pause();
@@ -392,7 +397,7 @@ export class Jugador {
                         }
 
                         for (let pajaro of settings.objeto.pajaros) {
-                            pajaro.reset_pajaro();
+                            pajaro.reset_pajaro(0);
                         }
 
                         settings.estado.jugadorDies = false;
@@ -426,7 +431,7 @@ export class Jugador {
                     }
 
                     for (let pajaro of settings.objeto.pajaros) {
-                        pajaro.reset_pajaro();
+                        pajaro.reset_pajaro(0);
                     }
 
                     settings.estado.jugadorDies = false;
@@ -463,6 +468,34 @@ export class Jugador {
         if (this.saltando) {
             this.reset_ssheetBooleanos();
             this.ssheet.andar[4] = true;
+
+            for (let bichos of settings.objeto.bichos) {
+
+                if (checkColision_abovePtos(bichos, this) && !this.saltoBonus[1]) {
+
+                    console.log('salto ptos');
+                    const id_bicho_ptos = [
+                        [400, 20],
+                        [200, 0]
+                    ];
+
+                    this.saltoBonus[1] = true;
+                    settings.marcadores.puntos += id_bicho_ptos[bichos.id][0];
+                    settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
+
+                    const gap = Math.floor(settings.constante.bsy / 3);
+                    const anchoIni = 15;
+                    const altoIni = 5;
+                    const sbx = 0;
+                    const sby = id_bicho_ptos[bichos.id][1];
+                    const anchoClip = 35;
+                    const altoClip = 20;
+                    const duracion = 1900;
+
+                    settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bichos.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
+
+                }
+            }
 
             if (settings.controles.tecla_at || settings.controles.touch_at) {
                 this.inicializa_disparo();

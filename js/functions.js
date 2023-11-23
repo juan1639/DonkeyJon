@@ -16,6 +16,15 @@ function checkColision(obj1, obj2, corr, dy) {
 }
 
 // ============================================================================
+function checkColision_abovePtos(obj1, obj2) {
+
+    return obj1.rect.x < obj2.rect.x + obj2.rect.ancho && 
+            obj1.rect.x + obj1.rect.ancho > obj2.rect.x &&
+            obj1.rect.y < obj2.rect.y + obj2.rect.alto * 2 && 
+            obj1.rect.y + obj1.rect.alto > obj2.rect.y;
+}
+
+// ============================================================================
 function lanzar_fireWorks() {
 
     const nroChispas = settings.constante.nro_CHISPASfireWorks;
@@ -53,6 +62,7 @@ function playSonidosLoop(sonido, loop, volumen) {
 export {
     borraCanvas,
     checkColision,
+    checkColision_abovePtos,
     lanzar_fireWorks,
     playSonidosLoop
 };

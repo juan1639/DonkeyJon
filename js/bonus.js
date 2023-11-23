@@ -23,7 +23,8 @@ export class Bonus {
             alto: this.altoTile
         }
 
-        const clipX = this.elegir_item(); 
+        const clipX = this.elegir_item();
+        this.puntos = 4000;
 
         this.clip = {
             x: clipX,
