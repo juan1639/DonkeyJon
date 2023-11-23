@@ -14,6 +14,8 @@ export class Bichos {
         this.max_recorrido = Math.floor(Math.random()* settings.resolucion[0]) + settings.resolucion[0];
         this.recorrido = 0;
 
+        this.abatido = false;
+
         this.ancho = settings.constante.bsx * 2;
         this.alto = settings.constante.bsy;
 
@@ -135,17 +137,27 @@ export class Bichos {
         if (!this.move.activo) return;
 
         // -------------------------------------------
-        this.rect.x += this.move.velX;
-        this.recorrido ++;
+        if (this.abatido) {
 
-        this.move.velY += settings.constante.GRAVEDAD;
-        dy += this.move.velY;
+            this.move.velY += settings.constante.GRAVEDAD;
+            this.rect.y += this.move.velY;
 
-        dy = this.check_colisionPlataformas(dy);
-        this.rect.y += dy;
+            if (this.rect.y > settings.resolucion[1]) this.check_outOfLimits(false);
 
-        this.check_cambioDireccion();
-        this.check_outOfLimits(false);
+        } else {
+
+            this.rect.x += this.move.velX;
+            this.recorrido ++;
+
+            this.move.velY += settings.constante.GRAVEDAD;
+            dy += this.move.velY;
+
+            dy = this.check_colisionPlataformas(dy);
+            this.rect.y += dy;
+
+            this.check_cambioDireccion();
+            this.check_outOfLimits(false);
+        }
     }
 
     check_colisionPlataformas(dy) {
@@ -185,6 +197,7 @@ export class Bichos {
 
             setTimeout(() => {
                 this.move.activo = true;
+                this.abatido = false;
             }, 2500);
         }
     }

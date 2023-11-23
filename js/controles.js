@@ -27,6 +27,7 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
             }, settings.constante.pausaMsgNivelMostrar);
 
             settings.sonidos.musicaFondo.play();
+            settings.sonidos.musicaFondo.loop = true;
             settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
 
@@ -120,6 +121,7 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             }, settings.constante.pausaMsgNivelMostrar);
             
             settings.sonidos.musicaFondo.play();
+            settings.sonidos.musicaFondo.loop = true;
             settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
         

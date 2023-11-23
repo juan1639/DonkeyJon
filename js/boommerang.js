@@ -52,6 +52,7 @@ export class Boommerang {
 
         this.check_limites();
         this.check_colisionPajaros();
+        this.check_colisionBichos();
 
         const clipX = this.move.anima * this.rect.anchoClip;
 
@@ -81,6 +82,22 @@ export class Boommerang {
                 pajaro.abatido = true;
                 settings.sonidos.dieThrow1.play();
                 settings.sonidos.chips1.play();
+            }
+        }
+    }
+
+    check_colisionBichos() {
+
+        for (let bicho of settings.objeto.bichos) {
+
+            if (checkColision(bicho, this, this.correcciones_pajaros, 0)) {
+                
+                console.log('colision Bicho');
+
+                settings.objeto.boommerang.shift();
+                bicho.abatido = true;
+                settings.sonidos.dieThrow1.play();
+                settings.sonidos.dieThrow2.play();
             }
         }
     }

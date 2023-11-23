@@ -67,6 +67,8 @@ export class Pajaros {
 
         this.actualiza(dxdy);
 
+        if (!this.move.activo) return;
+
         this.ctx.save();
 
         if (this.move.flip) {
@@ -102,6 +104,8 @@ export class Pajaros {
         if (this.abatido) {
 
             this.rect.y += Math.abs(this.move.velX);
+            
+            if (this.rect.y > settings.resolucion[1]) this.reset_pajaro();
 
         } else {
 
@@ -118,9 +122,14 @@ export class Pajaros {
 
     check_cambioDireccion(recorrido) {
 
-        if (recorrido >= this.max_recorrido) {
+        /* if (recorrido >= this.max_recorrido) {
 
             this.recorrido = 0;
+            this.move.velX = -this.move.velX;
+            this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
+        } */
+        
+        if ((this.rect.x >= settings.resolucion[0] - this.rect.ancho && this.move.velX > 0) || (this.rect.x <= 0 && this.move.velX < 0)) {
             this.move.velX = -this.move.velX;
             this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
         }
@@ -135,11 +144,38 @@ export class Pajaros {
         }
     }
 
+    reset_pajaro() {
+
+        const posXY = this.selecc_posInicial(0);
+
+        this.rect.x = posXY[0];
+        this.rect.y = posXY[1];
+        
+        this.move.velX = posXY[2];
+        this.move.velY = posXY[3];
+
+        this.move.flip = posXY[4];
+        this.move.anima = 0;
+        this.move.activo = false;
+        
+        setTimeout(() => {
+            this.abatido = false;
+            this.move.activo = true;
+        }, 5000);
+    }
+
     selecc_posInicial(posIniY) {
 
         const array_inicializaPajaro = [];
 
-        array_inicializaPajaro.push(Math.floor(Math.random()* settings.resolucion[0]));
+        const nro_rnd = Math.floor(Math.random()* 2);
+        if (nro_rnd === 0) {
+            array_inicializaPajaro.push(-settings.constante.bsx);
+            
+        } else {
+            array_inicializaPajaro.push(settings.resolucion[0]);
+        }
+
         array_inicializaPajaro.push(posIniY + Math.floor(Math.random()* settings.resolucion[1]));
 
         if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {

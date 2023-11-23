@@ -206,6 +206,10 @@ function bucle_principal() {
         decor.dibuja(dxdy);
     }
 
+    for (let showb of settings.objeto.showbonus) {
+        showb.dibuja(dxdy);
+    }
+
     for (let chispa of settings.objeto.chispa) {
         if (chispa) chispa.dibuja(dxdy);
     }

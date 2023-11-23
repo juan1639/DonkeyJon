@@ -1,6 +1,7 @@
 import { settings } from "./main.js";
 import { Textos } from './textos.js';
 import { Boommerang } from "./boommerang.js";
+import { ShowBonus } from "./showbonus.js";
 import {
     checkColision,
     lanzar_fireWorks,
@@ -62,7 +63,7 @@ export class Jugador {
         this.msg_NOllave = false;
 
         this.bandera_boommerang = false;
-        this.cadencia_boommerang = 199;
+        this.cadencia_boommerang = 425;
 
         this.duracion_dies = 3200;
 
@@ -94,15 +95,15 @@ export class Jugador {
         this.correcciones_bichos = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 8),
-            obj2_ver: Math.floor(height / 8)
+            obj2_hor: Math.floor(width / 4),
+            obj2_ver: Math.floor(height / 5)
         }
 
         this.correcciones_pajaros = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 3),
-            obj2_ver: Math.floor(height / 4)
+            obj2_hor: Math.floor(width / 4),
+            obj2_ver: Math.floor(height / 5)
         }
 
         this.intervalo_anima = setInterval(() => {
@@ -289,11 +290,14 @@ export class Jugador {
                     settings.estado.nivelSuperado = true;
                     settings.bandera[nivel] = true;
                     lanzar_fireWorks();
+                    settings.sonidos.musicaFondo.pause();
                     settings.sonidos.fireWorks.play();
 
                     setTimeout(() => {
                         settings.estado.nivelSuperado = false;
                         settings.sonidos.fireWorks.pause();
+                        settings.sonidos.musicaFondo.play();
+
                     }, settings.constante.pausaFireWorksNivelSuperado);
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
@@ -341,6 +345,19 @@ export class Jugador {
                 settings.marcadores.puntos += 2000;
                 settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
                 bonus.accion_realizada = true;
+
+                // 16, 370, (16,64,108,154,202)
+                const gap = Math.floor(settings.constante.bsy / 3);
+                const anchoIni = 30;
+                const altoIni = 10;
+                const sbx = 15;
+                const sby = 368;
+                const anchoClip = 44;
+                const altoClip = 15;
+                const duracion = 2800;
+
+                settings.objeto.showbonus.push(new ShowBonus('./img/items_ri.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
+
                 settings.sonidos.chips1.play();
                 settings.sonidos.chips2.play();
                 
@@ -357,7 +374,7 @@ export class Jugador {
 
         for (let bichos of settings.objeto.bichos) {
 
-            if (checkColision(bichos, this, this.correcciones_bichos, 0) && !dies) {
+            if (checkColision(bichos, this, this.correcciones_bichos, 0) && !dies && !this.ssheet.agachado[4] && !bichos.abatido) {
 
                 const array_posValidas = this.averiguar_plataformas();
                 const pos_bicho = bichos.rect.y + bichos.rect.alto;
@@ -372,6 +389,10 @@ export class Jugador {
                     setTimeout(() => {
                         for (let bicho of settings.objeto.bichos) {
                             bicho.check_outOfLimits(true);
+                        }
+
+                        for (let pajaro of settings.objeto.pajaros) {
+                            pajaro.reset_pajaro();
                         }
 
                         settings.estado.jugadorDies = false;
@@ -392,7 +413,7 @@ export class Jugador {
 
         for (let pajaro of settings.objeto.pajaros) {
 
-            if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies && !pajaro.abatido) {
+            if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies && !this.ssheet.agachado[4] && !pajaro.abatido) {
                 
                 settings.estado.jugadorDies = true;
 
@@ -402,6 +423,10 @@ export class Jugador {
                 setTimeout(() => {
                     for (let bicho of settings.objeto.bichos) {
                         bicho.check_outOfLimits(true);
+                    }
+
+                    for (let pajaro of settings.objeto.pajaros) {
+                        pajaro.reset_pajaro();
                     }
 
                     settings.estado.jugadorDies = false;
