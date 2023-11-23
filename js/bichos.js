@@ -4,26 +4,24 @@ import { checkColision } from "./functions.js";
 // ============================================================================
 export class Bichos {
 
-    constructor(id, posIniX, posIniY) {
+    constructor(id, indice) {
 
         this.ctx = settings.ctx;
         this.img = new Image();
         this.img.src = './img/Ssheet_platD.png';
 
         this.id = id;
-        this.max_recorrido = Math.floor(Math.random()* settings.resolucion[0]) + settings.resolucion[0];
-        this.recorrido = 0;
-
+        this.indice = indice;
         this.abatido = false;
 
         this.ancho = settings.constante.bsx * 2;
         this.alto = settings.constante.bsy;
 
-        this.elegir_ssheetId();
+        this.elegir_ssheetId(this.id);
 
         this.rect = {
-            x: posIniX,
-            y: posIniY,
+            x: 0,
+            y: 0,
             ancho: this.ancho,
             alto: this.alto,
             clipX: 270,
@@ -35,7 +33,10 @@ export class Bichos {
         // ---------------------------------------------------------------------
         // Id --> 0 Mariq, 1 Carac, 
         // ---------------------------------------------------------------------
-        const velocidades = [[3, 4], [1, 2]];
+        const velocidades = [
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2]
+        ];
         const nro_rnd = Math.floor(Math.random()* velocidades[this.id].length);
 
         this.move = {
@@ -46,6 +47,8 @@ export class Bichos {
             flip: true,
             anima: 0
         }
+
+        this.check_outOfLimits(true);
 
         // --------------------------------------------------------------------------
         // Correcciones en las colisiones
@@ -82,6 +85,8 @@ export class Bichos {
 
         this.actualiza(dxdy);
 
+        if (!this.move.activo) return;
+
         this.ctx.save();
 
         if (this.move.flip) {
@@ -113,14 +118,14 @@ export class Bichos {
         return [0, 0];
     }
 
-    elegir_ssheetId() {
+    elegir_ssheetId(id) {
 
-        if (this.id === 0) {
+        if (id === 0) {
             this.ssheet = {
                 andando: [270, 320, 270, 580, true],
             }
 
-        } else if (this.id === 1) {
+        } else if (id === 1) {
             this.ssheet = {
                 andando: [5, 830, 5, 960, true],
             }
@@ -178,27 +183,52 @@ export class Bichos {
 
     check_cambioDireccion() {
 
-        if (this.recorrido > this.max_recorrido) {
+        if ((this.rect.x === Math.floor(settings.resolucion[0] / 8) && this.move.velX < 0) || (this.rect.x === Math.floor(settings.resolucion[0] / 1.3) && this.move.velX > 0)) {
 
-            this.recorrido = 0;
-            this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
-            this.move.velX *= -1;
+            if (Math.floor(Math.random()* 9) < 1) {
+                this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
+                this.move.velX *= -1;
+            }
         }
     }
 
     check_outOfLimits(reset) {
 
-        const limit_do = settings.resolucion[1] + settings.constante.bsx * 5;
+        const limit_do = settings.resolucion[1] + settings.constante.bsx * 3;
 
         if (this.rect.y > limit_do || reset) {
-            this.rect.x = Math.floor(Math.random()* settings.resolucion[0]);
-            this.rect.y = -settings.resolucion[1];
+
+            const rangoX = Math.floor(settings.resolucion[0] / 4);
+            this.rect.x = Math.floor(Math.random()* rangoX);
+            this.move.velX = Math.abs(this.move.velX);
+            this.move.flip = true;
+
+            if (Math.floor(Math.random()* 9) < 5) {
+                this.rect.x = settings.resolucion[0] - settings.constante.bsx - this.rect.x;
+                this.move.velX = Math.abs(this.move.velX) * -1;
+                this.move.flip = false;
+            }
+
+            this.rect.y = -settings.constante.bsy * 2;
+
+            // this.move.velY = 0;
             this.move.activo = false;
+
+            if (Math.floor(Math.random()* 9) < 5) {
+                this.id = 0;
+                this.elegir_ssheetId(this.id);
+                
+            } else {
+                this.id = 1;
+                this.elegir_ssheetId(this.id);
+            }
+
+            const callBack = 1200 + Math.floor(Math.random()* 1000);
 
             setTimeout(() => {
                 this.move.activo = true;
                 this.abatido = false;
-            }, 2500);
+            }, callBack);
         }
     }
 }

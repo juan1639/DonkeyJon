@@ -15,9 +15,6 @@ export class Pajaros {
         this.ancho = settings.constante.bsx;
         this.alto = settings.constante.bsy;
 
-        this.max_recorrido = settings.resolucion[0] * 4;
-        this.recorrido = 0;
-
         this.max_recorrY = settings.constante.bsy * 3;
         this.recorrY = 0;
 
@@ -103,7 +100,9 @@ export class Pajaros {
         // -------------------------------------------
         if (this.abatido) {
 
-            this.rect.y += Math.abs(this.move.velX);
+            // this.rect.y += Math.abs(this.move.velX);
+            this.move.velY += settings.constante.GRAVEDAD;
+            this.rect.y += this.move.velY;
             
             if (this.rect.y > settings.resolucion[1]) this.reset_pajaro(0);
             
@@ -116,21 +115,14 @@ export class Pajaros {
             this.recorrY ++;
             
             this.check_cambioY(this.recorrY);
-            this.check_cambioDireccion(this.recorrido);
+            this.check_cambioDireccion();
 
             if (this.rect.y > settings.resolucion[1]) this.reset_pajaro(0);
         }
     }
 
-    check_cambioDireccion(recorrido) {
+    check_cambioDireccion() {
 
-        /* if (recorrido >= this.max_recorrido) {
-
-            this.recorrido = 0;
-            this.move.velX = -this.move.velX;
-            this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
-        } */
-        
         if ((this.rect.x >= settings.resolucion[0] - this.rect.ancho && this.move.velX > 0) || (this.rect.x <= 0 && this.move.velX < 0)) {
             this.move.velX = -this.move.velX;
             this.move.flip = this.move.flip ? this.move.flip = false : this.move.flip = true;
@@ -186,7 +178,7 @@ export class Pajaros {
         array_inicializaPajaro.push(posIniY + Math.floor(Math.random()* nro_rnd));
         
         // -----------------------------------------------------------------
-        const velocidadProgresiva = 5 + Math.floor(settings.marcadores.nivel / 3);
+        const velocidadProgresiva = 2 + Math.floor(settings.marcadores.nivel / 3);
         
         if (array_inicializaPajaro[0] < settings.resolucion[0] / 2) {
             array_inicializaPajaro.push(Math.floor(Math.random()* velocidadProgresiva) + 2);

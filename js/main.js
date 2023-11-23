@@ -98,24 +98,20 @@ window.onload = () => {
 
     // ---------------------------------------------------------------
     const nivel = settings.marcadores.nivel - 1;
-    const rangoX = settings.resolucion[0] * 3;
     
     for (let i = 0; i < settings.nro_enemigos.mariq[nivel]; i ++) {
 
-        const posIniX = (Math.floor(Math.random()* rangoX) - (rangoX / 3));
-        const posIniY = settings.ini_suelo - settings.gap * 5 - settings.constante.bsy;
-        const id = Math.floor(Math.random()* 2);
+        const id = Math.floor(Math.random()* settings.constante.nro_bichos);
 
-        settings.objeto.bichos.push(new Bichos(id, posIniX, posIniY));
+        settings.objeto.bichos.push(new Bichos(id));
     }
 
     // ---------------------------------------------------------------    
     for (let i = 0; i < settings.nro_enemigos.pajaros[nivel]; i ++) {
 
         const posIniY = 0;
-        const id = Math.floor(Math.random()* settings.nro_bichos);
 
-        settings.objeto.pajaros.push(new Pajaros(id, posIniY));
+        settings.objeto.pajaros.push(new Pajaros(i, posIniY));
     }
 
     // ---------------------------------------------------------------
@@ -147,8 +143,8 @@ window.onload = () => {
     
     // ---------------------------------------------------------------
     const id_llave = './img/keyYellow.png';
-    const llx = 1 * settings.constante.bsx;
-    const lly = settings.ini_suelo - settings.gap * 5;
+    const llx = -8 * settings.constante.bsx;
+    const lly = settings.ini_suelo - settings.gap * 4 - settings.constante.bsy * 3;
 
     settings.objeto.llave = new Llave(id_llave, llx, lly, true);
 

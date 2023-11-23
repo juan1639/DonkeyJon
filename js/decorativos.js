@@ -70,6 +70,9 @@ export class Decorativos {
 
         } else if (this.id.slice(0, 12) === './img/lockYe') {
             return [this.anchoTile * 2, this.altoTile * 2];
+
+        } else if (this.id.slice(0, 12) === './img/signLe' || this.id.slice(0, 12) === './img/signRi') {
+            return [this.anchoTile * 2, this.altoTile * 2];
         }
 
         return [this.anchoTile * 2, this.altoTile * 4];

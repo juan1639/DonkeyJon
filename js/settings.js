@@ -1,3 +1,4 @@
+
 // ============================================================================
 export class Settings {
 
@@ -90,9 +91,9 @@ export class Settings {
         };
 
         this.nro_enemigos = {
-            mariq: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
-            carac: [4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9],
-            pajaros: [3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7]
+            mariq: [2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+            carac: [2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+            pajaros: [2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5]
         };
 
         this.controles = {
@@ -159,6 +160,8 @@ export class Settings {
             [this.ini_suelo - this.gap * 5, 8, 20, true, true, 0, 6],
             [this.ini_suelo - this.gap * 5, 32, 8, true, true, 0, 6],
 
+            [this.ini_suelo - this.gap * 4 - this.gapMini - this.constante.bsy, -9, 3, true, true, 0, 6],
+
             [this.ini_suelo - this.gap * 4, -6, 24, true, true, 0, 6],
             [this.ini_suelo - this.gap * 4, 22, 26, true, false, 0, 6],
 
@@ -194,16 +197,18 @@ export class Settings {
             [-15, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
             [-15, this.ini_suelo - this.gap * 3, 1, './img/Letrero_IMI.png', false],
             [31, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
+            [6, this.ini_suelo - this.gap * 2, 1, './img/signArrow_up.png', false],
+            [10, this.ini_suelo - this.gap * 2, 1, './img/signArrow_right.png', false],
             [-7, this.ini_suelo, 1, './img/signArrow_TR.png', false],
             [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
             [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png', false],
             [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png', false],
             [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
-            [34, this.ini_suelo - this.gap * 6, 1, './img/signArrow_left.png', false],
-            [9, this.ini_suelo - this.gap * 5, 1, './img/signArrow_left.png', false],
+            [34, this.ini_suelo - this.gap * 6, 1, './img/signLeft.png', false],
+            [9, this.ini_suelo - this.gap * 5, 1, './img/signLeft.png', false],
             [37, this.ini_suelo - this.gap * 6, 1, './img/Letrero_Arlekin.png', false],
 
-            [-6, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true],
+            [2, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true],
 
             [-12, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
             [-10, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
