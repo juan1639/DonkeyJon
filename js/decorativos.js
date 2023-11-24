@@ -122,6 +122,7 @@ export class DecorativosOffGame {
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
         this.id = id;
+        console.log(this.id);
 
         this.ctx = settings.ctx;
         this.img = new Image();
@@ -143,8 +144,11 @@ export class DecorativosOffGame {
         this.rect.x += dxdy[0];
         this.rect.y += dxdy[1];
 
-        if (settings.estado.preJuego) {
+        /* if ((settings.estado.preJuego && this.id.slice(6, 21) === 'cartel_presenta') ||
+            (settings.estado.gameOver && this.id === './img/cartel_gameover.png')) {
             this.ctx.drawImage(this.img, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
-        }
+        } */
+
+        this.ctx.drawImage(this.img, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
     }
 }

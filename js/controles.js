@@ -12,9 +12,11 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
     if (settings.estado.preJuego) {
 
         if (pulsacion === settings.tecla.enter) {
+
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
+            settings.objeto.decorativosOffgame.pop();
+            // settings.marcadores.botonNewGame.style.display = 'none';
 
             for (let bicho of settings.objeto.bichos) {
                 bicho.check_outOfLimits(true);
@@ -31,7 +33,7 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
             settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
 
-    } else if (settings.estado.gameOver) {
+    } else if (settings.estado.reJugar) {
 
         if (pulsacion === settings.tecla.enter) {
             settings.estado.gameOver = false;
@@ -62,6 +64,17 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
         if (pulsacion === settings.tecla.at[0] || pulsacion === settings.tecla.at[1]) {
             //console.log('atacar...');
             settings.controles.tecla_at = true;
+        }
+
+        if (pulsacion === settings.tecla.music_onoff[0] || pulsacion === settings.tecla.music_onoff[1]) {
+            console.log('musica');
+            
+            if (settings.sonidos.musicaFondo.paused) {
+                settings.sonidos.musicaFondo.play();
+
+            } else {
+                settings.sonidos.musicaFondo.pause();
+            }
         }
     }
 });
@@ -105,10 +118,12 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
 
     if (settings.estado.preJuego) {
 
-        if (touch === settings.touch.newGame) {
+        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
+            
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
+            settings.objeto.decorativosOffgame.pop();
+            // settings.marcadores.botonNewGame.style.display = 'none';
 
             for (let bicho of settings.objeto.bichos) {
                 bicho.check_outOfLimits(true);
@@ -125,9 +140,9 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
         
-    } else if (settings.estado.gameOver) {
+    } else if (settings.estado.reJugar) {
 
-        if (touch === settings.touch.newGame) {
+        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
             settings.estado.gameOver = false;
             settings.estado.preJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';
@@ -156,6 +171,17 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
         if (touch === settings.touch.at[0] || touch === settings.touch.at[1]) {
             //console.log('atacar...');
             settings.controles.touch_at = true;
+        }
+
+        if (touch === settings.touch.music_onoff) {
+            //console.log('musica');
+
+            if (settings.sonidos.musicaFondo.paused) {
+                settings.sonidos.musicaFondo.play();
+
+            } else {
+                settings.sonidos.musicaFondo.pause();
+            }
         }
     }
     
@@ -212,10 +238,11 @@ const eventos_click = document.addEventListener('click', (event) => {
 
     if (settings.estado.preJuego) {
 
-        if (clickar === settings.touch.newGame) {
+        if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
             settings.estado.preJuego = false;
             settings.estado.enJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
+            settings.objeto.decorativosOffgame.pop();
+            // settings.marcadores.botonNewGame.style.display = 'none';
 
             for (let bicho of settings.objeto.bichos) {
                 bicho.check_outOfLimits(true);
@@ -232,9 +259,9 @@ const eventos_click = document.addEventListener('click', (event) => {
             settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
         }
         
-    } else if (settings.estado.gameOver) {
+    } else if (settings.estado.reJugar) {
 
-        if (clickar === settings.touch.newGame) {
+        if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
             settings.estado.gameOver = false;
             settings.estado.preJuego = true;
             settings.marcadores.botonNewGame.style.display = 'none';

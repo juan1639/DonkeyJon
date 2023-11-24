@@ -1,5 +1,6 @@
-import { checkColision } from "./functions.js";
 import { settings } from "./main.js";
+import { checkColision } from "./functions.js";
+import { ShowBonus } from "./showbonus.js";
 
 // ============================================================================
 export class Boommerang {
@@ -80,6 +81,21 @@ export class Boommerang {
 
                 settings.objeto.boommerang.shift();
                 pajaro.abatido = true;
+
+                settings.marcadores.puntos += 800;
+                settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
+
+                const gap = 0;
+                const anchoIni = 15;
+                const altoIni = 5;
+                const sbx = 0;
+                const sby = 40;
+                const anchoClip = 35;
+                const altoClip = 20;
+                const duracion = 2100;
+
+                settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', pajaro.rect.x, pajaro.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
+                
                 settings.sonidos.dieThrow1.play();
                 settings.sonidos.chips1.play();
             }

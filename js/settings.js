@@ -62,6 +62,7 @@ export class Settings {
             pajaros: [],
             llave: null,
             bonus: [],
+            lossiete: [],
             showbonus: [],
             decorativos: [],
             decorativosOffgame: [],
@@ -116,7 +117,8 @@ export class Settings {
             up: 'ArrowUp',
             do: 'ArrowDown',
             at: ['Control', ' '],
-            enter: 'Enter',
+            music_onoff: ['s', 'S'],
+            enter: 'Enter'
         };
 
         this.touch = {
@@ -125,8 +127,11 @@ export class Settings {
             up: ['boton__up', 'flecha__up'],
             do: ['boton__do', 'flecha__do'],
             at: ['boton__at', 'icono__at'],
+            music_onoff: 'boton__music',
             nextLevel: 'boton__NextLevel',
-            newGame: 'boton__newGame'
+            newGame: 'boton__newGame',
+            canvas: 'canvas'
+
         }
 
         this.estado = {
@@ -134,6 +139,7 @@ export class Settings {
             enJuego: false,
             jugadorDies: false,
             gameOver: false,
+            reJugar: false,
             nivelSuperado: false
         };
         
@@ -235,7 +241,8 @@ export class Settings {
         ];
 
         this.array_decorativosOffgame = [
-            [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_presentacion.png', 400, 300]
+            [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_presentacion.png', 400, 300],
+            [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_gameover.png', 400, 140]
         ];
 
         this.imagenes = {

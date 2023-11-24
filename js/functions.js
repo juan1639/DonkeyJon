@@ -1,21 +1,20 @@
 import { settings } from './main.js';
 import { FireWorks } from "./fireworks.js";
+import { Textos } from './textos.js';
 
 // ============================================================================
 //  Funciones varias
 // 
-// ----------------------------------------------------------------------------
-
 // ============================================================================
 function checkColision(obj1, obj2, corr, dy) {
-
+    
     return obj1.rect.x + corr.obj1_hor < obj2.rect.x + obj2.rect.ancho - corr.obj2_hor && 
             obj1.rect.x + obj1.rect.ancho - corr.obj1_hor > obj2.rect.x + corr.obj2_hor &&
             obj1.rect.y + corr.obj1_ver < obj2.rect.y + dy + obj2.rect.alto - corr.obj2_ver && 
             obj1.rect.y + obj1.rect.alto - corr.obj1_ver > obj2.rect.y + dy + corr.obj2_ver;
 }
 
-// ============================================================================
+// ----------------------------------------------------------------------------
 function checkColision_abovePtos(obj1, obj2) {
 
     // En la 3ra linea del return la diferencia es --- obj2.rect.alto * 2 ---
@@ -43,6 +42,23 @@ function lanzar_fireWorks() {
 }
 
 // ============================================================================
+function check_gameOver() {
+
+    if (settings.marcadores.vidas < 0 && settings.estado.enJuego) {
+        settings.estado.enJuego = false;
+        settings.estado.gameOver = true;
+
+        const txt = 'Toque Pantalla o pulse ENTER para jugar volver a jugar...';
+
+        setTimeout(() => {
+            settings.estado.gameOver = false;
+            settings.estado.reJugar = true;
+            settings.objeto.textos.push(new Textos(txt, 'center', 27, 'rgb(240, 49, 19)'));
+        }, 5000);
+    }
+}
+
+// ============================================================================
 function reescalaCanvas() {
     return;
 }
@@ -65,6 +81,7 @@ export {
     borraCanvas,
     checkColision,
     checkColision_abovePtos,
+    check_gameOver,
     lanzar_fireWorks,
     playSonidosLoop
 };

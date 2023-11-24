@@ -10,6 +10,7 @@ import { Bichos } from './bichos.js';
 import { Pajaros } from './pajaros.js';
 import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
+import { LosSiete } from './lossiete.js';
 import { Decorativos, DecorativosOffGame } from './decorativos.js';
 import { Textos } from './textos.js';
 import { ShowVidas } from './showvidas.js';
@@ -17,7 +18,8 @@ import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
 import { 
-    borraCanvas
+    borraCanvas,
+    check_gameOver
 } from "./functions.js";
 
 // ----------------------------------------------------------------------------
@@ -126,13 +128,12 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
-    for (let i of settings.array_decorativosOffgame) {
-        const id_dOff = i[2];
-        const rx = Math.floor(i[0]);
-        const ry = Math.floor(i[1]);
+    let i = settings.array_decorativosOffgame[0];
+    const id_dOff = i[2];
+    const rx = Math.floor(i[0]);
+    const ry = Math.floor(i[1]);
 
-        settings.objeto.decorativos.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
-    }
+    settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
 
     // ---------------------------------------------------------------
     for (let txt of settings.array_textos) {
@@ -157,6 +158,12 @@ window.onload = () => {
         const bonY = bonus[2];
 
         settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
+    }
+
+    // ---------------------------------------------------------------
+    for (let i = 0; i < settings.array_bonus.length; i ++) {
+
+        settings.objeto.lossiete.push(new LosSiete(i, 50 * i, 0));
     }
 
     // ---------------------------------------------------------------
@@ -212,6 +219,10 @@ function bucle_principal() {
         decor.dibuja(dxdy);
     }
 
+    for (let los7 of settings.objeto.lossiete) {
+        los7.dibuja();
+    }
+
     for (let showb of settings.objeto.showbonus) {
         showb.dibuja(dxdy);
     }
@@ -233,6 +244,8 @@ function bucle_principal() {
     for (let decorOff of settings.objeto.decorativosOffgame) {
         decorOff.dibuja(dxdy);
     }
+
+    check_gameOver();
 }
 
 export { settings };

@@ -115,7 +115,7 @@ BOTONES < CONTROLES & NUEVA PARTIDA >
 }
 
 .NewGame {
-	display: flex;
+	display: none;
 	color: #FFFFA5; 
 	background-color: #ff3010;
 	text-shadow: 2px 2px 2px black;
@@ -150,8 +150,18 @@ BOTONES < CONTROLES & NUEVA PARTIDA >
 }
 
 #boton__up {
-	width: 100%;
+	width: 33%;
 	border-radius: 90% 90% 0 0;
+}
+
+#boton__at {
+	width: 32%;
+	border-radius: 0 70% 0 0;
+}
+
+#boton__music {
+	width: 32%;
+	border-radius: 70% 0 0 0;
 }
 
 #boton__do {

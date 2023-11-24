@@ -24,6 +24,7 @@ export class Bonus {
         }
 
         const clipX = this.elegir_item();
+        this.colorId = (clipX - 8) / 32;
         this.puntos = 4000;
 
         this.clip = {

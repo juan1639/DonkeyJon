@@ -2,6 +2,7 @@ import { settings } from "./main.js";
 import { Textos } from './textos.js';
 import { Boommerang } from "./boommerang.js";
 import { ShowBonus } from "./showbonus.js";
+import { DecorativosOffGame } from "./decorativos.js";
 import {
     checkColision,
     checkColision_abovePtos,
@@ -118,6 +119,7 @@ export class Jugador {
         settings.sonidos.intermision.volume = settings.volumen.intermision;
         settings.sonidos.fireWorks.volume = settings.volumen.fireWorks;
         settings.sonidos.ataque.volume = settings.volumen.ataque;
+        settings.sonidos.gameOver.volume = settings.volumen.gameOver;
     }
 
     dibuja() {
@@ -363,6 +365,8 @@ export class Jugador {
 
                 settings.objeto.showbonus.push(new ShowBonus('./img/items_ri.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
 
+                settings.objeto.lossiete[bonus.colorId].mostrar = true;
+
                 settings.sonidos.chips1.play();
                 settings.sonidos.chips2.play();
                 
@@ -387,7 +391,7 @@ export class Jugador {
                 if (array_posValidas.includes(pos_bicho)) {
 
                     settings.estado.jugadorDies = true;
-
+                    bichos.abatido = true;                  
                     settings.sonidos.musicaFondo.pause();
                     settings.sonidos.pacmanDies.play();
 
@@ -422,7 +426,7 @@ export class Jugador {
             if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies && !this.ssheet.agachado[4] && !pajaro.abatido) {
                 
                 settings.estado.jugadorDies = true;
-
+                pajaro.abatido = true;
                 settings.sonidos.musicaFondo.pause();
                 settings.sonidos.pacmanDies.play();
 
@@ -618,8 +622,22 @@ export class Jugador {
     }
 
     revivir_jugador_preparado() {
+
         settings.estado.jugadorDies = false;
         settings.marcadores.vidas --;
+
+        if (settings.marcadores.vidas < 0) {
+
+            let i = settings.array_decorativosOffgame[1];
+            const id_dOff = i[2];
+            const rx = Math.floor(i[0]);
+            const ry = Math.floor(i[1]);
+
+            settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
+            settings.sonidos.gameOver.play();
+            return;
+        }
+
         settings.marcadores.scoreVidas.innerHTML = 'Vidas: ' + settings.marcadores.vidas.toString();
         settings.objeto.showvidas.pop();
         settings.sonidos.musicaFondo.play();
