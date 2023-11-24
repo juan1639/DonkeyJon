@@ -493,7 +493,6 @@ export class Jugador {
                     const duracion = 1900;
 
                     settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bichos.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
-
                 }
             }
 
@@ -557,7 +556,6 @@ export class Jugador {
         this.ssheet.atacando[4] = true;
 
         if (!this.bandera_boommerang) {
-            
 
             this.bandera_boommerang = true;
             const ruta = './img/boommerang_sheet.png';

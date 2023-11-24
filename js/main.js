@@ -24,7 +24,8 @@ import {
     eventos_touchStart,
     eventos_touchEnd,
     eventos_keyDown,
-    eventos_keyUp
+    eventos_keyUp,
+    eventos_click
 } from "./controles.js";
 
 // ----------------------------------------------------------------------------

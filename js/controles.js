@@ -202,9 +202,60 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
     }
 });
 
+// ----------------------------------------------------------------------
+//  EVENTOS Click
+// 
+// ----------------------------------------------------------------------
+const eventos_click = document.addEventListener('click', (event) => {
+    //console.log(event.target.id, event.targetTouches, event);
+    const clickar = event.target.id;
+
+    if (settings.estado.preJuego) {
+
+        if (clickar === settings.touch.newGame) {
+            settings.estado.preJuego = false;
+            settings.estado.enJuego = true;
+            settings.marcadores.botonNewGame.style.display = 'none';
+
+            for (let bicho of settings.objeto.bichos) {
+                bicho.check_outOfLimits(true);
+            }
+
+            settings.msg.nivel = true;
+
+            setTimeout(() => {
+                settings.msg.nivel = false;
+            }, settings.constante.pausaMsgNivelMostrar);
+            
+            settings.sonidos.musicaFondo.play();
+            settings.sonidos.musicaFondo.loop = true;
+            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+        }
+        
+    } else if (settings.estado.gameOver) {
+
+        if (clickar === settings.touch.newGame) {
+            settings.estado.gameOver = false;
+            settings.estado.preJuego = true;
+            settings.marcadores.botonNewGame.style.display = 'none';
+            rejugarNuevaPartida();
+        }
+        
+    } else if (settings.estado.nivelSuperado) {
+
+        if (touch === settings.touch.nextLevel) {
+            settings.estado.nivelSuperado = false;
+            settings.estado.enJuego = true;
+            //acciones_comunes_nivelSuperado_ReiniciarPartida();
+            settings.marcadores.botonNextLevel.style.display = 'none';
+        }
+    }
+});
+
 export {
     eventos_touchStart,
     eventos_touchEnd,
     eventos_keyDown,
-    eventos_keyUp
+    eventos_keyUp,
+    eventos_click
 };
