@@ -42,6 +42,9 @@ export class Bonus {
         const cw = this.clip.ancho;
         const ch = this.clip.alto;
 
+        if (this.rect.x < -settings.constante.bsx || this.rect.x > settings.resolucion[0] + settings.constante.bsx || this.rect.y < -settings.constante.bsy * 2 || this.rect.y > settings.resolucion[1] + settings.constante.bsy) return;
+
+        // -----------------------------------------------------------------------------------
         if (!this.accion_realizada) {
             this.ctx.drawImage(this.img, this.clip.x, this.clip.y, cw, ch, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
         } 

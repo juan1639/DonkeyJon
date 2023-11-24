@@ -23,6 +23,9 @@ export class Scroll {
         if (this.y > this.alto && dxdy[1] > 0) this.y -= this.alto * 2;
         if (this.y < -this.alto && dxdy[1] < 0) this.y += this.alto * 2;
 
+        if (this.x + this.ancho < 0 || this.x > settings.resolucion[0] || this.y + this.alto < 0 || this.y > settings.resolucion[1]) return;
+
+        // ----------------------------------------------------------------------
         this.ctx.drawImage(this.img, this.x, this.y, this.ancho, this.alto);
     }
 }

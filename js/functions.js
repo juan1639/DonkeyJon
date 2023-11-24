@@ -18,6 +18,8 @@ function checkColision(obj1, obj2, corr, dy) {
 // ============================================================================
 function checkColision_abovePtos(obj1, obj2) {
 
+    // En la 3ra linea del return la diferencia es --- obj2.rect.alto * 2 ---
+
     return obj1.rect.x < obj2.rect.x + obj2.rect.ancho && 
             obj1.rect.x + obj1.rect.ancho > obj2.rect.x &&
             obj1.rect.y < obj2.rect.y + obj2.rect.alto * 2 && 

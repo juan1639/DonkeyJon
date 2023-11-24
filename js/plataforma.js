@@ -37,6 +37,9 @@ export class Plataforma {
         this.rect.x += dxdy[0];
         this.rect.y += dxdy[1];
 
+        if (this.rect.y < -settings.constante.bsy || this.rect.y > settings.resolucion[1] + settings.constante.bsy) return;
+
+        // -------------------------------------------------------------------------
         let imagen = this.img; 
 
         for (let i = 0; i < this.rect.anchoBucle; i ++) {
@@ -96,6 +99,9 @@ export class PlataformaMovil {
 
         this.actualiza(dxdy);
 
+        if (this.rect.y < -settings.constante.bsy || this.rect.y > settings.resolucion[1] + settings.constante.bsy) return;
+
+        // -------------------------------------------------------------------
         for (let i = 0; i < this.rect.anchoBucle; i ++) {
 
             this.ctx.drawImage(this.img, this.rect.x + i * this.anchoTile, this.rect.y, this.anchoTile, this.altoTile);

@@ -28,7 +28,7 @@ export class Textos {
         const noLlave = settings.objeto.jugador.msg_NOllave;
         const nivel = settings.msg.nivel;
 
-        if ((this.size === 50 && colision) || (this.size === 120 && nivel) || (this.size === 70 && noLlave) || (this.size === 50 && col_llave)) {
+        if ((this.size === 50 && colision) || (this.size === 120 && nivel) || (this.size === 70 && noLlave) || (this.size === 50 && col_llave) || (this.size === 75)) {
             
             this.ctx.fillStyle = this.color;   
         }

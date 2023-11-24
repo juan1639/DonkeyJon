@@ -307,7 +307,7 @@ export class Jugador {
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
 
-                    this.mostrar_msg();
+                    this.mostrar_msg('nollave');
                 }
 
                 if (!item.accion_realizada && this.ssheet.agachado[4] && item.id.slice(0, 15) === './img/switchRed') {
@@ -400,8 +400,9 @@ export class Jugador {
                             pajaro.reset_pajaro(0);
                         }
 
-                        settings.estado.jugadorDies = false;
-                        settings.sonidos.musicaFondo.play();
+                        this.mostrar_msg('Preparado!');
+                        this.revivir_jugador_preparado();
+
                     }, this.duracion_dies);
 
                     return true;
@@ -434,8 +435,9 @@ export class Jugador {
                         pajaro.reset_pajaro(0);
                     }
 
-                    settings.estado.jugadorDies = false;
-                    settings.sonidos.musicaFondo.play();
+                    this.mostrar_msg('Preparado!');
+                    this.revivir_jugador_preparado();
+
                 }, this.duracion_dies);
 
                 return true;
@@ -590,9 +592,9 @@ export class Jugador {
         this.ssheet.atacando[4] = false;
     }
 
-    mostrar_msg() {
+    mostrar_msg(elegir) {
 
-        if (!this.msg_NOllave) {
+        if (!this.msg_NOllave && elegir === 'nollave') {
 
             this.msg_NOllave = true;
 
@@ -602,7 +604,24 @@ export class Jugador {
             setTimeout(() => {
                 this.msg_NOllave = false;
                 settings.objeto.textos.pop();
-            }, 3000);
+            }, 2200);
         }
+
+        if (elegir === 'Preparado!') {
+
+            settings.objeto.textos.push(new Textos(elegir, 'center', 75, 'rgb(225, 150, 19)'));
+
+            setTimeout(() => {
+                settings.objeto.textos.pop();
+            }, 2000);
+        }
+    }
+
+    revivir_jugador_preparado() {
+        settings.estado.jugadorDies = false;
+        settings.marcadores.vidas --;
+        settings.marcadores.scoreVidas.innerHTML = 'Vidas: ' + settings.marcadores.vidas.toString();
+        settings.objeto.showvidas.pop();
+        settings.sonidos.musicaFondo.play();
     }
 }

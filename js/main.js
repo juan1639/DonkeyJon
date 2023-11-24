@@ -12,6 +12,7 @@ import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
 import { Decorativos, DecorativosOffGame } from './decorativos.js';
 import { Textos } from './textos.js';
+import { ShowVidas } from './showvidas.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
@@ -144,8 +145,8 @@ window.onload = () => {
     
     // ---------------------------------------------------------------
     const id_llave = './img/keyYellow.png';
-    const llx = -8 * settings.constante.bsx;
-    const lly = settings.ini_suelo - settings.gap * 4 - settings.constante.bsy * 3;
+    const llx = 29 * settings.constante.bsx;
+    const lly = settings.ini_suelo - settings.gap * 3;
 
     settings.objeto.llave = new Llave(id_llave, llx, lly, true);
 
@@ -156,6 +157,14 @@ window.onload = () => {
         const bonY = bonus[2];
 
         settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
+    }
+
+    // ---------------------------------------------------------------
+    for (let i = settings.marcadores.vidas; i > 0; i --) {
+        const idVidas = './img/Ssheet_jugador.png';
+        const xVidas = settings.resolucion[0] - i * settings.constante.bsx - settings.constante.bsx;
+
+        settings.objeto.showvidas.push(new ShowVidas(idVidas, xVidas, 0, settings.constante.bsx, settings.constante.bsy));
     }
     
     // ---------------------------------------------------------------
@@ -205,6 +214,10 @@ function bucle_principal() {
 
     for (let showb of settings.objeto.showbonus) {
         showb.dibuja(dxdy);
+    }
+
+    for (let showvida of settings.objeto.showvidas) {
+        showvida.dibuja();
     }
 
     for (let chispa of settings.objeto.chispa) {

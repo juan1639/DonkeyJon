@@ -66,6 +66,7 @@ export class Settings {
             decorativos: [],
             decorativosOffgame: [],
             textos: [],
+            showvidas: [],
             chispa: []
         };
 
@@ -160,7 +161,7 @@ export class Settings {
             [this.ini_suelo - this.gap * 5, 8, 20, true, true, 0, 6],
             [this.ini_suelo - this.gap * 5, 32, 8, true, true, 0, 6],
 
-            [this.ini_suelo - this.gap * 4 - this.gapMini - this.constante.bsy, -9, 3, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 3, 28, 4, true, true, 0, 6],
 
             [this.ini_suelo - this.gap * 4, -6, 24, true, true, 0, 6],
             [this.ini_suelo - this.gap * 4, 22, 26, true, false, 0, 6],

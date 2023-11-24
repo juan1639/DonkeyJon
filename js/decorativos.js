@@ -43,6 +43,9 @@ export class Decorativos {
         this.rect.x += dxdy[0];
         this.rect.y += dxdy[1];
 
+        if (this.rect.x > settings.resolucion[0] + settings.constante.bsx || this.rect.y > settings.resolucion[1] + settings.constante.bsy || this.rect.y < -settings.constante.bsy * 5) return;
+
+        // ----------------------------------------------------------------------------------
         let img = this.img;
         img.src = this.elegirImg();
 
