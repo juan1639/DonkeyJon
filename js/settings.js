@@ -15,7 +15,7 @@ export class Settings {
             nro_CHISPASfireWorks: 99,
             nro_DIAMANTES: 7,
             pausaFireWorksNivelSuperado: 12000,
-            pausaMsgNivelMostrar: 7000,
+            pausaMsgNivelMostrar: 5200,
             ancho_jugador: 120,
             alto_jugador: 150
         };
@@ -194,13 +194,14 @@ export class Settings {
             [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 28, 4, true, true, 0, 6],
             [this.ini_suelo - this.gap * 5 - this.gapMini, 28, 4, true, true, 0, 6],
 
-            [this.ini_suelo - this.gap * 5, 19, 20, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 5, 21, 18, true, true, 0, 6],
 
             [this.ini_suelo - this.gap * 4, 31, 7, true, true, 0, 6],
             [this.ini_suelo - this.gap * 4, 22, 5, true, true, 0, 6],
             [this.ini_suelo - this.gap * 4, 41, 5, true, true, 0, 6],
 
             [this.ini_suelo - this.gap * 3, 31, 4, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 3, 6, 10, true, true, 0, 6],
 
             [this.ini_suelo - this.gap * 2, 32, 8, true, true, 0, 6],
             [this.ini_suelo - this.gap * 2, 23, 5, true, true, 0, 6],
@@ -231,9 +232,9 @@ export class Settings {
 
         this.array_escaleras2 = [
             [31, this.ini_suelo, this.gap],
-            [-1, this.ini_suelo - this.gap * 1, this.gap],
+            [10, this.ini_suelo, this.gap * 3],
             [25, this.ini_suelo - this.gap * 2, this.gap * 2],
-            [8, this.ini_suelo - this.gap * 2, this.gap],
+            [12, this.ini_suelo - this.gap * 3, this.gap * 3],
             [-5, this.ini_suelo - this.gap * 3, this.gap],
             [34, this.ini_suelo - this.gap * 4, this.gap]
         ];
@@ -275,20 +276,25 @@ export class Settings {
             [58, this.ini_suelo, 1, './img/tree05.png', false],
             [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
             [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
-            [60, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+            [59, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+            [6, this.ini_suelo, 1, './img/tree05.png', false],
+            [6, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
             [26, this.ini_suelo, 1, './img/Letrero_creditos.png', false],
-            [2, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
+            [1, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
             [42, this.ini_suelo, 1, './img/Letrero_IMI.png', false],
             [32, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
-            [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
+            [49, this.ini_suelo, 1, './img/signArrow_up.png', false],
+            [12, this.ini_suelo, 1, './img/signArrow_up.png', false],
+            [14, this.ini_suelo, 1, './img/signRight.png', false],
             [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
             [24, this.ini_suelo - this.gap * 6, 1, './img/signLeft.png', false],
+            [27, this.ini_suelo - this.gap * 6, 1, './img/signRight.png', false],
             [37, this.ini_suelo - this.gap * 6, 1, './img/Letrero_Arlekin.png', false],
 
             [35, this.ini_suelo - this.gap * 6, 1, './img/switchRed_mid.png', true],
 
             [2, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
-            [4, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
+            [6, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
         ];
 
         this.array_nivelesDecorativos = [
@@ -318,6 +324,21 @@ export class Settings {
             ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 4, true],
             ['./img/items_ri.png', 33, this.ini_suelo - this.gap * 5, true],
             ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true]
+        ];
+
+        this.array_bonus2 = [
+            ['./img/items_ri.png', 35, this.ini_suelo, true],
+            ['./img/items_ri.png', 8, this.ini_suelo - this.gap * 3, true],
+            ['./img/items_ri.png', 32, this.ini_suelo - this.gap * 3, true],
+            ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
+            ['./img/items_ri.png', 56, this.ini_suelo, true],
+            ['./img/items_ri.png', 30, this.ini_suelo - this.gap * 6, true],
+            ['./img/items_ri.png', 56, this.ini_suelo - this.gap * 6, true]
+        ];
+
+        this.array_nivelesBonus = [
+            this.array_bonus,
+            this.array_bonus2
         ];
 
         this.array_decorativosOffgame = [

@@ -45,6 +45,16 @@ export class LosSiete {
         this.ccy = 0;
         this.ccanc = 100;
         this.ccalc = 20;
+
+        this.showInterm = true;
+
+        setInterval(() => {
+            if (this.showInterm) {
+                this.showInterm = false;
+            } else {
+                this.showInterm = true;
+            }
+        }, 900);
     }
 
     dibuja() {
@@ -53,7 +63,7 @@ export class LosSiete {
             this.ctx.drawImage(this.img, this.clip.x, this.clip.y, this.clip.ancho, this.clip.alto, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
         }
         
-        if (settings.objeto.jugador.getLos7) {
+        if (settings.objeto.jugador.getLos7 && this.showInterm) {
             this.ctx.drawImage(this.img_completed, this.ccx, this.ccy, this.ccanc, this.ccalc, this.xc, this.yc, this.cancho, this.calto);
         }
     }

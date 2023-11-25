@@ -5,6 +5,7 @@ import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Decorativos } from './decorativos.js';
 import { Llave } from './llave.js';
+import { Bonus } from './bonus.js';
 
 // ============================================================================
 //  Funciones varias
@@ -55,10 +56,17 @@ function construir_nuevoNivel() {
     instanciar_plataformas(settings.marcadores.nivel);
     instanciar_escaleras(settings.marcadores.nivel);
     instanciar_decorativos(settings.marcadores.nivel);
+    instanciar_bonus(settings.marcadores.nivel);
     instanciar_llave(settings.marcadores.nivel);
 
     settings.marcadores.nivel ++;
+    settings.msg.nivel = true;
     settings.estado.nivelSuperado = false;
+
+    setTimeout(() => {
+        settings.msg.nivel = false;
+    }, settings.constante.pausaMsgNivelMostrar);
+
     settings.sonidos.fireWorks.pause();
     settings.sonidos.musicaFondo.play();
 }
@@ -127,6 +135,20 @@ function instanciar_llave(nivel) {
     const booleano = nivelActual[3];
 
     settings.objeto.llave = new Llave(id_llave, llx, lly, booleano);
+}
+
+// ============================================================================
+function instanciar_bonus(nivel) {
+
+    const nivelActual = settings.array_nivelesBonus[nivel];
+
+    for (let bonus of nivelActual) {
+        const idBonus = bonus[0];
+        const bonX = bonus[1] * settings.constante.bsx;
+        const bonY = bonus[2];
+
+        settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
+    }
 }
 
 // ============================================================================

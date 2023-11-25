@@ -310,6 +310,7 @@ export class Jugador {
                     settings.sonidos.fireWorks.play();
 
                     setTimeout(() => {
+                        this.accion_realizada = false;
                         construir_nuevoNivel();
                     }, settings.constante.pausaFireWorksNivelSuperado);
 
