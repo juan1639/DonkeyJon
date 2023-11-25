@@ -13,24 +13,7 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
 
         if (pulsacion === settings.tecla.enter) {
 
-            settings.estado.preJuego = false;
-            settings.estado.enJuego = true;
-            settings.objeto.decorativosOffgame.pop();
-            // settings.marcadores.botonNewGame.style.display = 'none';
-
-            for (let bicho of settings.objeto.bichos) {
-                bicho.check_outOfLimits(true);
-            }
-
-            settings.msg.nivel = true;
-
-            setTimeout(() => {
-                settings.msg.nivel = false;
-            }, settings.constante.pausaMsgNivelMostrar);
-
-            settings.sonidos.musicaFondo.play();
-            settings.sonidos.musicaFondo.loop = true;
-            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+            comenzar_partida(); 
         }
 
     } else if (settings.estado.reJugar) {
@@ -76,6 +59,19 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
                 settings.sonidos.musicaFondo.pause();
             }
         }
+
+        if (pulsacion === 'T') {
+
+            if (settings.trucos.invisible) {
+                console.log('modo normal');
+                settings.trucos.invisible = false;
+            } else {
+                console.log('modo invisible');
+                settings.trucos.invisible = true;
+            }
+        }
+
+        if (pulsacion === 'Y') settings.trucos.vidasInfinitas = true;
     }
 });
 
@@ -116,40 +112,7 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
     //console.log(event.target.id, event.targetTouches, event);
     const touch = event.target.id;
 
-    if (settings.estado.preJuego) {
-
-        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
-            
-            settings.estado.preJuego = false;
-            settings.estado.enJuego = true;
-            settings.objeto.decorativosOffgame.pop();
-            // settings.marcadores.botonNewGame.style.display = 'none';
-
-            for (let bicho of settings.objeto.bichos) {
-                bicho.check_outOfLimits(true);
-            }
-
-            settings.msg.nivel = true;
-
-            setTimeout(() => {
-                settings.msg.nivel = false;
-            }, settings.constante.pausaMsgNivelMostrar);
-            
-            settings.sonidos.musicaFondo.play();
-            settings.sonidos.musicaFondo.loop = true;
-            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
-        }
-        
-    } else if (settings.estado.reJugar) {
-
-        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
-            settings.estado.gameOver = false;
-            settings.estado.preJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
-            rejugarNuevaPartida();
-        }
-        
-    } else if (settings.estado.enJuego) {
+    if (settings.estado.enJuego) {
 
         if (touch === settings.touch.iz[0] || touch === settings.touch.iz[1]) {
             // console.log('izq...');
@@ -172,17 +135,6 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
             //console.log('atacar...');
             settings.controles.touch_at = true;
         }
-
-        if (touch === settings.touch.music_onoff) {
-            //console.log('musica');
-
-            if (settings.sonidos.musicaFondo.paused) {
-                settings.sonidos.musicaFondo.play();
-
-            } else {
-                settings.sonidos.musicaFondo.pause();
-            }
-        }
     }
     
     if (settings.estado.nivelSuperado) {
@@ -201,6 +153,23 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 
     //console.log(event.target.id, event.targetTouches);
     const touchEnd = event.target.id;
+
+    if (settings.estado.preJuego) {
+
+        if (touchEnd === settings.touch.newGame || touchEnd === settings.touch.canvas) {
+            
+            comenzar_partida();
+        }
+        
+    } else if (settings.estado.reJugar) {
+
+        if (touchEnd === settings.touch.newGame || touchEnd === settings.touch.canvas) {
+            settings.estado.gameOver = false;
+            settings.estado.preJuego = true;
+            settings.marcadores.botonNewGame.style.display = 'none';
+            rejugarNuevaPartida();
+        }
+    }
 
     if (settings.estado.enJuego) {
 
@@ -226,6 +195,17 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
             settings.controles.touch_at = false;
         }
     }
+
+    if (touchEnd === settings.touch.music_onoff) {
+        //console.log('musica');
+
+        if (settings.sonidos.musicaFondo.paused) {
+            settings.sonidos.musicaFondo.play();
+
+        } else {
+            settings.sonidos.musicaFondo.pause();
+        }
+    }
 });
 
 // ----------------------------------------------------------------------
@@ -239,24 +219,8 @@ const eventos_click = document.addEventListener('click', (event) => {
     if (settings.estado.preJuego) {
 
         if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
-            settings.estado.preJuego = false;
-            settings.estado.enJuego = true;
-            settings.objeto.decorativosOffgame.pop();
-            // settings.marcadores.botonNewGame.style.display = 'none';
 
-            for (let bicho of settings.objeto.bichos) {
-                bicho.check_outOfLimits(true);
-            }
-
-            settings.msg.nivel = true;
-
-            setTimeout(() => {
-                settings.msg.nivel = false;
-            }, settings.constante.pausaMsgNivelMostrar);
-            
-            settings.sonidos.musicaFondo.play();
-            settings.sonidos.musicaFondo.loop = true;
-            settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+            comenzar_partida();
         }
         
     } else if (settings.estado.reJugar) {
@@ -278,6 +242,29 @@ const eventos_click = document.addEventListener('click', (event) => {
         }
     }
 });
+
+// ----------------------------------------------------------------------------
+function comenzar_partida() {
+
+    settings.estado.preJuego = false;
+    settings.estado.enJuego = true;
+    settings.objeto.decorativosOffgame.pop();
+    // settings.marcadores.botonNewGame.style.display = 'none';
+
+    for (let bicho of settings.objeto.bichos) {
+        bicho.check_outOfLimits(true);
+    }
+
+    settings.msg.nivel = true;
+
+    setTimeout(() => {
+        settings.msg.nivel = false;
+    }, settings.constante.pausaMsgNivelMostrar);
+
+    settings.sonidos.musicaFondo.play();
+    settings.sonidos.musicaFondo.loop = true;
+    settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+}
 
 export {
     eventos_touchStart,

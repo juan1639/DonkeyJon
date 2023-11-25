@@ -29,12 +29,32 @@ export class LosSiete {
             ancho: 32,
             alto: 24
         }
+
+        // ---------------------------------------------------------------
+        //  Completados los 7
+        // ---------------------------------------------------------------
+        this.img_completed = new Image();
+        this.img_completed.src = './img/showPtos.png';
+
+        this.xc = marginLeft;
+        this.yc = settings.constante.bsy;
+        this.cancho = settings.constante.bsx * 7;
+        this.calto = settings.constante.bsy;
+
+        this.ccx = 80;
+        this.ccy = 0;
+        this.ccanc = 100;
+        this.ccalc = 20;
     }
 
     dibuja() {
 
         if (this.mostrar) {
             this.ctx.drawImage(this.img, this.clip.x, this.clip.y, this.clip.ancho, this.clip.alto, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
-        } 
+        }
+        
+        if (settings.objeto.jugador.getLos7) {
+            this.ctx.drawImage(this.img_completed, this.ccx, this.ccy, this.ccanc, this.ccalc, this.xc, this.yc, this.cancho, this.calto);
+        }
     }
 }

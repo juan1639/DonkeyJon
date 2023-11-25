@@ -115,12 +115,29 @@ export class PlataformaMovil {
 
         if (!settings.objeto.jugador.accion_realizada) return;
 
-        // -------------------------------------------
-        this.rect.x += this.move.velX;
+        // ---------------------------------------------------
+        if (settings.marcadores.nivel === 1) {
 
-        if (this.check_colisionPlataformas()) {
-            this.rect.x -= this.move.velX;
-            this.move.velX *= -1;
+            this.rect.x += this.move.velX;
+
+            if (this.check_colisionPlataformas()) {
+                this.rect.x -= this.move.velX;
+                this.move.velX *= -1;
+            }
+
+            return;
+        }
+
+        if (settings.marcadores.nivel === 2) {
+
+            this.rect.y += this.move.velY;
+
+            if (this.check_colisionPlataformas()) {
+                this.rect.y -= this.move.velY;
+                this.move.velY *= -1;
+            }
+
+            return;
         }
     }
 

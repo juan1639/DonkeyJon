@@ -13,6 +13,7 @@ export class Settings {
             FPS: 60,
             nro_bichos: 2,
             nro_CHISPASfireWorks: 99,
+            nro_DIAMANTES: 7,
             pausaFireWorksNivelSuperado: 12000,
             pausaMsgNivelMostrar: 7000,
             ancho_jugador: 120,
@@ -184,6 +185,41 @@ export class Settings {
             [this.ini_suelo, -16, 64, false, false, 0, 6]
         ];
 
+        this.array_plataformas2 = [
+
+            [this.ini_suelo - this.gap * 6, 0, 14, false, true, 0, 6],
+            [this.ini_suelo - this.gap * 6, 23, 23, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 6, 52, 12, true, false, 0, 6],
+
+            [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 28, 4, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 5 - this.gapMini, 28, 4, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 5, 19, 20, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 4, 31, 7, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 4, 22, 5, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 4, 41, 5, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 3, 31, 4, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 2, 32, 8, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 2, 23, 5, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 1 - this.gapMini * 2, 42, 3, true, true, 0, 6],
+            [this.ini_suelo - this.gap * 1 - this.gapMini, 39, 2, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 1, 25, 12, true, true, 0, 6],
+
+            [this.ini_suelo - this.gap * 1, 48, 8, false, false, 1, 6],
+
+            [this.ini_suelo, 0, 64, false, false, 0, 6]
+        ];
+
+        this.array_nivelesPlataformas = [
+            this.array_plataformas,
+            this.array_plataformas2
+        ];
+
         this.array_escaleras = [
             [31, this.ini_suelo, this.gap],
             [-1, this.ini_suelo - this.gap * 1, this.gap],
@@ -191,6 +227,20 @@ export class Settings {
             [8, this.ini_suelo - this.gap * 2, this.gap],
             [-5, this.ini_suelo - this.gap * 3, this.gap],
             [34, this.ini_suelo - this.gap * 4, this.gap]
+        ];
+
+        this.array_escaleras2 = [
+            [31, this.ini_suelo, this.gap],
+            [-1, this.ini_suelo - this.gap * 1, this.gap],
+            [25, this.ini_suelo - this.gap * 2, this.gap * 2],
+            [8, this.ini_suelo - this.gap * 2, this.gap],
+            [-5, this.ini_suelo - this.gap * 3, this.gap],
+            [34, this.ini_suelo - this.gap * 4, this.gap]
+        ];
+
+        this.array_nivelesEscaleras = [
+            this.array_escaleras,
+            this.array_escaleras2
         ];
 
         this.array_decorativos = [
@@ -221,9 +271,39 @@ export class Settings {
             [-10, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
         ];
 
+        this.array_decorativos2 = [
+            [58, this.ini_suelo, 1, './img/tree05.png', false],
+            [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
+            [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
+            [60, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+            [26, this.ini_suelo, 1, './img/Letrero_creditos.png', false],
+            [2, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
+            [42, this.ini_suelo, 1, './img/Letrero_IMI.png', false],
+            [32, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
+            [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
+            [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
+            [24, this.ini_suelo - this.gap * 6, 1, './img/signLeft.png', false],
+            [37, this.ini_suelo - this.gap * 6, 1, './img/Letrero_Arlekin.png', false],
+
+            [35, this.ini_suelo - this.gap * 6, 1, './img/switchRed_mid.png', true],
+
+            [2, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
+            [4, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
+        ];
+
+        this.array_nivelesDecorativos = [
+            this.array_decorativos,
+            this.array_decorativos2
+        ];
+
         this.array_textos = [
             [' Pulse agachar para realizar accion', 'center', 50, this.colores.txt_amar1],
             [' N i v e l  ', 'center', 120, this.colores.txt_amar3]
+        ];
+
+        this.array_llaves = [
+            ['./img/keyYellow.png', 29 * this.constante.bsx, this.ini_suelo - this.gap * 3, true],
+            ['./img/keyYellow.png', 54 * this.constante.bsx, this.ini_suelo - this.gap * 6, true]
         ];
 
         this.msg = {
@@ -244,6 +324,11 @@ export class Settings {
             [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_presentacion.png', 400, 300],
             [this.resolucion[0] / 2, this.resolucion[1] / 2, './img/cartel_gameover.png', 400, 140]
         ];
+
+        this.trucos = {
+            invisible: false,
+            vidasInfinitas: false
+        };
 
         this.imagenes = {
             ssheet_jugador: new Image(),

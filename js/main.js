@@ -14,6 +14,7 @@ import { LosSiete } from './lossiete.js';
 import { Decorativos, DecorativosOffGame } from './decorativos.js';
 import { Textos } from './textos.js';
 import { ShowVidas } from './showvidas.js';
+import { Boommerang } from './boommerang.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
@@ -67,8 +68,11 @@ window.onload = () => {
     const xIni = settings.ini_jugador.x;
     const yIni = settings.ini_jugador.y;
     console.log('Jugador coord:', xIni, yIni, ancho, alto, resX, resY);
-
+    
     settings.objeto.jugador = new Jugador(xIni, yIni, ancho, alto);
+    
+    // ---------------------------------------------------------------
+    settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
 
     // ---------------------------------------------------------------
     const final = settings.array_plataformas.length - 1;
@@ -161,9 +165,9 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
-    for (let i = 0; i < settings.array_bonus.length; i ++) {
+    for (let i = 0; i < settings.constante.nro_DIAMANTES; i ++) {
 
-        settings.objeto.lossiete.push(new LosSiete(i, 50 * i, 0));
+        settings.objeto.lossiete.push(new LosSiete(i, settings.constante.bsx * i, 0));
     }
 
     // ---------------------------------------------------------------

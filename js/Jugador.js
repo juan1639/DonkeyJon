@@ -6,7 +6,9 @@ import { DecorativosOffGame } from "./decorativos.js";
 import {
     checkColision,
     checkColision_abovePtos,
+    check_getLos7,
     lanzar_fireWorks,
+    construir_nuevoNivel
 } from "./functions.js";
 
 // ============================================================================
@@ -68,6 +70,8 @@ export class Jugador {
         this.bandera_boommerang = false;
         this.cadencia_boommerang = 425;
 
+        this.getLos7 = false;
+
         this.duracion_dies = 3200;
 
         // --------------------------------------------------------------------------
@@ -120,6 +124,7 @@ export class Jugador {
         settings.sonidos.fireWorks.volume = settings.volumen.fireWorks;
         settings.sonidos.ataque.volume = settings.volumen.ataque;
         settings.sonidos.gameOver.volume = settings.volumen.gameOver;
+        settings.sonidos.intermision.volume = settings.volumen.intermision;
     }
 
     dibuja() {
@@ -212,8 +217,12 @@ export class Jugador {
         dy = this.check_colisionPlataformas(dy);
         this.col_item = this.check_colisionItems();
         this.col_llave = this.check_colisionLlave();
-        this.col_bicho = this.check_colisionBichos();
-        this.col_pajaro = this.check_colisionPajaros();
+
+        if (!settings.trucos.invisible) {
+            this.col_bicho = this.check_colisionBichos();
+            this.col_pajaro = this.check_colisionPajaros();
+        }
+        
         this.col_bonus = this.check_colisionBonus();
 
         // -----------------------------------------------
@@ -301,10 +310,7 @@ export class Jugador {
                     settings.sonidos.fireWorks.play();
 
                     setTimeout(() => {
-                        settings.estado.nivelSuperado = false;
-                        settings.sonidos.fireWorks.pause();
-                        settings.sonidos.musicaFondo.play();
-
+                        construir_nuevoNivel();
                     }, settings.constante.pausaFireWorksNivelSuperado);
 
                 } else if (item.id === './img/lockYellow.png' && !superado && !llave.accion_realizada) {
@@ -366,6 +372,12 @@ export class Jugador {
                 settings.objeto.showbonus.push(new ShowBonus('./img/items_ri.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
 
                 settings.objeto.lossiete[bonus.colorId].mostrar = true;
+
+                if (!this.getLos7) {
+                    this.getLos7 = check_getLos7();
+
+                    if (this.getLos7) settings.sonidos.intermision.play();
+                }
 
                 settings.sonidos.chips1.play();
                 settings.sonidos.chips2.play();

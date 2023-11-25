@@ -64,6 +64,7 @@ export class Pajaros {
 
         this.actualiza(dxdy);
 
+        if (settings.estado.nivelSuperado) return;
         if (!this.move.activo) return;
 
         this.ctx.save();
