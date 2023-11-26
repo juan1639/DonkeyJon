@@ -18,7 +18,12 @@ import { Boommerang } from './boommerang.js';
 import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
-import { 
+import {
+    instanciar_plataformas,
+    instanciar_escaleras,
+    instanciar_decorativos,
+    instanciar_bonus,
+    instanciar_llave,
     borraCanvas,
     check_gameOver
 } from "./functions.js";
@@ -75,36 +80,6 @@ window.onload = () => {
     settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
 
     // ---------------------------------------------------------------
-    const final = settings.array_plataformas.length - 1;
-
-    for (let i = final; i >= 0; i --) {
-
-        const p_y = settings.array_plataformas[i][0];
-        const p_x = settings.array_plataformas[i][1];
-        const p_ancho = settings.array_plataformas[i][2];
-        const p_bordeIz = settings.array_plataformas[i][3];
-        const p_bordeDe = settings.array_plataformas[i][4];
-        const movil = settings.array_plataformas[i][5];
-
-        if (movil === 0) {
-            settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png', p_bordeIz, p_bordeDe));
-            
-        } else {
-            settings.objeto.plataforma.push(new PlataformaMovil(p_y, p_x, p_ancho, './img/tile6.png', movil, movil));
-        }
-    }
-    
-    // ---------------------------------------------------------------
-    for (let escalera of settings.array_escaleras) {
-
-        const e_x = escalera[0];
-        const e_y = escalera[1];
-        const e_size = escalera[2];
-
-        settings.objeto.escalera.push(new Escalera(e_x, e_y, e_size));
-    }
-
-    // ---------------------------------------------------------------
     const nivel = settings.marcadores.nivel - 1;
     
     for (let i = 0; i < settings.nro_enemigos.mariq[nivel]; i ++) {
@@ -120,15 +95,6 @@ window.onload = () => {
         const posIniY = 0;
 
         settings.objeto.pajaros.push(new Pajaros(i, posIniY));
-    }
-
-    // ---------------------------------------------------------------
-    for (let i of settings.array_decorativos) {
-        const decX = i[0] * settings.constante.bsx;
-        const accion = i[4]; // interactuable true/false
-        console.log('dec:', decX, i[3], i[1], i[2], i[4]);
-
-        settings.objeto.decorativos.push(new Decorativos(i[3], decX, i[1], i[2], accion));
     }
 
     // ---------------------------------------------------------------
@@ -148,21 +114,11 @@ window.onload = () => {
         settings.objeto.textos.push(new Textos(txt[0], alin, size, color));
     }
     
-    // ---------------------------------------------------------------
-    const id_llave = './img/keyYellow.png';
-    const llx = 29 * settings.constante.bsx;
-    const lly = settings.ini_suelo - settings.gap * 3;
-
-    settings.objeto.llave = new Llave(id_llave, llx, lly, true);
-
-    // ---------------------------------------------------------------
-    for (let bonus of settings.array_bonus) {
-        const idBonus = bonus[0];
-        const bonX = bonus[1] * settings.constante.bsx;
-        const bonY = bonus[2];
-
-        settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
-    }
+    instanciar_plataformas(0);
+    instanciar_escaleras(0);
+    instanciar_decorativos(0);
+    instanciar_bonus(0);
+    instanciar_llave(0);
 
     // ---------------------------------------------------------------
     for (let i = 0; i < settings.constante.nro_DIAMANTES; i ++) {

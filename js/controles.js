@@ -19,10 +19,9 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
     } else if (settings.estado.reJugar) {
 
         if (pulsacion === settings.tecla.enter) {
-            settings.estado.gameOver = false;
-            settings.estado.preJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
+            
             rejugarNuevaPartida();
+            comenzar_partida();
         }
     
     } else if (settings.estado.enJuego) {
@@ -112,6 +111,22 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
     //console.log(event.target.id, event.targetTouches, event);
     const touch = event.target.id;
 
+    if (settings.estado.preJuego) {
+
+        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
+            
+            comenzar_partida();
+        }
+        
+    } else if (settings.estado.reJugar) {
+
+        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
+
+            rejugarNuevaPartida();
+            comenzar_partida();
+        }
+    }
+
     if (settings.estado.enJuego) {
 
         if (touch === settings.touch.iz[0] || touch === settings.touch.iz[1]) {
@@ -153,23 +168,6 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 
     //console.log(event.target.id, event.targetTouches);
     const touchEnd = event.target.id;
-
-    if (settings.estado.preJuego) {
-
-        if (touchEnd === settings.touch.newGame || touchEnd === settings.touch.canvas) {
-            
-            comenzar_partida();
-        }
-        
-    } else if (settings.estado.reJugar) {
-
-        if (touchEnd === settings.touch.newGame || touchEnd === settings.touch.canvas) {
-            settings.estado.gameOver = false;
-            settings.estado.preJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
-            rejugarNuevaPartida();
-        }
-    }
 
     if (settings.estado.enJuego) {
 
@@ -226,10 +224,9 @@ const eventos_click = document.addEventListener('click', (event) => {
     } else if (settings.estado.reJugar) {
 
         if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
-            settings.estado.gameOver = false;
-            settings.estado.preJuego = true;
-            settings.marcadores.botonNewGame.style.display = 'none';
+
             rejugarNuevaPartida();
+            comenzar_partida();
         }
         
     } else if (settings.estado.nivelSuperado) {
@@ -245,18 +242,18 @@ const eventos_click = document.addEventListener('click', (event) => {
 
 // ----------------------------------------------------------------------------
 function comenzar_partida() {
-
+    
     settings.estado.preJuego = false;
     settings.estado.enJuego = true;
     settings.objeto.decorativosOffgame.pop();
     // settings.marcadores.botonNewGame.style.display = 'none';
-
+    
     for (let bicho of settings.objeto.bichos) {
         bicho.check_outOfLimits(true);
     }
-
+    
     settings.msg.nivel = true;
-
+    
     setTimeout(() => {
         settings.msg.nivel = false;
     }, settings.constante.pausaMsgNivelMostrar);
@@ -266,6 +263,22 @@ function comenzar_partida() {
     settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
 }
 
+// ----------------------------------------------------------------------------
+function rejugarNuevaPartida() {
+
+    location.reload();
+
+    settings.estado.reJugar = false;
+    //settings.marcadores.puntos = 0;
+    //settings.marcadores.nivel = 0;
+    //settings.marcadores.vidas = 3;
+
+    //construir_nuevoNivel();
+
+    // settings.marcadores.botonNewGame.style.display = 'none';
+}
+
+// ----------------------------------------------------------------------------
 export {
     eventos_touchStart,
     eventos_touchEnd,

@@ -116,7 +116,7 @@ export class PlataformaMovil {
         if (!settings.objeto.jugador.accion_realizada) return;
 
         // ---------------------------------------------------
-        if (settings.marcadores.nivel === 1) {
+        if (settings.marcadores.nivel === -999) {
 
             this.rect.x += this.move.velX;
 
@@ -128,7 +128,7 @@ export class PlataformaMovil {
             return;
         }
 
-        if (settings.marcadores.nivel === 2) {
+        if (settings.marcadores.nivel > 0) {
 
             this.rect.y += this.move.velY;
 

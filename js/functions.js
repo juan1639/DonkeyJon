@@ -172,7 +172,7 @@ function check_gameOver() {
 // ============================================================================
 function check_resetGetLos7() {
 
-    if (settings.objeto.jugador.getLos7) {
+    if (settings.objeto.jugador.getLos7 || settings.marcadores.nivel === 0) {
 
         settings.objeto.jugador.getLos7 = false;
 
@@ -213,6 +213,11 @@ export {
     checkColision,
     checkColision_abovePtos,
     check_gameOver,
+    instanciar_plataformas,
+    instanciar_escaleras,
+    instanciar_decorativos,
+    instanciar_bonus,
+    instanciar_llave,
     check_getLos7,
     lanzar_fireWorks,
     construir_nuevoNivel,

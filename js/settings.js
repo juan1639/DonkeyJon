@@ -158,9 +158,11 @@ export class Settings {
         // -------------------------------------------------------------------
         this.array_plataformas = [
 
+            [this.ini_suelo - this.gap * 7 - this.gapMini, 10, 5, true, true, 0, 6],
             [this.ini_suelo - this.gap * 6, -16, 22, false, true, 0, 6],
-            [this.ini_suelo - this.gap * 6, 7, 3, false, false, 1, 6],
+            [this.ini_suelo - this.gap * 7, 9, 12, false, false, 1, 6],
             [this.ini_suelo - this.gap * 6, 23, 25, true, false, 0, 6],
+            [this.ini_suelo - this.gap * 6, 12, 2, true, true, 0, 6],
 
             [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 30, 3, true, true, 0, 6],
             [this.ini_suelo - this.gap * 5 - this.gapMini, 35, 2, true, true, 0, 6],
