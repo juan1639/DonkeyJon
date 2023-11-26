@@ -58,6 +58,7 @@ function construir_nuevoNivel() {
     instanciar_decorativos(settings.marcadores.nivel);
     instanciar_bonus(settings.marcadores.nivel);
     instanciar_llave(settings.marcadores.nivel);
+    check_resetGetLos7();
 
     settings.marcadores.nivel ++;
     settings.msg.nivel = true;
@@ -165,6 +166,19 @@ function check_gameOver() {
             settings.estado.reJugar = true;
             settings.objeto.textos.push(new Textos(txt, 'center', 27, 'rgb(240, 49, 19)'));
         }, 5000);
+    }
+}
+
+// ============================================================================
+function check_resetGetLos7() {
+
+    if (settings.objeto.jugador.getLos7) {
+
+        settings.objeto.jugador.getLos7 = false;
+
+        for (let diamante of settings.objeto.lossiete) {
+            diamante.mostrar = false;
+        }
     }
 }
 

@@ -203,6 +203,8 @@ export class Jugador {
             return [0, 0];
         }
 
+        if (settings.marcadores.nivel > settings.constante.nro_niveles) return [0, 0];
+
         // -----------------------------------------------
         let dxdy = [0, 0];
         let dx = dxdy[0];
@@ -364,20 +366,37 @@ export class Jugador {
                 const gap = Math.floor(settings.constante.bsy / 3);
                 const anchoIni = 30;
                 const altoIni = 10;
-                const sbx = 15;
-                const sby = 368;
-                const anchoClip = 44;
-                const altoClip = 15;
+                const sbx = 0;
+                const sby = 60;
+                const anchoClip = 40;
+                const altoClip = 20;
                 const duracion = 2800;
 
-                settings.objeto.showbonus.push(new ShowBonus('./img/items_ri.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
+                settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
 
                 settings.objeto.lossiete[bonus.colorId].mostrar = true;
 
                 if (!this.getLos7) {
                     this.getLos7 = check_getLos7();
 
-                    if (this.getLos7) settings.sonidos.intermision.play();
+                    if (this.getLos7) {
+
+                        settings.marcadores.puntos += 64000;
+                        settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
+
+                        const gap = Math.floor(settings.constante.bsy);
+                        const anchoIni = 60;
+                        const altoIni = 20;
+                        const sbx = 0;
+                        const sby = 80;
+                        const anchoClip = 70;
+                        const altoClip = 20;
+                        const duracion = 3900;
+
+                        settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
+                        
+                        settings.sonidos.intermision.play();
+                    }
                 }
 
                 settings.sonidos.chips1.play();

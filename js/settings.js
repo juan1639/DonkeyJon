@@ -14,6 +14,7 @@ export class Settings {
             nro_bichos: 2,
             nro_CHISPASfireWorks: 99,
             nro_DIAMANTES: 7,
+            nro_niveles: 2,
             pausaFireWorksNivelSuperado: 12000,
             pausaMsgNivelMostrar: 5200,
             ancho_jugador: 120,
@@ -218,7 +219,8 @@ export class Settings {
 
         this.array_nivelesPlataformas = [
             this.array_plataformas,
-            this.array_plataformas2
+            this.array_plataformas2,
+            this.array_plataformas
         ];
 
         this.array_escaleras = [
@@ -241,7 +243,8 @@ export class Settings {
 
         this.array_nivelesEscaleras = [
             this.array_escaleras,
-            this.array_escaleras2
+            this.array_escaleras2,
+            this.array_escaleras
         ];
 
         this.array_decorativos = [
@@ -299,7 +302,8 @@ export class Settings {
 
         this.array_nivelesDecorativos = [
             this.array_decorativos,
-            this.array_decorativos2
+            this.array_decorativos2,
+            this.array_decorativos
         ];
 
         this.array_textos = [
@@ -309,7 +313,8 @@ export class Settings {
 
         this.array_llaves = [
             ['./img/keyYellow.png', 29 * this.constante.bsx, this.ini_suelo - this.gap * 3, true],
-            ['./img/keyYellow.png', 54 * this.constante.bsx, this.ini_suelo - this.gap * 6, true]
+            ['./img/keyYellow.png', 54 * this.constante.bsx, this.ini_suelo - this.gap * 6, true],
+            ['./img/keyYellow.png', 29 * this.constante.bsx, this.ini_suelo - this.gap * 3, true]
         ];
 
         this.msg = {
@@ -338,7 +343,8 @@ export class Settings {
 
         this.array_nivelesBonus = [
             this.array_bonus,
-            this.array_bonus2
+            this.array_bonus2,
+            this.array_bonus
         ];
 
         this.array_decorativosOffgame = [
