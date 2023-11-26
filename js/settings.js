@@ -381,7 +381,7 @@ export class Settings {
             fondo_cielo1: new Image(),
             tile_medio: new Image(),
             tile_madera: new Image(),
-            tile_metal: new Image('./img/blockGrey.png'),
+            tile_metal: new Image(),
             escalera: new Image()
         };
 

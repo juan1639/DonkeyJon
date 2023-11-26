@@ -3,27 +3,22 @@
 // 
 // ----------------------------------------------------------------------------
 import { Settings } from './settings.js';
-import { Scroll } from './scroll.js';
-import { Plataforma, PlataformaMovil } from './plataforma.js';
-import { Escalera } from './Escalera.js';
-import { Bichos } from './bichos.js';
-import { Pajaros } from './pajaros.js';
-import { Llave } from './llave.js';
-import { Bonus } from './bonus.js';
-import { LosSiete } from './lossiete.js';
-import { Decorativos, DecorativosOffGame } from './decorativos.js';
-import { Textos } from './textos.js';
-import { ShowVidas } from './showvidas.js';
-import { Boommerang } from './boommerang.js';
-import { Jugador } from './Jugador.js';
 
 // ----------------------------------------------------------------------------
 import {
+    instanciar_scrolls,
+    instanciar_jugador,
+    instanciar_boommerang,
+    instanciar_bichos,
+    instanciar_pajaros,
+    instanciar_textos,
     instanciar_plataformas,
     instanciar_escaleras,
     instanciar_decorativos,
     instanciar_bonus,
     instanciar_llave,
+    instanciar_los7,
+    instanciar_showVidas,
     borraCanvas,
     check_gameOver
 } from "./functions.js";
@@ -90,6 +85,9 @@ window.onload = () => {
     settings.marcadores.botonNewGame.addEventListener('click', () => {comenzar_instancias();});
 }
 
+// ===========================================================================
+//  Instancias
+// ---------------------------------------------------------------------------
 function comenzar_instancias() {
 
     settings.marcadores.menuPrincipal.style.display = 'none';
@@ -103,44 +101,11 @@ function comenzar_instancias() {
     settings.ctx.scale(settings.escala.x, settings.escala.y);
 
     // ---------------------------------------------------------------
-    for (let scroll of settings.ini_scrolls) {
-        const s_x = scroll[0];
-        const s_y = scroll[1];
-        const s_img = scroll[2];
-
-        settings.objeto.scroll.push(new Scroll(s_x, s_y, resX, resY, s_img));
-    }
-    
-    // ---------------------------------------------------------------
-    const ancho = settings.constante.ancho_jugador;
-    const alto = settings.constante.alto_jugador;
-    const xIni = settings.ini_jugador.x;
-    const yIni = settings.ini_jugador.y;
-    console.log('Jugador coord:', xIni, yIni, ancho, alto, resX, resY);
-    
-    settings.objeto.jugador = new Jugador(xIni, yIni, ancho, alto);
-    
-    // ---------------------------------------------------------------
-    settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
-
-    // ---------------------------------------------------------------
-    const dificultad = settings.constante.dificultad;
-    
-    for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
-
-        const id = Math.floor(Math.random()* settings.constante.nro_bichos);
-
-        settings.objeto.bichos.push(new Bichos(id));
-    }
-
-    // ---------------------------------------------------------------    
-    for (let i = 0; i < settings.nro_enemigosDificultad.pajaros[dificultad]; i ++) {
-
-        const posIniY = 0;
-
-        settings.objeto.pajaros.push(new Pajaros(i, posIniY));
-    }
-
+    instanciar_scrolls();
+    instanciar_jugador();
+    instanciar_boommerang();
+    instanciar_bichos();
+    instanciar_pajaros();
     // ---------------------------------------------------------------
     /* let i = settings.array_decorativosOffgame[0];
     const id_dOff = i[2];
@@ -150,34 +115,16 @@ function comenzar_instancias() {
     settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4])); */
 
     // ---------------------------------------------------------------
-    for (let txt of settings.array_textos) {
-        const alin = txt[1];
-        const size = txt[2];
-        const color = txt[3];
-
-        settings.objeto.textos.push(new Textos(txt[0], alin, size, color));
-    }
-    
     instanciar_plataformas(0);
     instanciar_escaleras(0);
     instanciar_decorativos(0);
     instanciar_bonus(0);
     instanciar_llave(0);
 
-    // ---------------------------------------------------------------
-    for (let i = 0; i < settings.constante.nro_DIAMANTES; i ++) {
+    instanciar_textos();
+    instanciar_los7();
+    instanciar_showVidas();
 
-        settings.objeto.lossiete.push(new LosSiete(i, settings.constante.bsx * i, 0));
-    }
-
-    // ---------------------------------------------------------------
-    for (let i = settings.marcadores.vidas; i > 0; i --) {
-        const idVidas = './img/Ssheet_jugador.png';
-        const xVidas = settings.resolucion[0] - i * settings.constante.bsx - settings.constante.bsx;
-
-        settings.objeto.showvidas.push(new ShowVidas(idVidas, xVidas, 0, settings.constante.bsx, settings.constante.bsy));
-    }
-    
     // ---------------------------------------------------------------
     setInterval(() => {
         bucle_principal();
@@ -188,17 +135,13 @@ function comenzar_instancias() {
     }, 999);
 }
 
-// ----------------------------------------------------------------------------
+// ====================================================================
 function comenzar_partida() {
     
     settings.estado.preJuego = false;
     settings.estado.enJuego = true;
     // settings.objeto.decorativosOffgame.pop();
 
-    /* for (let bicho of settings.objeto.bichos) {
-        bicho.check_outOfLimits(true);
-    } */
-    
     settings.msg.nivel = true;
     
     setTimeout(() => {

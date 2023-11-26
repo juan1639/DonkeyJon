@@ -1,11 +1,18 @@
 import { settings } from './main.js';
 import { FireWorks } from "./fireworks.js";
 import { Textos } from './textos.js';
+import { Scroll } from './scroll.js';
+import { Jugador } from './Jugador.js';
+import { Boommerang } from './boommerang.js';
+import { Bichos } from './bichos.js';
+import { Pajaros } from './pajaros.js';
 import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
 import { Decorativos } from './decorativos.js';
 import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
+import { LosSiete } from './lossiete.js';
+import { ShowVidas } from './showvidas.js';
 
 // ============================================================================
 //  Funciones varias
@@ -72,6 +79,74 @@ function construir_nuevoNivel() {
 
     settings.sonidos.fireWorks.pause();
     settings.sonidos.musicaFondo.play();
+}
+
+// ============================================================================
+function instanciar_scrolls() {
+
+    for (let scroll of settings.ini_scrolls) {
+        const s_x = scroll[0];
+        const s_y = scroll[1];
+        const s_img = scroll[2];
+
+        settings.objeto.scroll.push(new Scroll(s_x, s_y, settings.resolucion[0], settings.resolucion[1], s_img));
+    }
+}
+
+// ============================================================================
+function instanciar_jugador() {
+
+    const ancho = settings.constante.ancho_jugador;
+    const alto = settings.constante.alto_jugador;
+    const xIni = settings.ini_jugador.x;
+    const yIni = settings.ini_jugador.y;
+    console.log('Jugador coord:', xIni, yIni, ancho, alto, settings.resolucion[0], settings.resolucion[1]);
+
+    settings.objeto.jugador = new Jugador(xIni, yIni, ancho, alto);
+}
+
+// ============================================================================
+function instanciar_boommerang() {
+
+    settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
+}
+
+// ============================================================================
+function instanciar_bichos() {
+
+    const dificultad = settings.constante.dificultad;
+    
+    for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
+
+        const id = Math.floor(Math.random()* settings.constante.nro_bichos);
+        
+        settings.objeto.bichos.push(new Bichos(id));
+    }
+}
+
+// ============================================================================
+function instanciar_pajaros() {
+    
+    const dificultad = settings.constante.dificultad;
+
+    for (let i = 0; i < settings.nro_enemigosDificultad.pajaros[dificultad]; i ++) {
+
+        const posIniY = 0;
+
+        settings.objeto.pajaros.push(new Pajaros(i, posIniY));
+    }
+}
+
+// ============================================================================
+function instanciar_textos() {
+
+    for (let txt of settings.array_textos) {
+        const alin = txt[1];
+        const size = txt[2];
+        const color = txt[3];
+
+        settings.objeto.textos.push(new Textos(txt[0], alin, size, color));
+    }
 }
 
 // ============================================================================
@@ -155,6 +230,26 @@ function instanciar_bonus(nivel) {
 }
 
 // ============================================================================
+function instanciar_los7() {
+
+    for (let i = 0; i < settings.constante.nro_DIAMANTES; i ++) {
+
+        settings.objeto.lossiete.push(new LosSiete(i, settings.constante.bsx * i, 0));
+    }
+}
+
+// ============================================================================
+function instanciar_showVidas() {
+
+    for (let i = settings.marcadores.vidas; i > 0; i --) {
+        const idVidas = './img/Ssheet_jugador.png';
+        const xVidas = settings.resolucion[0] - i * settings.constante.bsx - settings.constante.bsx;
+
+        settings.objeto.showvidas.push(new ShowVidas(idVidas, xVidas, 0, settings.constante.bsx, settings.constante.bsy));
+    }
+}
+
+// ============================================================================
 function check_gameOver() {
 
     if (settings.marcadores.vidas < 0 && settings.estado.enJuego) {
@@ -215,11 +310,19 @@ export {
     checkColision,
     checkColision_abovePtos,
     check_gameOver,
+    instanciar_scrolls,
+    instanciar_jugador,
+    instanciar_boommerang,
+    instanciar_bichos,
+    instanciar_pajaros,
+    instanciar_textos,
     instanciar_plataformas,
     instanciar_escaleras,
     instanciar_decorativos,
     instanciar_bonus,
     instanciar_llave,
+    instanciar_los7,
+    instanciar_showVidas,
     check_getLos7,
     lanzar_fireWorks,
     construir_nuevoNivel,
