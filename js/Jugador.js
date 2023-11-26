@@ -72,6 +72,9 @@ export class Jugador {
 
         this.getLos7 = false;
 
+        this.invisible = true;
+        this.duracion_invisible = 3500;
+
         this.duracion_dies = 3200;
 
         // --------------------------------------------------------------------------
@@ -116,6 +119,10 @@ export class Jugador {
         this.intervalo_anima = setInterval(() => {
             this.move.anima = this.move.anima === 0 ? this.move.anima = 2 : this.move.anima = 0;
         }, 99);
+
+        setTimeout(() => {
+            this.invisible = false;
+        }, this.duracion_invisible);
         
         settings.sonidos.jump.volume = settings.volumen.jump;
         settings.sonidos.pacmanDies.volume = settings.volumen.pacmanDies;
@@ -146,8 +153,11 @@ export class Jugador {
         this.rect.clipX = clipXY[0];
         this.rect.clipY = clipXY[1];
 
-        this.ctx.drawImage(this.img, this.rect.clipX, this.rect.clipY, this.rect.clipAncho, this.rect.clipAlto, 
-            this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
+        if ((!this.invisible) || (this.invisible && this.move.anima === 0)) {
+
+            this.ctx.drawImage(this.img, this.rect.clipX, this.rect.clipY, this.rect.clipAncho, this.rect.clipAlto, 
+                this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
+        }
 
         this.ctx.restore();
 
@@ -220,7 +230,7 @@ export class Jugador {
         this.col_item = this.check_colisionItems();
         this.col_llave = this.check_colisionLlave();
 
-        if (!settings.trucos.invisible) {
+        if (!settings.trucos.invisible && !this.invisible) {
             this.col_bicho = this.check_colisionBichos();
             this.col_pajaro = this.check_colisionPajaros();
         }
@@ -657,6 +667,11 @@ export class Jugador {
 
         settings.estado.jugadorDies = false;
         settings.marcadores.vidas --;
+        this.invisible = true;
+
+        setTimeout(() => {
+            this.invisible = false;
+        }, this.duracion_invisible);
 
         if (settings.marcadores.vidas < 0) {
 

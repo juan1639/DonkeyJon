@@ -15,7 +15,11 @@ export class Settings {
             nro_CHISPASfireWorks: 99,
             nro_DIAMANTES: 7,
             nro_niveles: 2,
-            pausaFireWorksNivelSuperado: 12000,
+            txt_selectMusica: 'Musica: On',
+            musica: true,
+            txt_selectDificultad: 'Dificultad: Normal',
+            dificultad: 1,
+            pausaFireWorksNivelSuperado: 9999,
             pausaMsgNivelMostrar: 5200,
             ancho_jugador: 120,
             alto_jugador: 150
@@ -80,7 +84,10 @@ export class Settings {
             scorePtos: document.getElementById('puntos'),
             scoreNivel: document.getElementById('nivel'),
             scoreVidas: document.getElementById('vidas'),
+            menuPrincipal: document.getElementById('menu__principal'),
             botonNewGame: document.getElementById('boton__newGame'),
+            botonSelectDificultad: document.getElementById('boton__selectDificultad'),
+            botonSelectMusica: document.getElementById('boton__selectMusica'),
             contenedorControles: document.getElementById('contenedor2__botonesControl'),
             botonNextLevel: document.getElementById('boton__NextLevel')
         };
@@ -92,6 +99,12 @@ export class Settings {
                 false, false, false, false, false,
                 false, false, false, false, false
             ]
+        };
+
+        this.nro_enemigosDificultad = {
+            mariq: [1, 2, 3],
+            carac: [1, 2, 3],
+            pajaros: [1, 2, 3],
         };
 
         this.nro_enemigos = {
@@ -137,8 +150,8 @@ export class Settings {
         }
 
         this.estado = {
-            preJuego: true,
-            enJuego: false,
+            preJuego: false,
+            enJuego: true,
             jugadorDies: false,
             gameOver: false,
             reJugar: false,
@@ -330,7 +343,9 @@ export class Settings {
             ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
             ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 4, true],
             ['./img/items_ri.png', 33, this.ini_suelo - this.gap * 5, true],
-            ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true]
+            ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true],
+            ['./img/items_ri.png', -6, this.ini_suelo - this.gap * 3, true],
+            ['./img/items_ri.png', -4, this.ini_suelo - this.gap * 5, true]
         ];
 
         this.array_bonus2 = [
@@ -340,7 +355,9 @@ export class Settings {
             ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
             ['./img/items_ri.png', 56, this.ini_suelo, true],
             ['./img/items_ri.png', 30, this.ini_suelo - this.gap * 6, true],
-            ['./img/items_ri.png', 56, this.ini_suelo - this.gap * 6, true]
+            ['./img/items_ri.png', 56, this.ini_suelo - this.gap * 6, true],
+            ['./img/items_ri.png', 53, this.ini_suelo, true],
+            ['./img/items_ri.png', 46, this.ini_suelo, true]
         ];
 
         this.array_nivelesBonus = [

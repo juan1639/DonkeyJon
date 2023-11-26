@@ -1,7 +1,7 @@
 import { settings } from "./main.js";
 
 // ----------------------------------------------------------------------
-//  EVENTOS Keydown / Keyup
+//  EVENTOS Keydown
 // 
 // ----------------------------------------------------------------------
 const eventos_keyDown = document.addEventListener('keydown', (event) => {
@@ -9,19 +9,11 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
     //console.log(event.key);
     const pulsacion = event.key;
 
-    if (settings.estado.preJuego) {
-
-        if (pulsacion === settings.tecla.enter) {
-
-            comenzar_partida(); 
-        }
-
-    } else if (settings.estado.reJugar) {
+    if (settings.estado.reJugar) {
 
         if (pulsacion === settings.tecla.enter) {
             
-            rejugarNuevaPartida();
-            comenzar_partida();
+            location.reload();
         }
     
     } else if (settings.estado.enJuego) {
@@ -75,6 +67,9 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
 });
 
 // ----------------------------------------------------------------------
+//  EVENTOS Keyup
+// 
+// ----------------------------------------------------------------------
 const eventos_keyUp = document.addEventListener('keyup', (event) => {
 
     if (settings.estado.enJuego) {
@@ -104,26 +99,17 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
 });
 
 // ----------------------------------------------------------------------
-//  EVENTOS touchstart / touchend
+//  EVENTOS touchstart
 // 
 // ----------------------------------------------------------------------
 const eventos_touchStart = document.addEventListener('touchstart', (event) => {
     //console.log(event.target.id, event.targetTouches, event);
     const touch = event.target.id;
 
-    if (settings.estado.preJuego) {
+    if (settings.estado.reJugar) {
 
         if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
-            
-            comenzar_partida();
-        }
-        
-    } else if (settings.estado.reJugar) {
-
-        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
-
-            rejugarNuevaPartida();
-            comenzar_partida();
+            location.reload();
         }
     }
 
@@ -154,15 +140,23 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
     
     if (settings.estado.nivelSuperado) {
 
-        if (touch === settings.touch.nextLevel) {
-            settings.estado.nivelSuperado = false;
-            settings.estado.enJuego = true;
-            //acciones_comunes_nivelSuperado_ReiniciarPartida();
-            settings.marcadores.botonNextLevel.style.display = 'none';
+    }
+
+    if (touch === settings.touch.music_onoff) {
+        //console.log('musica');
+
+        if (settings.sonidos.musicaFondo.paused) {
+            settings.sonidos.musicaFondo.play();
+
+        } else {
+            settings.sonidos.musicaFondo.pause();
         }
     }
 });
 
+// ----------------------------------------------------------------------
+//  EVENTOS touchend
+// 
 // ----------------------------------------------------------------------
 const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 
@@ -193,17 +187,6 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
             settings.controles.touch_at = false;
         }
     }
-
-    if (touchEnd === settings.touch.music_onoff) {
-        //console.log('musica');
-
-        if (settings.sonidos.musicaFondo.paused) {
-            settings.sonidos.musicaFondo.play();
-
-        } else {
-            settings.sonidos.musicaFondo.pause();
-        }
-    }
 });
 
 // ----------------------------------------------------------------------
@@ -214,69 +197,16 @@ const eventos_click = document.addEventListener('click', (event) => {
     //console.log(event.target.id, event.targetTouches, event);
     const clickar = event.target.id;
 
-    if (settings.estado.preJuego) {
+    if (settings.estado.reJugar) {
 
         if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
-
-            comenzar_partida();
-        }
-        
-    } else if (settings.estado.reJugar) {
-
-        if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
-
-            rejugarNuevaPartida();
-            comenzar_partida();
+            location.reload();
         }
         
     } else if (settings.estado.nivelSuperado) {
 
-        if (touch === settings.touch.nextLevel) {
-            settings.estado.nivelSuperado = false;
-            settings.estado.enJuego = true;
-            //acciones_comunes_nivelSuperado_ReiniciarPartida();
-            settings.marcadores.botonNextLevel.style.display = 'none';
-        }
     }
 });
-
-// ----------------------------------------------------------------------------
-function comenzar_partida() {
-    
-    settings.estado.preJuego = false;
-    settings.estado.enJuego = true;
-    settings.objeto.decorativosOffgame.pop();
-    // settings.marcadores.botonNewGame.style.display = 'none';
-    
-    for (let bicho of settings.objeto.bichos) {
-        bicho.check_outOfLimits(true);
-    }
-    
-    settings.msg.nivel = true;
-    
-    setTimeout(() => {
-        settings.msg.nivel = false;
-    }, settings.constante.pausaMsgNivelMostrar);
-
-    settings.sonidos.musicaFondo.play();
-    settings.sonidos.musicaFondo.loop = true;
-    settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
-}
-
-// ----------------------------------------------------------------------------
-function rejugarNuevaPartida() {
-
-    location.reload();
-
-    settings.estado.reJugar = false;
-    //settings.marcadores.puntos = 0;
-    //settings.marcadores.nivel = 0;
-    //settings.marcadores.vidas = 3;
-
-    //construir_nuevoNivel();
-
-    // settings.marcadores.botonNewGame.style.display = 'none';
-}
 
 // ----------------------------------------------------------------------------
 export {

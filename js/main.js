@@ -51,6 +51,50 @@ window.onload = () => {
 
     settings = new Settings(escalaSel);
 
+    settings.marcadores.botonSelectMusica.addEventListener('click', () => {
+
+        const opciones = [settings.constante.txt_selectMusica, 'Musica: Off'];
+
+        if (settings.marcadores.botonSelectMusica.innerHTML === opciones[0]) {
+            settings.marcadores.botonSelectMusica.innerHTML = opciones[1];
+            settings.constante.musica = false;
+            
+        } else {
+            settings.marcadores.botonSelectMusica.innerHTML = opciones[0];
+            settings.constante.musica = true;
+        }
+    });
+
+    settings.marcadores.botonSelectDificultad.addEventListener('click', () => {
+
+        const opciones = [
+            'Dificultad: Fácil',
+            settings.constante.txt_selectDificultad,
+            'Dificultad: Difícil'
+        ];
+
+        if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[0]) {
+            settings.marcadores.botonSelectDificultad.innerHTML = opciones[1];
+            settings.constante.dificultad = 1;
+            
+        } else if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[1]) {
+            settings.marcadores.botonSelectDificultad.innerHTML = opciones[2];
+            settings.constante.dificultad = 2;
+            
+        } else if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[2]) {
+            settings.marcadores.botonSelectDificultad.innerHTML = opciones[0];
+            settings.constante.dificultad = 0;
+        }
+    });
+
+    settings.marcadores.botonNewGame.addEventListener('click', () => {comenzar_instancias();});
+}
+
+function comenzar_instancias() {
+
+    settings.marcadores.menuPrincipal.style.display = 'none';
+    settings.canvas.style.display = 'flex';
+
     const resX = settings.resolucion[0];
     const resY = settings.resolucion[1];
 
@@ -80,9 +124,9 @@ window.onload = () => {
     settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
 
     // ---------------------------------------------------------------
-    const nivel = settings.marcadores.nivel - 1;
+    const dificultad = settings.constante.dificultad;
     
-    for (let i = 0; i < settings.nro_enemigos.mariq[nivel]; i ++) {
+    for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
 
         const id = Math.floor(Math.random()* settings.constante.nro_bichos);
 
@@ -90,7 +134,7 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------    
-    for (let i = 0; i < settings.nro_enemigos.pajaros[nivel]; i ++) {
+    for (let i = 0; i < settings.nro_enemigosDificultad.pajaros[dificultad]; i ++) {
 
         const posIniY = 0;
 
@@ -98,12 +142,12 @@ window.onload = () => {
     }
 
     // ---------------------------------------------------------------
-    let i = settings.array_decorativosOffgame[0];
+    /* let i = settings.array_decorativosOffgame[0];
     const id_dOff = i[2];
     const rx = Math.floor(i[0]);
     const ry = Math.floor(i[1]);
 
-    settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
+    settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4])); */
 
     // ---------------------------------------------------------------
     for (let txt of settings.array_textos) {
@@ -138,6 +182,34 @@ window.onload = () => {
     setInterval(() => {
         bucle_principal();
     }, 1000 / settings.constante.FPS);
+
+    setTimeout(() => {
+        comenzar_partida();
+    }, 999);
+}
+
+// ----------------------------------------------------------------------------
+function comenzar_partida() {
+    
+    settings.estado.preJuego = false;
+    settings.estado.enJuego = true;
+    // settings.objeto.decorativosOffgame.pop();
+
+    /* for (let bicho of settings.objeto.bichos) {
+        bicho.check_outOfLimits(true);
+    } */
+    
+    settings.msg.nivel = true;
+    
+    setTimeout(() => {
+        settings.msg.nivel = false;
+    }, settings.constante.pausaMsgNivelMostrar);
+
+    if (settings.constante.musica) {
+        settings.sonidos.musicaFondo.play();
+        settings.sonidos.musicaFondo.loop = true;
+        settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+    }
 }
 
 // ===================================================================

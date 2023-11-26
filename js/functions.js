@@ -63,8 +63,10 @@ function construir_nuevoNivel() {
     settings.marcadores.nivel ++;
     settings.msg.nivel = true;
     settings.estado.nivelSuperado = false;
+    settings.objeto.jugador.invisible = true;
 
     setTimeout(() => {
+        settings.objeto.jugador.invisible = false;
         settings.msg.nivel = false;
     }, settings.constante.pausaMsgNivelMostrar);
 

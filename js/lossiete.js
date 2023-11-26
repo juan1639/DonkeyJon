@@ -30,6 +30,8 @@ export class LosSiete {
             alto: 24
         }
 
+        this.contador = 0;
+
         // ---------------------------------------------------------------
         //  Completados los 7
         // ---------------------------------------------------------------
@@ -59,8 +61,15 @@ export class LosSiete {
 
     dibuja() {
 
-        if (this.mostrar) {
+        this.contador ++;
+        if (this.contador >= 7) this.contador = 0;
+
+        // --------------------------------------------------------------------
+        if (this.mostrar && !settings.objeto.jugador.getLos7) {
             this.ctx.drawImage(this.img, this.clip.x, this.clip.y, this.clip.ancho, this.clip.alto, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
+
+        } else if (this.mostrar && settings.objeto.jugador.getLos7) {
+            this.ctx.drawImage(this.img, 8 + 32 * this.contador, this.clip.y, this.clip.ancho, this.clip.alto, this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
         }
         
         if (settings.objeto.jugador.getLos7 && this.showInterm) {
