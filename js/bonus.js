@@ -1,24 +1,60 @@
 import { settings } from "./main.js";
+import { Scroll } from "./scroll.js";
 
 // ============================================================================
 export class Bonus {
 
-    constructor(id, left, top, accion) {
+    static ini_suelo = Scroll.resolucion[1] - Scroll.bsy * 2;
+    static gap = Scroll.bsy * 6;
+    static gapMini = Scroll.bsy * 2;
+
+    static array_bonus = [
+        ['./img/items_ri.png', 35, this.ini_suelo, true],
+        ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 1, true],
+        ['./img/items_ri.png', 29, this.ini_suelo - this.gap * 2, true],
+        ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
+        ['./img/items_ri.png', 12, this.ini_suelo - this.gap * 4, true],
+        ['./img/items_ri.png', 33, this.ini_suelo - this.gap * 5, true],
+        ['./img/items_ri.png', 25, this.ini_suelo - this.gap * 6, true],
+        ['./img/items_ri.png', -6, this.ini_suelo - this.gap * 3, true],
+        ['./img/items_ri.png', -4, this.ini_suelo - this.gap * 5, true]
+    ];
+
+    static array_bonus2 = [
+        ['./img/items_ri.png', 35, this.ini_suelo, true],
+        ['./img/items_ri.png', 8, this.ini_suelo - this.gap * 3, true],
+        ['./img/items_ri.png', 32, this.ini_suelo - this.gap * 3, true],
+        ['./img/items_ri.png', 10, this.ini_suelo - this.gap * 3, true],
+        ['./img/items_ri.png', 56, this.ini_suelo, true],
+        ['./img/items_ri.png', 30, this.ini_suelo - this.gap * 6, true],
+        ['./img/items_ri.png', 56, this.ini_suelo - this.gap * 6, true],
+        ['./img/items_ri.png', 53, this.ini_suelo, true],
+        ['./img/items_ri.png', 46, this.ini_suelo, true]
+    ];
+
+    static array_nivelesBonus = [
+        this.array_bonus,
+        this.array_bonus2,
+        this.array_bonus
+    ];
+
+    // ------------------------------------------------------------------
+    constructor(args) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
-        this.id = id;
+        this.id = args[0];
 
         this.ctx = settings.ctx;
         this.img = new Image();
         this.img.src = this.id;
 
-        this.accion = accion;
+        this.accion = args[3];
         this.accion_realizada = false;
 
         this.rect = {
-            x: left,
-            y: top - this.altoTile,
+            x: args[1] * this.anchoTile,
+            y: args[2] - this.altoTile,
             ancho: this.anchoTile,
             alto: this.altoTile
         }

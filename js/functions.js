@@ -84,12 +84,8 @@ function construir_nuevoNivel() {
 // ============================================================================
 function instanciar_scrolls() {
 
-    for (let scroll of settings.ini_scrolls) {
-        const s_x = scroll[0];
-        const s_y = scroll[1];
-        const s_img = scroll[2];
-
-        settings.objeto.scroll.push(new Scroll(s_x, s_y, settings.resolucion[0], settings.resolucion[1], s_img));
+    for (let args of Scroll.ini_scrolls) {
+        settings.objeto.scroll.push(new Scroll(args, settings.resolucion[0], settings.resolucion[1]));
     }
 }
 
@@ -140,35 +136,26 @@ function instanciar_pajaros() {
 // ============================================================================
 function instanciar_textos() {
 
-    for (let txt of settings.array_textos) {
-        const alin = txt[1];
-        const size = txt[2];
-        const color = txt[3];
-
-        settings.objeto.textos.push(new Textos(txt[0], alin, size, color));
+    for (let args of Textos.array_textos) {
+        settings.objeto.textos.push(new Textos(args));
     }
 }
 
 // ============================================================================
 function instanciar_plataformas(nivel) {
 
-    const nivelActual = settings.array_nivelesPlataformas[nivel];
+    const nivelActual = Plataforma.array_nivelesPlataformas[nivel];
     const final = nivelActual.length - 1;
 
     for (let i = final; i >= 0; i --) {
 
-        const p_y = nivelActual[i][0];
-        const p_x = nivelActual[i][1];
-        const p_ancho = nivelActual[i][2];
-        const p_bordeIz = nivelActual[i][3];
-        const p_bordeDe = nivelActual[i][4];
         const movil = nivelActual[i][5];
 
         if (movil === 0) {
-            settings.objeto.plataforma.push(new Plataforma(p_y, p_x, p_ancho, './img/tile1.png', p_bordeIz, p_bordeDe));
+            settings.objeto.plataforma.push(new Plataforma(nivelActual[i], './img/tile1.png'));
             
         } else {
-            settings.objeto.plataforma.push(new PlataformaMovil(p_y, p_x, p_ancho, './img/tile6.png', movil, movil));
+            settings.objeto.plataforma.push(new PlataformaMovil(nivelActual[i], './img/tile6.png'));
         }
     }
 }
@@ -176,22 +163,17 @@ function instanciar_plataformas(nivel) {
 // ============================================================================
 function instanciar_escaleras(nivel) {
 
-    const nivelActual = settings.array_nivelesEscaleras[nivel];
+    const nivelActual = Escalera.array_nivelesEscaleras[nivel];
 
-    for (let escalera of nivelActual) {
-
-        const e_x = escalera[0];
-        const e_y = escalera[1];
-        const e_size = escalera[2];
-
-        settings.objeto.escalera.push(new Escalera(e_x, e_y, e_size));
+    for (let args of nivelActual) {
+        settings.objeto.escalera.push(new Escalera(args));
     }
 }
 
 // ============================================================================
 function instanciar_decorativos(nivel) {
 
-    const nivelActual = settings.array_nivelesDecorativos[nivel];
+    const nivelActual = Decorativos.array_nivelesDecorativos[nivel];
 
     for (let i of nivelActual) {
         const decX = i[0] * settings.constante.bsx;
@@ -205,27 +187,17 @@ function instanciar_decorativos(nivel) {
 // ============================================================================
 function instanciar_llave(nivel) {
 
-    const nivelActual = settings.array_llaves[nivel];
-
-    const id_llave = nivelActual[0];
-    const llx = nivelActual[1];
-    const lly = nivelActual[2];
-    const booleano = nivelActual[3];
-
-    settings.objeto.llave = new Llave(id_llave, llx, lly, booleano);
+    const nivelActual = Llave.array_llaves[nivel];
+    settings.objeto.llave = new Llave(nivelActual);
 }
 
 // ============================================================================
 function instanciar_bonus(nivel) {
 
-    const nivelActual = settings.array_nivelesBonus[nivel];
+    const nivelActual = Bonus.array_nivelesBonus[nivel];
 
-    for (let bonus of nivelActual) {
-        const idBonus = bonus[0];
-        const bonX = bonus[1] * settings.constante.bsx;
-        const bonY = bonus[2];
-
-        settings.objeto.bonus.push(new Bonus(idBonus, bonX, bonY, true));
+    for (let args of nivelActual) {
+        settings.objeto.bonus.push(new Bonus(args));
     }
 }
 

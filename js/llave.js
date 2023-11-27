@@ -1,24 +1,36 @@
 import { settings } from "./main.js";
+import { Scroll } from './scroll.js';
 
 // ============================================================================
 export class Llave {
 
-    constructor(id, left, top, accion) {
+    static ini_suelo = Scroll.resolucion[1] - Scroll.bsy * 2;
+    static gap = Scroll.bsy * 6;
+    static gapMini = Scroll.bsy * 2;
+
+    static array_llaves = [
+        ['./img/keyYellow.png', 29 * Scroll.bsx, this.ini_suelo - this.gap * 3, true],
+        ['./img/keyYellow.png', 54 * Scroll.bsx, this.ini_suelo - this.gap * 6, true],
+        ['./img/keyYellow.png', 29 * Scroll.bsx, this.ini_suelo - this.gap * 3, true]
+    ];
+
+    // -----------------------------------------------------------------------
+    constructor(args) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
-        this.id = id;
+        this.id = args[0];
 
         this.ctx = settings.ctx;
         this.img = new Image();
         this.img.src = this.id;
 
-        this.accion = accion;
+        this.accion = args[3];
         this.accion_realizada = false;
 
         this.rect = {
-            x: left,
-            y: top,
+            x: args[1],
+            y: args[2],
             ancho: this.anchoTile * 2,
             alto: this.altoTile * 2
         }

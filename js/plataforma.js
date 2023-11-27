@@ -1,10 +1,94 @@
 import { settings } from "./main.js";
 import { checkColision } from "./functions.js";
+import { Scroll } from "./scroll.js";
 
 // ============================================================================
 export class Plataforma {
 
-    constructor(top, left, width, ruta, bordeIz, bordeDe) {
+    static ini_suelo = Scroll.resolucion[1] - Scroll.bsy * 2;
+    static gap = Scroll.bsy * 6;
+    static gapMini = Scroll.bsy * 2;
+
+    // --------------------------------------------------------------------
+    // [ y, x, longSize, bordeIz, bordeDe, movil/fija, nro_alturas nivel ]
+    // --------------------------------------------------------------------
+    static array_plataformas = [
+
+        [this.ini_suelo - this.gap * 7 - this.gapMini, 10, 5, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 6, -16, 22, false, true, 0, 6],
+        [this.ini_suelo - this.gap * 7, 9, 12, false, false, 1, 6],
+        [this.ini_suelo - this.gap * 6, 23, 25, true, false, 0, 6],
+        [this.ini_suelo - this.gap * 6, 12, 2, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 30, 3, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 5 - this.gapMini, 35, 2, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 5, -16, 20, false, true, 0, 6],
+        [this.ini_suelo - this.gap * 5, 8, 20, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 5, 32, 8, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 3, 28, 4, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 4, -6, 24, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 4, 22, 26, true, false, 0, 6],
+
+        [this.ini_suelo - this.gap * 3, -16, 15, false, true, 0, 6],
+        [this.ini_suelo - this.gap * 3, 3, 10, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 2, -4, 39, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 1, -6, 14, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 1, 11, 7, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 1, 21, 17, true, true, 0, 6],
+
+        [this.ini_suelo, -16, 64, false, false, 0, 6]
+    ];
+
+    static array_plataformas2 = [
+
+        [this.ini_suelo - this.gap * 6, 0, 14, false, true, 0, 6],
+        [this.ini_suelo - this.gap * 6, 23, 23, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 6, 52, 12, true, false, 0, 6],
+
+        [this.ini_suelo - this.gap * 5 - this.gapMini * 2, 28, 4, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 5 - this.gapMini, 28, 4, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 5, 21, 18, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 4, 31, 7, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 4, 22, 5, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 4, 41, 5, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 3, 31, 4, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 3, 6, 10, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 2, 32, 8, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 2, 23, 5, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 1 - this.gapMini * 2, 42, 3, true, true, 0, 6],
+        [this.ini_suelo - this.gap * 1 - this.gapMini, 39, 2, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 1, 25, 12, true, true, 0, 6],
+
+        [this.ini_suelo - this.gap * 1, 48, 8, false, false, 1, 6],
+
+        [this.ini_suelo, 0, 64, false, false, 0, 6]
+    ];
+
+    static array_nivelesPlataformas = [
+        this.array_plataformas,
+        this.array_plataformas2,
+        this.array_plataformas
+    ];
+
+    // ----------------------------------------------------------------------
+    constructor(args, ruta) {
+
+        /* const p_y = nivelActual[i][0];
+        const p_x = nivelActual[i][1];
+        const p_ancho = nivelActual[i][2];
+        const p_bordeIz = nivelActual[i][3];
+        const p_bordeDe = nivelActual[i][4]; */
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
@@ -20,14 +104,14 @@ export class Plataforma {
         this.img_bordeDe = new Image();
         this.img_bordeDe.src = './img/tile3.png';
 
-        this.bordeIz = bordeIz;
-        this.bordeDe = bordeDe;
+        this.bordeIz = args[3];
+        this.bordeDe = args[4];
 
         this.rect = {
-            x: left * settings.constante.bsx,
-            y: top,
-            ancho: width * settings.constante.bsx,
-            anchoBucle: width,
+            x: args[1] * settings.constante.bsx,
+            y: args[0],
+            ancho: args[2] * settings.constante.bsx,
+            anchoBucle: args[2],
             alto: settings.constante.bsy
         }
     }
@@ -62,7 +146,7 @@ export class Plataforma {
 // ============================================================================
 export class PlataformaMovil {
 
-    constructor(top, left, width, ruta, dx, dy) {
+    constructor(args, ruta) {
 
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
@@ -74,17 +158,17 @@ export class PlataformaMovil {
         this.img.src = ruta;
 
         this.rect = {
-            x: left * settings.constante.bsx,
-            y: top,
-            ancho: width * settings.constante.bsx,
-            anchoBucle: width,
+            x: args[1] * settings.constante.bsx,
+            y: args[0],
+            ancho: args[2] * settings.constante.bsx,
+            anchoBucle: args[2],
             alto: settings.constante.bsy
         }
 
         this.move = {
             activo: true,
-            velX: dx,
-            velY: dy
+            velX: args[5],
+            velY: args[5]
         }
 
         this.correcciones = {

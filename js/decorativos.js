@@ -1,8 +1,75 @@
 import { settings } from "./main.js";
+import { Scroll } from "./scroll.js";
 
 // ============================================================================
 export class Decorativos {
 
+    static ini_suelo = Scroll.resolucion[1] - Scroll.bsy * 2;
+    static gap = Scroll.bsy * 6;
+    static gapMini = Scroll.bsy * 2;
+
+    static array_decorativos = [
+
+        [-10, this.ini_suelo, 1, './img/tree05.png', false],
+        [42, this.ini_suelo, 1, './img/tree05.png', false],
+        [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
+        [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
+        [-14, this.ini_suelo - this.gap * 5, 3, './img/tree05.png', false],
+        [42, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+        [26, this.ini_suelo, 1, './img/Letrero_creditos.png', false],
+        [-15, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
+        [-15, this.ini_suelo - this.gap * 3, 1, './img/Letrero_IMI.png', false],
+        [31, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
+        [6, this.ini_suelo - this.gap * 2, 1, './img/signArrow_up.png', false],
+        [10, this.ini_suelo - this.gap * 2, 1, './img/signArrow_right.png', false],
+        [-7, this.ini_suelo, 1, './img/signArrow_TR.png', false],
+        [38, this.ini_suelo, 1, './img/signArrow_up.png', false],
+        [3, this.ini_suelo - this.gap * 1, 1, './img/signArrow_up.png', false],
+        [30, this.ini_suelo - this.gap * 4, 1, './img/signArrow_TL.png', false],
+        [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
+        [34, this.ini_suelo - this.gap * 6, 1, './img/signLeft.png', false],
+        [9, this.ini_suelo - this.gap * 5, 1, './img/signLeft.png', false],
+        [37, this.ini_suelo - this.gap * 6, 1, './img/Letrero_Arlekin.png', false],
+
+        [2, this.ini_suelo - this.gap * 5, 1, './img/switchRed_mid.png', true],
+
+        [-12, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
+        [-10, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
+    ];
+
+    static array_decorativos2 = [
+
+        [58, this.ini_suelo, 1, './img/tree05.png', false],
+        [-10, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
+        [42, this.ini_suelo - this.gap * 4, 1, './img/tree05.png', false],
+        [59, this.ini_suelo - this.gap * 6, 2, './img/tree05.png', false],
+        [6, this.ini_suelo, 1, './img/tree05.png', false],
+        [6, this.ini_suelo - this.gap * 3, 1, './img/tree05.png', false],
+        [26, this.ini_suelo, 1, './img/Letrero_creditos.png', false],
+        [1, this.ini_suelo, 1, './img/Letrero_kenneyNl.png', false],
+        [42, this.ini_suelo, 1, './img/Letrero_IMI.png', false],
+        [32, this.ini_suelo - this.gap * 2, 1, './img/Letrero_piscis.png', false],
+        [49, this.ini_suelo, 1, './img/signArrow_up.png', false],
+        [12, this.ini_suelo, 1, './img/signArrow_up.png', false],
+        [14, this.ini_suelo, 1, './img/signRight.png', false],
+        [32, this.ini_suelo - this.gap * 4, 1, './img/signArrow_up.png', false],
+        [24, this.ini_suelo - this.gap * 6, 1, './img/signLeft.png', false],
+        [27, this.ini_suelo - this.gap * 6, 1, './img/signRight.png', false],
+        [37, this.ini_suelo - this.gap * 6, 1, './img/Letrero_Arlekin.png', false],
+
+        [35, this.ini_suelo - this.gap * 6, 1, './img/switchRed_mid.png', true],
+
+        [2, this.ini_suelo - this.gap * 6, 1, './img/flagYellow1.png', false],
+        [6, this.ini_suelo - this.gap * 6, 1, './img/lockYellow.png', false]
+    ];
+
+    static array_nivelesDecorativos = [
+        this.array_decorativos,
+        this.array_decorativos2,
+        this.array_decorativos
+    ];
+
+    // ----------------------------------------------------------------------------
     constructor(id, left, top, cuantos, accion) {
 
         this.anchoTile = settings.constante.bsx;

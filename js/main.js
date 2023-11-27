@@ -20,7 +20,8 @@ import {
     instanciar_los7,
     instanciar_showVidas,
     borraCanvas,
-    check_gameOver
+    check_gameOver,
+    playSonidosLoop
 } from "./functions.js";
 
 // ----------------------------------------------------------------------------
@@ -46,6 +47,7 @@ window.onload = () => {
 
     settings = new Settings(escalaSel);
 
+    // --------------------------------------------------------------------
     settings.marcadores.botonSelectMusica.addEventListener('click', () => {
 
         const opciones = [settings.constante.txt_selectMusica, 'Musica: Off'];
@@ -58,10 +60,13 @@ window.onload = () => {
             settings.marcadores.botonSelectMusica.innerHTML = opciones[0];
             settings.constante.musica = true;
         }
+        
+        playSonidosLoop(settings.sonidos.dieThrow1, false, 0.9);
+        playSonidosLoop(settings.sonidos.chips1, false, 0.9);
     });
 
     settings.marcadores.botonSelectDificultad.addEventListener('click', () => {
-
+        
         const opciones = [
             'Dificultad: Fácil',
             settings.constante.txt_selectDificultad,
@@ -80,9 +85,17 @@ window.onload = () => {
             settings.marcadores.botonSelectDificultad.innerHTML = opciones[0];
             settings.constante.dificultad = 0;
         }
-    });
 
-    settings.marcadores.botonNewGame.addEventListener('click', () => {comenzar_instancias();});
+        playSonidosLoop(settings.sonidos.dieThrow2, false, 0.9);
+        playSonidosLoop(settings.sonidos.chips3, false, 0.9);
+    });
+    
+    settings.marcadores.botonNewGame.addEventListener('click', () => {
+        
+        playSonidosLoop(settings.sonidos.dieThrow1, false, 0.9);
+        playSonidosLoop(settings.sonidos.chips2, false, 0.9);
+        comenzar_instancias();
+    });
 }
 
 // ===========================================================================

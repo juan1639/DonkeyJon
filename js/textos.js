@@ -3,12 +3,25 @@ import { settings } from "./main.js";
 // ============================================================================
 export class Textos {
 
-    constructor(idTxt, alin, size, color) {
+    static colores = {
+        azul_fondo: 'rgb(134, 210, 230)',
+        blanco_nube: 'rgb(233, 233, 233)',
+        txt_amar2: 'rgb(240, 240, 170)',
+        txt_amar1: 'rgb(255, 89, 19)',
+        txt_amar3: 'rgb(225, 155, 29)'
+    };
 
-        this.idTxt = idTxt;
-        this.alin = alin;
-        this.size = size;
-        this.color = color;
+    static array_textos = [
+        [' Pulse agachar para realizar accion', 'center', 50, this.colores.txt_amar1],
+        [' N i v e l  ', 'center', 120, this.colores.txt_amar3]
+    ];
+
+    constructor(args) {
+
+        this.idTxt = args[0];
+        this.alin = args[1];
+        this.size = args[2];
+        this.color = args[3];
 
         this.ctx = settings.ctx;
     }
