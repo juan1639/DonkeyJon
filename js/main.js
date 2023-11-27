@@ -49,48 +49,25 @@ window.onload = () => {
     settings = new Settings(escalaSel);
 
     // --------------------------------------------------------------------
-    settings.marcadores.botonSelectMusica.addEventListener('click', () => {
+    const keysListen = Object.keys(settings.marcadores);
 
-        const opciones = [settings.constante.txt_selectMusica, 'Musica: Off'];
+    for (let boton of keysListen) {
+        if (boton === 'botonSelectMusica' || boton === 'botonSelectDificultad') {
+            settings.marcadores[boton].addEventListener('click', () => {
 
-        if (settings.marcadores.botonSelectMusica.innerHTML === opciones[0]) {
-            settings.marcadores.botonSelectMusica.innerHTML = opciones[1];
-            settings.constante.musica = false;
-            
-        } else {
-            settings.marcadores.botonSelectMusica.innerHTML = opciones[0];
-            settings.constante.musica = true;
+                settings.opciones_menuP[boton] ++;
+                if (settings.opciones_menuP[boton] >= 3) settings.opciones_menuP[boton] = 0;
+
+                const opcion = settings.opciones_menuP[boton];
+
+                settings.marcadores[boton].innerHTML = settings.constante[boton][opcion];
+
+                playSonidosLoop(settings.sonidos.dieThrow1, false, 0.9);
+                playSonidosLoop(settings.sonidos.chips1, false, 0.9);
+            });
         }
-        
-        playSonidosLoop(settings.sonidos.dieThrow1, false, 0.9);
-        playSonidosLoop(settings.sonidos.chips1, false, 0.9);
-    });
+    }
 
-    settings.marcadores.botonSelectDificultad.addEventListener('click', () => {
-        
-        const opciones = [
-            'Dificultad: Fácil',
-            settings.constante.txt_selectDificultad,
-            'Dificultad: Difícil'
-        ];
-
-        if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[0]) {
-            settings.marcadores.botonSelectDificultad.innerHTML = opciones[1];
-            settings.constante.dificultad = 1;
-            
-        } else if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[1]) {
-            settings.marcadores.botonSelectDificultad.innerHTML = opciones[2];
-            settings.constante.dificultad = 2;
-            
-        } else if (settings.marcadores.botonSelectDificultad.innerHTML === opciones[2]) {
-            settings.marcadores.botonSelectDificultad.innerHTML = opciones[0];
-            settings.constante.dificultad = 0;
-        }
-
-        playSonidosLoop(settings.sonidos.dieThrow2, false, 0.9);
-        playSonidosLoop(settings.sonidos.chips3, false, 0.9);
-    });
-    
     settings.marcadores.botonNewGame.addEventListener('click', () => {
         
         playSonidosLoop(settings.sonidos.dieThrow1, false, 0.9);
@@ -155,10 +132,8 @@ function comenzar_partida() {
         settings.msg.nivel = false;
     }, settings.constante.pausaMsgNivelMostrar);
 
-    if (settings.constante.musica) {
-        settings.sonidos.musicaFondo.play();
-        settings.sonidos.musicaFondo.loop = true;
-        settings.sonidos.musicaFondo.volume = settings.volumen.musicaFondo;
+    if (settings.opciones_menuP.botonSelectMusica != 1) {
+        playSonidosLoop(settings.sonidos.musicaFondo, true, settings.volumen.musicaFondo);
     }
 }
 

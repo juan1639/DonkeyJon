@@ -7,46 +7,33 @@ import { settings } from "./main.js";
 const eventos_keyDown = document.addEventListener('keydown', (event) => {
 
     //console.log(event.key);
+    const keysTeclas = Object.keys(settings.tecla);
     const pulsacion = event.key;
 
     if (settings.estado.reJugar) {
 
-        if (pulsacion === settings.tecla.enter) {
+        if (pulsacion === settings.tecla.tecla_enter[0] || pulsacion === settings.tecla.tecla_enter[1]) {
             
             location.reload();
         }
     
     } else if (settings.estado.enJuego) {
 
-        if (pulsacion === settings.tecla.iz) {
-            //console.log('izq...');
-            settings.controles.tecla_iz = true;
-            
-        } else if (pulsacion === settings.tecla.de) {
-            //console.log('dcha...');
-            settings.controles.tecla_de = true;
+        for (let idTecla of keysTeclas) {
 
-        } else if (pulsacion === settings.tecla.up) {
-            //console.log('arriba/salto');
-            settings.controles.tecla_up = true;
-
-        } else if (pulsacion === settings.tecla.do) {
-            //console.log('agachar');
-            settings.controles.tecla_do = true;
+            if (pulsacion === settings.tecla[idTecla][0] || pulsacion === settings.tecla[idTecla][1]) {
+                settings.controles[idTecla] = true;
+            }
         }
 
-        if (pulsacion === settings.tecla.at[0] || pulsacion === settings.tecla.at[1]) {
-            //console.log('atacar...');
-            settings.controles.tecla_at = true;
-        }
-
-        if (pulsacion === settings.tecla.music_onoff[0] || pulsacion === settings.tecla.music_onoff[1]) {
-            console.log('musica');
+        if (pulsacion === settings.tecla.tecla_music_onoff[0] || pulsacion === settings.tecla.tecla_music_onoff[1]) {
             
             if (settings.sonidos.musicaFondo.paused) {
+                console.log('musica ON');
                 settings.sonidos.musicaFondo.play();
 
             } else {
+                console.log('musica OFF');
                 settings.sonidos.musicaFondo.pause();
             }
         }
@@ -72,28 +59,16 @@ const eventos_keyDown = document.addEventListener('keydown', (event) => {
 // ----------------------------------------------------------------------
 const eventos_keyUp = document.addEventListener('keyup', (event) => {
 
+    const keysTeclas = Object.keys(settings.tecla);
+    const pulsacion = event.key;
+
     if (settings.estado.enJuego) {
 
-        if (event.key === settings.tecla.iz) {
-            //console.log('endizq...');
-            settings.controles.tecla_iz = false;
-    
-        } else if (event.key === settings.tecla.de) {
-            //console.log('enddcha...');
-            settings.controles.tecla_de = false;
+        for (let idTecla of keysTeclas) {
 
-        } else if (event.key === settings.tecla.up) {
-            //console.log('endArriba/salto');
-            settings.controles.tecla_up = false;
-
-        } else if (event.key === settings.tecla.do) {
-            //console.log('endAgachar');
-            settings.controles.tecla_do = false;
-        }
-
-        if (event.key === settings.tecla.at[0] || event.key === settings.tecla.at[1]) {
-            // console.log('endAtacar');
-            settings.controles.tecla_at = false;
+            if (pulsacion === settings.tecla[idTecla][0] || pulsacion === settings.tecla[idTecla][1]) {
+                settings.controles[idTecla] = false;
+            }
         }
     }
 });
@@ -103,38 +78,25 @@ const eventos_keyUp = document.addEventListener('keyup', (event) => {
 // 
 // ----------------------------------------------------------------------
 const eventos_touchStart = document.addEventListener('touchstart', (event) => {
+
     //console.log(event.target.id, event.targetTouches, event);
+    const keysTeclas = Object.keys(settings.tecla);
     const touch = event.target.id;
 
     if (settings.estado.reJugar) {
 
-        if (touch === settings.touch.newGame || touch === settings.touch.canvas) {
+        if (touch === settings.tecla.touch_newGame[0] || touch === settings.tecla.touch_canvas[0]) {
             location.reload();
         }
     }
 
     if (settings.estado.enJuego) {
 
-        if (touch === settings.touch.iz[0] || touch === settings.touch.iz[1]) {
-            // console.log('izq...');
-            settings.controles.touch_iz = true;
-            
-        } else if (touch === settings.touch.de[0] || touch === settings.touch.de[1]) {
-            // console.log('dcha...');
-            settings.controles.touch_de = true;
-            
-        } else if (touch === settings.touch.up[0] || touch === settings.touch.up[1]) {
-            //console.log('arriba/saltar');
-            settings.controles.touch_up = true;
+        for (let idTecla of keysTeclas) {
 
-        } else if (touch === settings.touch.do[0] || touch === settings.touch.do[1]) {
-            //console.log('arriba/saltar');
-            settings.controles.touch_do = true;
-        }
-
-        if (touch === settings.touch.at[0] || touch === settings.touch.at[1]) {
-            //console.log('atacar...');
-            settings.controles.touch_at = true;
+            if (touch === settings.tecla[idTecla][0] || touch === settings.tecla[idTecla][1]) {
+                settings.controles[idTecla] = true;
+            }
         }
     }
     
@@ -142,13 +104,14 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
 
     }
 
-    if (touch === settings.touch.music_onoff) {
-        //console.log('musica');
+    if (touch === settings.tecla.touch_music_onoff[0] || touch === settings.tecla.touch_music_onoff[1]) {
 
         if (settings.sonidos.musicaFondo.paused) {
+            console.log('musica: ON');
             settings.sonidos.musicaFondo.play();
 
         } else {
+            console.log('musica: OFF');
             settings.sonidos.musicaFondo.pause();
         }
     }
@@ -161,30 +124,16 @@ const eventos_touchStart = document.addEventListener('touchstart', (event) => {
 const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 
     //console.log(event.target.id, event.targetTouches);
+    const keysTeclas = Object.keys(settings.tecla);
     const touchEnd = event.target.id;
 
     if (settings.estado.enJuego) {
 
-        if (touchEnd === settings.touch.iz[0] || touchEnd === settings.touch.iz[1]) {
-            // console.log('endizq...');
-            settings.controles.touch_iz = false;
-    
-        } else if (touchEnd === settings.touch.de[0] || touchEnd ===  settings.touch.de[1]) {
-            // console.log('enddcha...');
-            settings.controles.touch_de = false;
+        for (let idTecla of keysTeclas) {
 
-        } else if (touchEnd === settings.touch.up[0] || touchEnd ===  settings.touch.up[1]) {
-            //console.log('endUp');
-            settings.controles.touch_up = false;
-
-        } else if (touchEnd === settings.touch.do[0] || touchEnd ===  settings.touch.do[1]) {
-            //console.log('endUp');
-            settings.controles.touch_do = false;
-        }
-
-        if (touchEnd === settings.touch.at[0] || touchEnd === settings.touch.at[1]) {
-            // console.log('endAtacar');
-            settings.controles.touch_at = false;
+            if (touchEnd === settings.tecla[idTecla][0] || touchEnd === settings.tecla[idTecla][1]) {
+                settings.controles[idTecla] = false;
+            }
         }
     }
 });
@@ -194,12 +143,13 @@ const eventos_touchEnd = document.addEventListener('touchend', (event) => {
 // 
 // ----------------------------------------------------------------------
 const eventos_click = document.addEventListener('click', (event) => {
+
     //console.log(event.target.id, event.targetTouches, event);
     const clickar = event.target.id;
 
     if (settings.estado.reJugar) {
 
-        if (clickar === settings.touch.newGame || clickar === settings.touch.canvas) {
+        if (clickar === settings.tecla.touch_newGame || clickar === settings.tecla.touch_canvas) {
             location.reload();
         }
         

@@ -15,14 +15,17 @@ export class Settings {
             nro_CHISPASfireWorks: 99,
             nro_DIAMANTES: 7,
             nro_niveles: 2,
-            txt_selectMusica: 'Musica: On',
-            musica: true,
-            txt_selectDificultad: 'Dificultad: Normal',
-            dificultad: 1,
+            botonSelectMusica: ['Musica: On', 'Musica: Off', 'Musica: On'],
+            botonSelectDificultad: ['Dificultad: Facil', 'Dificultad: Normal', 'Dificultad: Difícil'],
             pausaFireWorksNivelSuperado: 9999,
             pausaMsgNivelMostrar: 5200,
             ancho_jugador: 120,
             alto_jugador: 150
+        };
+
+        this.opciones_menuP = {
+            botonSelectMusica: 0,
+            botonSelectDificultad: 1
         };
 
         this.resolucion = [
@@ -107,38 +110,47 @@ export class Settings {
         };
 
         this.controles = {
+            tecla_iz: false,
+            tecla_de: false,
+            tecla_up: false,
+            tecla_do: false,
+            tecla_at: false,
+            tecla_music_onoff: false,
+            tecla_enter: false,
+
             touch_iz: false,
             touch_de: false,
             touch_up: false,
             touch_do: false,
             touch_at: false,
-            tecla_iz: false,
-            tecla_de: false,
-            tecla_up: false,
-            tecla_do: false,
-            tecla_at: false
+            touch_music_onoff: false,
+            touch_nextLevel: false,
+            touch_newGame: false,
+            touch_canvas: false
         };
 
         this.tecla = {
-            iz: 'ArrowLeft',
-            de: 'ArrowRight',
-            up: 'ArrowUp',
-            do: 'ArrowDown',
-            at: ['Control', ' '],
-            music_onoff: ['s', 'S'],
-            enter: 'Enter'
+            tecla_iz: ['ArrowLeft', 'ArrowLeft'],
+            tecla_de: ['ArrowRight', 'ArrowRight'],
+            tecla_up: ['ArrowUp', 'ArrowUp'],
+            tecla_do: ['ArrowDown', 'ArrowDown'],
+            tecla_at: ['Control', ' '],
+            tecla_music_onoff: ['s', 'S'],
+            tecla_enter: ['Enter', 'Enter'],
+
+            touch_iz: ['boton__le', 'flecha__le'],
+            touch_de: ['boton__ri', 'flecha__ri'],
+            touch_up: ['boton__up', 'flecha__up'],
+            touch_do: ['boton__do', 'flecha__do'],
+            touch_at: ['boton__at', 'icono__at'],
+            touch_music_onoff: ['boton__music', 'boton__music'],
+            touch_nextLevel: ['boton__NextLevel', 'boton__NextLevel'],
+            touch_newGame: ['boton__newGame', 'boton__newGame'],
+            touch_canvas: ['canvas', 'canvas']
         };
 
         this.touch = {
-            iz: ['boton__le', 'flecha__le'],
-            de: ['boton__ri', 'flecha__ri'],
-            up: ['boton__up', 'flecha__up'],
-            do: ['boton__do', 'flecha__do'],
-            at: ['boton__at', 'icono__at'],
-            music_onoff: 'boton__music',
-            nextLevel: 'boton__NextLevel',
-            newGame: 'boton__newGame',
-            canvas: 'canvas'
+            
 
         }
 

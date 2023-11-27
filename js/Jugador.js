@@ -3,6 +3,7 @@ import { Textos } from './textos.js';
 import { Boommerang } from "./boommerang.js";
 import { ShowBonus } from "./showbonus.js";
 import { DecorativosOffGame } from "./decorativos.js";
+
 import {
     checkColision,
     checkColision_abovePtos,

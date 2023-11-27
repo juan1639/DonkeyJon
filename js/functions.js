@@ -102,7 +102,7 @@ function instanciar_boommerang() {
 // ============================================================================
 function instanciar_bichos() {
 
-    const dificultad = settings.constante.dificultad;
+    const dificultad = settings.opciones_menuP.botonSelectDificultad;
     
     for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
 
@@ -114,7 +114,7 @@ function instanciar_bichos() {
 // ============================================================================
 function instanciar_pajaros() {
     
-    const dificultad = settings.constante.dificultad;
+    const dificultad = settings.opciones_menuP.botonSelectDificultad;
 
     for (let i = 0; i < settings.nro_enemigosDificultad.pajaros[dificultad]; i ++) {
 
