@@ -8,7 +8,7 @@ import { Bichos } from './bichos.js';
 import { Pajaros } from './pajaros.js';
 import { Plataforma, PlataformaMovil } from './plataforma.js';
 import { Escalera } from './Escalera.js';
-import { Decorativos } from './decorativos.js';
+import { Decorativos, DecorativosOffGame } from './decorativos.js';
 import { Llave } from './llave.js';
 import { Bonus } from './bonus.js';
 import { LosSiete } from './lossiete.js';
@@ -91,19 +91,11 @@ function instanciar_scrolls() {
 
 // ============================================================================
 function instanciar_jugador() {
-
-    const ancho = settings.constante.ancho_jugador;
-    const alto = settings.constante.alto_jugador;
-    const xIni = settings.ini_jugador.x;
-    const yIni = settings.ini_jugador.y;
-    console.log('Jugador coord:', xIni, yIni, ancho, alto, settings.resolucion[0], settings.resolucion[1]);
-
-    settings.objeto.jugador = new Jugador(xIni, yIni, ancho, alto);
+    settings.objeto.jugador = new Jugador(settings.ini_jugador.args);
 }
 
-// ============================================================================
+// ---------------------------------------------------------------------------
 function instanciar_boommerang() {
-
     settings.objeto.boommerang.push(new Boommerang('./img/boommerang_sheet.png', -100, -100, -1, -1));
 }
 
@@ -115,7 +107,6 @@ function instanciar_bichos() {
     for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
 
         const id = Math.floor(Math.random()* settings.constante.nro_bichos);
-        
         settings.objeto.bichos.push(new Bichos(id));
     }
 }
@@ -128,7 +119,6 @@ function instanciar_pajaros() {
     for (let i = 0; i < settings.nro_enemigosDificultad.pajaros[dificultad]; i ++) {
 
         const posIniY = 0;
-
         settings.objeto.pajaros.push(new Pajaros(i, posIniY));
     }
 }
@@ -184,6 +174,13 @@ function instanciar_decorativos(nivel) {
     }
 }
 
+// ----------------------------------------------------------------------------
+function instanciar_decorativosOffgame(id) {
+
+    let args = settings.array_decorativosOffgame[id];
+    settings.objeto.decorativosOffgame.push(new DecorativosOffGame(args[2], args[0], args[1], args[3], args[4]));
+}
+
 // ============================================================================
 function instanciar_llave(nivel) {
 
@@ -201,7 +198,7 @@ function instanciar_bonus(nivel) {
     }
 }
 
-// ============================================================================
+// ----------------------------------------------------------------------------
 function instanciar_los7() {
 
     for (let i = 0; i < settings.constante.nro_DIAMANTES; i ++) {
@@ -291,6 +288,7 @@ export {
     instanciar_plataformas,
     instanciar_escaleras,
     instanciar_decorativos,
+    instanciar_decorativosOffgame,
     instanciar_bonus,
     instanciar_llave,
     instanciar_los7,

@@ -35,8 +35,12 @@ export class Settings {
         this.gapMini = this.constante.bsy * 2;
 
         this.ini_jugador = {
-            x: Math.floor(this.resolucion[0] / 2),
-            y: this.ini_suelo - this.constante.alto_jugador
+            args: [
+                Math.floor(this.resolucion[0] / 2),
+                this.ini_suelo - this.constante.alto_jugador,
+                this.constante.ancho_jugador,
+                this.constante.alto_jugador
+            ]
         };
 
         this.escala = {
@@ -46,24 +50,24 @@ export class Settings {
 
         this.canvas = document.getElementById('canvas');
         this.ctx = canvas.getContext('2d');
-
+        
         this.objeto = {
             scroll: [],
             plataforma: [],
             escalera: [],
             jugador: null,
-            boommerang: [],
             bichos: [],
             pajaros: [],
-            llave: null,
             bonus: [],
+            boommerang: [],
+            decorativos: [],
             lossiete: [],
             showbonus: [],
-            decorativos: [],
-            decorativosOffgame: [],
-            textos: [],
             showvidas: [],
-            chispa: []
+            chispa: [],
+            textos: [],
+            llave: null,
+            decorativosOffgame: []
         };
 
         this.marcadores = {

@@ -14,7 +14,7 @@ import {
 // ============================================================================
 export class Jugador {
 
-    constructor(left, top, width, height) {
+    constructor(args) {
 
         this.ctx = settings.ctx;
         this.img = settings.imagenes.ssheet_jugador;
@@ -33,10 +33,10 @@ export class Jugador {
         }
 
         this.rect = {
-            x: left,
-            y: top,
-            ancho: width,
-            alto: height,
+            x: args[0],
+            y: args[1],
+            ancho: args[2],
+            alto: args[3],
             clipX: 0,
             clipY: 0,
             clipAncho: 80,
@@ -84,14 +84,14 @@ export class Jugador {
         this.correcciones = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 3),
+            obj2_hor: Math.floor(args[2] / 3),
             obj2_ver: 0
         }
 
         this.correcciones_escalera = {
             obj1_hor: 0,
             obj1_ver: 10,
-            obj2_hor: Math.floor(width / 2),
+            obj2_hor: Math.floor(args[2] / 2),
             obj2_ver: 0
         }
 
@@ -99,21 +99,21 @@ export class Jugador {
             obj1_hor: 0,
             obj1_ver: 0,
             obj2_hor: 0,
-            obj2_ver: Math.floor(width / 3)
+            obj2_ver: Math.floor(args[2] / 3)
         }
 
         this.correcciones_bichos = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 4),
-            obj2_ver: Math.floor(height / 5)
+            obj2_hor: Math.floor(args[2] / 4),
+            obj2_ver: Math.floor(args[3] / 5)
         }
 
         this.correcciones_pajaros = {
             obj1_hor: 0,
             obj1_ver: 0,
-            obj2_hor: Math.floor(width / 4),
-            obj2_ver: Math.floor(height / 5)
+            obj2_hor: Math.floor(args[2] / 4),
+            obj2_ver: Math.floor(args[3] / 5)
         }
 
         this.intervalo_anima = setInterval(() => {

@@ -15,6 +15,7 @@ import {
     instanciar_plataformas,
     instanciar_escaleras,
     instanciar_decorativos,
+    instanciar_decorativosOffgame,
     instanciar_bonus,
     instanciar_llave,
     instanciar_los7,
@@ -119,18 +120,11 @@ function comenzar_instancias() {
     instanciar_boommerang();
     instanciar_bichos();
     instanciar_pajaros();
-    // ---------------------------------------------------------------
-    /* let i = settings.array_decorativosOffgame[0];
-    const id_dOff = i[2];
-    const rx = Math.floor(i[0]);
-    const ry = Math.floor(i[1]);
 
-    settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4])); */
-
-    // ---------------------------------------------------------------
     instanciar_plataformas(0);
     instanciar_escaleras(0);
     instanciar_decorativos(0);
+    //instanciar_decorativosOffgame(0);
     instanciar_bonus(0);
     instanciar_llave(0);
 
@@ -173,66 +167,28 @@ function bucle_principal() {
 
     borraCanvas();
 
-    for (let scroll of settings.objeto.scroll) {
-        scroll.dibuja(dxdy);
+    const keyObjs = Object.keys(settings.objeto);
+
+    for (let objeto of keyObjs) {
+
+        if (objeto === 'jugador') {
+            dxdy = settings.objeto[objeto].dibuja();
+
+        } else if (objeto === 'lossiete' || objeto === 'showvidas') {
+            for (let noArg of settings.objeto[objeto]) {
+                noArg.dibuja();
+            }
+        
+        } else if (objeto === 'llave') {
+            settings.objeto[objeto].dibuja(dxdy);
+
+        } else {
+            for (let arg of settings.objeto[objeto]) {
+                arg.dibuja(dxdy);
+            }
+        }
     }
     
-    for (let plataforma of settings.objeto.plataforma) {
-        plataforma.dibuja(dxdy);
-    }
-
-    for (let escalera of settings.objeto.escalera) {
-        escalera.dibuja(dxdy);
-    }
-
-    for (let bicho of settings.objeto.bichos) {
-        bicho.dibuja(dxdy);
-    }
-
-    for (let pajaro of settings.objeto.pajaros) {
-        pajaro.dibuja(dxdy);
-    }
-
-    for (let bon of settings.objeto.bonus) {
-        bon.dibuja(dxdy);
-    }
-
-    dxdy = settings.objeto.jugador.dibuja();
-
-    for (let boommerang of settings.objeto.boommerang) {
-        boommerang.dibuja(dxdy);
-    }
-    
-    for (let decor of settings.objeto.decorativos) {
-        decor.dibuja(dxdy);
-    }
-
-    for (let los7 of settings.objeto.lossiete) {
-        los7.dibuja();
-    }
-
-    for (let showb of settings.objeto.showbonus) {
-        showb.dibuja(dxdy);
-    }
-
-    for (let showvida of settings.objeto.showvidas) {
-        showvida.dibuja();
-    }
-
-    for (let chispa of settings.objeto.chispa) {
-        if (chispa) chispa.dibuja(dxdy);
-    }
-
-    for (let texto of settings.objeto.textos) {
-        texto.dibuja(dxdy);
-    }
-
-    settings.objeto.llave.dibuja(dxdy);
-
-    for (let decorOff of settings.objeto.decorativosOffgame) {
-        decorOff.dibuja(dxdy);
-    }
-
     check_gameOver();
 }
 
