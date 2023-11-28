@@ -4,6 +4,9 @@ import { settings } from "./main.js";
 // ============================================================================
 export class FireWorks {
 
+    static nro_CHISPASfireWorks = 99;
+
+    // ------------------------------------------------------------
     constructor(id, left, top) {
 
         this.ctx = settings.ctx;

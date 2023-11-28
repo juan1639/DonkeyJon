@@ -40,7 +40,7 @@ function checkColision_abovePtos(obj1, obj2) {
 // ============================================================================
 function lanzar_fireWorks() {
 
-    const nroChispas = settings.constante.nro_CHISPASfireWorks;
+    const nroChispas = FireWorks.nro_CHISPASfireWorks;
 
     const rangoX = Math.floor(settings.resolucion[0] / 2);
     const rangoY = Math.floor(settings.resolucion[1] / 4);
@@ -106,7 +106,7 @@ function instanciar_bichos() {
     
     for (let i = 0; i < settings.nro_enemigosDificultad.mariq[dificultad]; i ++) {
 
-        const id = Math.floor(Math.random()* settings.constante.nro_bichos);
+        const id = Math.floor(Math.random()* Bichos.nro_bichos);
         settings.objeto.bichos.push(new Bichos(id));
     }
 }

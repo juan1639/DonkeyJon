@@ -9,8 +9,13 @@ import {
     checkColision_abovePtos,
     check_getLos7,
     lanzar_fireWorks,
-    construir_nuevoNivel
+    construir_nuevoNivel,
+    playSonidosLoop
 } from "./functions.js";
+
+import {
+    instanciar_showBonus
+} from "./functions-aux-jugador.js";
 
 // ============================================================================
 export class Jugador {
@@ -320,7 +325,7 @@ export class Jugador {
                     settings.bandera[nivel] = true;
                     lanzar_fireWorks();
                     settings.sonidos.musicaFondo.pause();
-                    settings.sonidos.fireWorks.play();
+                    playSonidosLoop(settings.sonidos.fireWorks, false, settings.volumen.fireWorks);
 
                     setTimeout(() => {
                         this.accion_realizada = false;
@@ -368,44 +373,18 @@ export class Jugador {
         for (let bonus of settings.objeto.bonus) {
 
             if (checkColision(bonus, this, this.correcciones_pajaros, 0) && !bonus.accion_realizada) {
-                
-                settings.marcadores.puntos += bonus.puntos;
-                settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
+
+                const args = [Math.floor(settings.constante.bsy / 3), 30, 10, 0, 60, 40, 20, 2800];
+                instanciar_showBonus(bonus, this, false, args);
                 bonus.accion_realizada = true;
-
-                // 16, 370, (16,64,108,154,202)
-                const gap = Math.floor(settings.constante.bsy / 3);
-                const anchoIni = 30;
-                const altoIni = 10;
-                const sbx = 0;
-                const sby = 60;
-                const anchoClip = 40;
-                const altoClip = 20;
-                const duracion = 2800;
-
-                settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
-
-                settings.objeto.lossiete[bonus.colorId].mostrar = true;
 
                 if (!this.getLos7) {
                     this.getLos7 = check_getLos7();
 
                     if (this.getLos7) {
-
-                        settings.marcadores.puntos += 64000;
-                        settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
-
-                        const gap = Math.floor(settings.constante.bsy);
-                        const anchoIni = 60;
-                        const altoIni = 20;
-                        const sbx = 0;
-                        const sby = 80;
-                        const anchoClip = 70;
-                        const altoClip = 20;
-                        const duracion = 3900;
-
-                        settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bonus.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
                         
+                        const args = [Math.floor(settings.constante.bsy), 60, 20, 0, 80, 70, 20, 3900];
+                        instanciar_showBonus(bonus, this, true, args);
                         settings.sonidos.intermision.play();
                     }
                 }
@@ -628,15 +607,12 @@ export class Jugador {
     }
 
     reset_ssheetBooleanos() {
-        this.ssheet.quieto[4] = false;
-        this.ssheet.andar[4] = false;
-        this.ssheet.agachado[4] = false;
-        this.ssheet.escalera[4] = false;
-        this.ssheet.escaleraQuieto[4] = false;
-        this.ssheet.saltar[4] = false;
-        this.ssheet.celebrar[4] = false;
-        this.ssheet.dies[4] = false;
-        this.ssheet.atacando[4] = false;
+
+        const acciones = Object.keys(this.ssheet);
+
+        for (let accion of acciones) {
+            this.ssheet[accion][4] = false;
+        }
     }
 
     mostrar_msg(elegir) {

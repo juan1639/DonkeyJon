@@ -4,6 +4,9 @@ import { checkColision } from "./functions.js";
 // ============================================================================
 export class Bichos {
 
+    static nro_bichos = 2;
+
+    // ---------------------------------------------------
     constructor(id, indice) {
 
         this.ctx = settings.ctx;

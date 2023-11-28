@@ -11,8 +11,6 @@ export class Settings {
             nro_columnas: 16,
             GRAVEDAD: 1,
             FPS: 60,
-            nro_bichos: 2,
-            nro_CHISPASfireWorks: 99,
             nro_DIAMANTES: 7,
             nro_niveles: 2,
             botonSelectMusica: ['Musica: On', 'Musica: Off', 'Musica: On'],
@@ -148,11 +146,6 @@ export class Settings {
             touch_newGame: ['boton__newGame', 'boton__newGame'],
             touch_canvas: ['canvas', 'canvas']
         };
-
-        this.touch = {
-            
-
-        }
 
         this.estado = {
             preJuego: false,
