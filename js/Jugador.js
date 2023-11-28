@@ -1,8 +1,8 @@
 import { settings } from "./main.js";
 import { Textos } from './textos.js';
 import { Boommerang } from "./boommerang.js";
-import { ShowBonus } from "./showbonus.js";
 import { DecorativosOffGame } from "./decorativos.js";
+import { Plataforma } from "./plataforma.js";
 
 import {
     checkColision,
@@ -80,6 +80,7 @@ export class Jugador {
 
         this.invisible = true;
         this.duracion_invisible = 3500;
+        this.intermitente = true;
 
         this.duracion_dies = 3200;
 
@@ -126,18 +127,13 @@ export class Jugador {
             this.move.anima = this.move.anima === 0 ? this.move.anima = 2 : this.move.anima = 0;
         }, 99);
 
+        setInterval(() => {
+            this.intermitente = this.intermitente ? this.intermitente = false : this.intermitente = true;
+        }, 50);
+
         setTimeout(() => {
             this.invisible = false;
         }, this.duracion_invisible);
-        
-        settings.sonidos.jump.volume = settings.volumen.jump;
-        settings.sonidos.pacmanDies.volume = settings.volumen.pacmanDies;
-        settings.sonidos.eatingGhost.volume = settings.volumen.eatingGhost;
-        settings.sonidos.intermision.volume = settings.volumen.intermision;
-        settings.sonidos.fireWorks.volume = settings.volumen.fireWorks;
-        settings.sonidos.ataque.volume = settings.volumen.ataque;
-        settings.sonidos.gameOver.volume = settings.volumen.gameOver;
-        settings.sonidos.intermision.volume = settings.volumen.intermision;
     }
 
     dibuja() {
@@ -159,16 +155,13 @@ export class Jugador {
         this.rect.clipX = clipXY[0];
         this.rect.clipY = clipXY[1];
 
-        if ((!this.invisible) || (this.invisible && this.move.anima === 0)) {
+        if ((!this.invisible) || (this.invisible && this.intermitente)) {
 
             this.ctx.drawImage(this.img, this.rect.clipX, this.rect.clipY, this.rect.clipAncho, this.rect.clipAlto, 
                 this.rect.x, this.rect.y, this.rect.ancho, this.rect.alto);
         }
 
         this.ctx.restore();
-
-        //this.ctx.drawImage(this.img, this.rect.x, this.rect.y);
-        //this.ctx.drawImage(this.img, 0, 0);
 
         return dxdy;
     }
@@ -340,7 +333,7 @@ export class Jugador {
                 if (!item.accion_realizada && this.ssheet.agachado[4] && item.id.slice(0, 15) === './img/switchRed') {
                     item.accion_realizada = true;
                     this.accion_realizada = true;
-                    settings.sonidos.eatingGhost.play();
+                    playSonidosLoop(settings.sonidos.eatingGhost, false, settings.volumen.eatingGhost);
                 }
                 
                 if (item.accion) return true; // msg explicativo accion
@@ -358,7 +351,7 @@ export class Jugador {
 
             if (!llave.accion_realizada && this.ssheet.agachado[4]) {
                 llave.accion_realizada = true;
-                settings.sonidos.eatingGhost.play();
+                playSonidosLoop(settings.sonidos.eatingGhost, false, settings.volumen.eatingGhost);
                 return true;
             }
 
@@ -376,6 +369,7 @@ export class Jugador {
 
                 const args = [Math.floor(settings.constante.bsy / 3), 30, 10, 0, 60, 40, 20, 2800];
                 instanciar_showBonus(bonus, this, false, args);
+                settings.objeto.lossiete[bonus.colorId].mostrar = true;
                 bonus.accion_realizada = true;
 
                 if (!this.getLos7) {
@@ -385,12 +379,12 @@ export class Jugador {
                         
                         const args = [Math.floor(settings.constante.bsy), 60, 20, 0, 80, 70, 20, 3900];
                         instanciar_showBonus(bonus, this, true, args);
-                        settings.sonidos.intermision.play();
+                        playSonidosLoop(settings.sonidos.intermision, false, settings.volumen.intermision);
                     }
                 }
 
-                settings.sonidos.chips1.play();
-                settings.sonidos.chips2.play();
+                playSonidosLoop(settings.sonidos.chips1, false, 0.9);
+                playSonidosLoop(settings.sonidos.chips2, false, 0.9);
                 
                 return true;
             }
@@ -412,10 +406,7 @@ export class Jugador {
 
                 if (array_posValidas.includes(pos_bicho)) {
 
-                    settings.estado.jugadorDies = true;
-                    bichos.abatido = true;                  
-                    settings.sonidos.musicaFondo.pause();
-                    settings.sonidos.pacmanDies.play();
+                    this.jugadorDies_enemigoAbatido_sonido(bichos);
 
                     setTimeout(() => {
                         for (let bicho of settings.objeto.bichos) {
@@ -447,10 +438,7 @@ export class Jugador {
 
             if (checkColision(pajaro, this, this.correcciones_pajaros, 0) && !dies && !this.ssheet.agachado[4] && !pajaro.abatido) {
                 
-                settings.estado.jugadorDies = true;
-                pajaro.abatido = true;
-                settings.sonidos.musicaFondo.pause();
-                settings.sonidos.pacmanDies.play();
+                this.jugadorDies_enemigoAbatido_sonido(pajaro);
 
                 setTimeout(() => {
                     for (let bicho of settings.objeto.bichos) {
@@ -475,11 +463,11 @@ export class Jugador {
 
     averiguar_plataformas() {
 
-        const nro_plataformas = settings.array_plataformas[0][6];
+        const nro_plataformas = Plataforma.array_plataformas[0][6];
         let array_posValidas = [];
 
         for (let i = 0; i < nro_plataformas; i ++) {
-            const plataf = settings.ini_suelo - i * settings.gap;
+            const plataf = Plataforma.ini_suelo - i * Plataforma.gap;
 
             array_posValidas.push(plataf);
             array_posValidas.push(plataf - 1);
@@ -506,21 +494,13 @@ export class Jugador {
                         [400, 20],
                         [200, 0]
                     ];
+                    
+                    const args = [
+                        Math.floor(settings.constante.bsy / 3), 15, 5, 0, id_bicho_ptos[bichos.id][1], 35, 20, 1900
+                    ];
 
+                    instanciar_showBonus(bichos, this, false, args);
                     this.saltoBonus[1] = true;
-                    settings.marcadores.puntos += id_bicho_ptos[bichos.id][0];
-                    settings.marcadores.scorePtos.innerHTML = 'Puntos: ' + settings.marcadores.puntos.toString();
-
-                    const gap = Math.floor(settings.constante.bsy / 3);
-                    const anchoIni = 15;
-                    const altoIni = 5;
-                    const sbx = 0;
-                    const sby = id_bicho_ptos[bichos.id][1];
-                    const anchoClip = 35;
-                    const altoClip = 20;
-                    const duracion = 1900;
-
-                    settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bichos.rect.x, this.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
                 }
             }
 
@@ -564,6 +544,7 @@ export class Jugador {
                 this.move.velYGrav = this.potencia_salto;
                 this.direcc_salto = this.move.flip === true ? -6 : 6;
                 settings.sonidos.jump.play();
+                playSonidosLoop(settings.sonidos.jump, false, settings.volumen.jump);
             }
         
         } else if (settings.controles.tecla_do || settings.controles.touch_do) {
@@ -576,6 +557,14 @@ export class Jugador {
         }
 
         return [dx, dy];
+    }
+
+    jugadorDies_enemigoAbatido_sonido(enemigo) {
+
+        settings.estado.jugadorDies = true;
+        enemigo.abatido = true;                  
+        settings.sonidos.musicaFondo.pause();
+        playSonidosLoop(settings.sonidos.pacmanDies, false, settings.volumen.pacmanDies);
     }
 
     inicializa_disparo() {
@@ -598,7 +587,7 @@ export class Jugador {
 
             settings.objeto.boommerang.push(new Boommerang(ruta, this.rect.x + iniX, this.rect.y + iniY, flip, -1));
 
-            settings.sonidos.ataque.play();
+            playSonidosLoop(settings.sonidos.ataque, false, settings.volumen.ataque);
 
             setTimeout(() => {
                 this.bandera_boommerang = false;
@@ -621,7 +610,9 @@ export class Jugador {
 
             this.msg_NOllave = true;
 
-            settings.objeto.textos.push(new Textos('Debes coger la llave...', 'center', 70, 'red'));
+            const args = ['Debes coger la llave...', 'center', 70, 'red'];
+
+            settings.objeto.textos.push(new Textos(args));
             //console.log(settings.objeto.textos.length);
 
             setTimeout(() => {
@@ -632,7 +623,8 @@ export class Jugador {
 
         if (elegir === 'Preparado!') {
 
-            settings.objeto.textos.push(new Textos(elegir, 'center', 75, 'rgb(225, 150, 19)'));
+            const args = [elegir, 'center', 75, 'rgb(225, 150, 19])'];
+            settings.objeto.textos.push(new Textos(args));
 
             setTimeout(() => {
                 settings.objeto.textos.pop();
@@ -658,7 +650,7 @@ export class Jugador {
             const ry = Math.floor(i[1]);
 
             settings.objeto.decorativosOffgame.push(new DecorativosOffGame(id_dOff, rx, ry, i[3], i[4]));
-            settings.sonidos.gameOver.play();
+            playSonidosLoop(settings.sonidos.gameOver, false, settings.volumen.gameOver);
             return;
         }
 

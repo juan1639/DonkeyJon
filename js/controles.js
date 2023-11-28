@@ -149,7 +149,7 @@ const eventos_click = document.addEventListener('click', (event) => {
 
     if (settings.estado.reJugar) {
 
-        if (clickar === settings.tecla.touch_newGame || clickar === settings.tecla.touch_canvas) {
+        if (clickar === settings.tecla.touch_newGame[0] || clickar === settings.tecla.touch_canvas[0]) {
             location.reload();
         }
         

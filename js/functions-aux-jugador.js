@@ -8,7 +8,13 @@ import { ShowBonus } from "./showbonus.js";
 function instanciar_showBonus(bonus, esto, los7Done, args) {
 
     if (!los7Done) {
-        settings.marcadores.puntos += bonus.puntos;
+
+        if (args[7] === 1900) {
+            settings.marcadores.puntos += args[4];
+
+        } else {
+            settings.marcadores.puntos += bonus.puntos;
+        }
         
     } else {
         settings.marcadores.puntos += 64000;
@@ -27,8 +33,6 @@ function instanciar_showBonus(bonus, esto, los7Done, args) {
     const duracion = args[7];
 
     settings.objeto.showbonus.push(new ShowBonus('./img/showPtos.png', bonus.rect.x, esto.rect.y - gap, anchoIni, altoIni, sbx, sby, anchoClip, altoClip, duracion));
-
-    settings.objeto.lossiete[bonus.colorId].mostrar = true;
 }
 
 export {

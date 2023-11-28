@@ -83,13 +83,7 @@ export class Plataforma {
 
     // ----------------------------------------------------------------------
     constructor(args, ruta) {
-
-        /* const p_y = nivelActual[i][0];
-        const p_x = nivelActual[i][1];
-        const p_ancho = nivelActual[i][2];
-        const p_bordeIz = nivelActual[i][3];
-        const p_bordeDe = nivelActual[i][4]; */
-
+        
         this.anchoTile = settings.constante.bsx;
         this.altoTile = settings.constante.bsy;
 

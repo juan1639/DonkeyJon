@@ -226,11 +226,12 @@ function check_gameOver() {
         settings.estado.gameOver = true;
 
         const txt = 'Toque Pantalla o pulse ENTER para jugar volver a jugar...';
+        const args = [txt, 'center', 27, 'rgb(240, 49, 19)'];
 
         setTimeout(() => {
             settings.estado.gameOver = false;
             settings.estado.reJugar = true;
-            settings.objeto.textos.push(new Textos(txt, 'center', 27, 'rgb(240, 49, 19)'));
+            settings.objeto.textos.push(new Textos(args));
         }, 5000);
     }
 }
